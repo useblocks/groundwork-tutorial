@@ -4,7 +4,7 @@ groundwork tutorial
 This is the repository of the groundwork tutorial.
 It contains the tutorial itself as sphinx project and related example code for each chapter.
 
-**To follow this tutorial, please visit https://groundwork-tutorial.readthedocs.io.**
+**To follow this tutorial, please visit https://useblocks.github.io/groundwork-tutorial/.**
 
 Helpful links
 -------------
