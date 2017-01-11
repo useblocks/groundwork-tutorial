@@ -13,7 +13,7 @@ adds a database in the second chapter for storing the change history
 and finally shows you how to create a complete web application based on the initial script.
 
 This is a bottom-up tutorial and therefore new code and functions are getting added with each new chapter.
-If you get lost and your code is not working as expected, try to catch a fresh code base from our git repository at
+If you get lost or your code is not working as expected, try to catch a fresh code base from our git repository at
 https://github.com/useblocks/groundwork-tutorial.
 
 If you only want to see the final source code and used architecture,
