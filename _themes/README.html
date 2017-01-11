@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gwTheme Sphinx Style &#8212; groundwork tutorial 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+     
+        
+    <link rel="apple-touch-icon" href="../_static/""" />
+        
+    <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">groundwork tutorial 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gwtheme-sphinx-style">
+<h1>gwTheme Sphinx Style<a class="headerlink" href="#gwtheme-sphinx-style" title="Permalink to this headline">¶</a></h1>
+<p>This repository contains sphinx styles, which are use by most groundwork related projects.
+It is a drivative of Kenneth Reitz&#8217;s themes for his projects and of Mitsuhiko&#8217;s themes for Flask and Flask related
+projects.  To use this style in your Sphinx documentation, follow this guide:</p>
+<ol class="arabic">
+<li><p class="first">put this folder as _themes into your docs folder.  Alternatively
+you can also use git submodules to check out the contents there.</p>
+</li>
+<li><p class="first">add this to your conf.py:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;_themes&#39;</span><span class="p">))</span>
+<span class="n">html_theme_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_themes&#39;</span><span class="p">]</span>
+<span class="n">html_theme</span> <span class="o">=</span> <span class="s1">&#39;gw&#39;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The following themes exist:</p>
+<dl class="docutils">
+<dt><strong>gw</strong></dt>
+<dd>the standard groundwork documentation theme for any kind of projects</dd>
+</dl>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The gwTheme provides the following configuration parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>contribute</strong>: If True, a contribute-area with github-buttons is shown inside the sidebar</li>
+<li><strong>github_user</strong>: Used the for github follow button. E.g.: useblocks</li>
+<li><strong>github_fork</strong>: Used for the github fork buttons. E.g.: useblocks/groundwork</li>
+</ul>
+</div></blockquote>
+<p>You can change their value inside the file <cite>conf.py</cite> of your sphinx project:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">html_theme_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;contribute&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;github_fork&quot;</span><span class="p">:</span> <span class="s2">&quot;useblocks/groundwork&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;github_user&quot;</span><span class="p">:</span> <span class="s2">&quot;useblocks&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="screenshot">
+<h2>Screenshot<a class="headerlink" href="#screenshot" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/screenshot.png"><img alt="screenshot of groundwork sphinx theme" class="align-center" src="../_images/screenshot.png" style="height: 400px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/gw_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">gwTheme Sphinx Style</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#screenshot">Screenshot</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/_themes/README.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+    
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+    
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ 
+        <div class="github_fork">
+            <a href="http://github.com/useblocks/groundwork-tutorial">
+                <img style="position: fixed; top: 0; right: 0; border: 0;"
+                     src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+                     alt="Fork me on GitHub">
+            </a>
+        </div>
+    
+
+
+    <div class="footer">
+      &copy; Copyright 2017, team useblocks.
+    </div>
+  </body>
+</html>
