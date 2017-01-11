@@ -6,4 +6,5 @@ Chapter 1 - groundwork
    :maxdepth: 2
    :caption: Contents:
 
+   introduction
    architecture

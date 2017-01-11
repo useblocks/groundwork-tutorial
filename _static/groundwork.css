@@ -514,3 +514,19 @@ div.sidebar {
     padding: 10px 20px 0 20px;
     text-align: justify;
 }
+
+
+div.sidebar div.topic {
+    background-color: transparent;
+    border: none;
+    margin-top: -20px;
+}
+}
+
+div.sidebar div.topic ul {
+    margin: 5px 0 5px 15px;
+}
+
+div.sidebar div.topic p.topic-title {
+    display: none;
+}
