@@ -6,14 +6,9 @@ from setuptools import setup, find_packages
 import re
 import ast
 
-_version_re = re.compile(r'__version__\s+=\s+(.*)')
-with open('csv_manager/version.py', 'rb') as f:
-    version = str(ast.literal_eval(_version_re.search(
-        f.read().decode('utf-8')).group(1)))
-
 setup(
     name='csv_manager',
-    version=version,
+    version="0.0.1",
     url='http://groundwork_tutorial.readthedocs.org',
     license='MIT license',
     author='team useblocks',

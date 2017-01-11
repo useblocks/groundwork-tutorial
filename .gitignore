@@ -96,3 +96,5 @@ ENV/
 
 # Doc zip container for pypi
 docs.zip
+
+docs/source/_themes
