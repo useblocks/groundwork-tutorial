@@ -35,7 +35,8 @@ import sys
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.todo',
               'sphinx.ext.viewcode',
-              'sphinxcontrib.plantuml'
+              'sphinxcontrib.plantuml',
+              'sphinx.ext.githubpages'
               ]
 
 this_dir = os.path.dirname(__file__)
