@@ -1,5 +1,5 @@
-Chapter 2 - groundwork-database
-===============================
+groundwork and databases
+========================
 
 
 .. toctree::

@@ -1,5 +1,5 @@
-Chapter 3 - groundwork-web
-==========================
+groundwork and the web
+======================
 
 
 .. toctree::

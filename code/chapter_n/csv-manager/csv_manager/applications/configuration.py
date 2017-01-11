@@ -1,9 +1,11 @@
 import sys
 import os
 
-APP_NAME = "csv_manager"
-APP_DESCRIPTION = "groundwork application of package groundwork-tutorial"
-APP_PATH = os.path.dirname(__file__)
+APP_NAME = "csv_manager_app"
+APP_DESCRIPTION = "groundwork application of package csv-manager"
+APP_PATH = os.path.join(os.path.expanduser('~'), "csv-manager")
+
+PLUGINS = ["csv_manager_plugin", "GwPluginsInfo", "GwDocumentsInfo", "GwWebManager"]
 
 GROUNDWORK_LOGGING = {
     'version': 1,
@@ -22,12 +24,12 @@ GROUNDWORK_LOGGING = {
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
-            'level': 'INFO'
+            'level': 'DEBUG'
         },
         'file': {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "debug",
-            "filename": "logs/app.log",
+            "filename": os.path.join(APP_PATH, "csv_manager.log"),
             "maxBytes": 1024000,
             "backupCount": 3,
             'level': 'DEBUG'

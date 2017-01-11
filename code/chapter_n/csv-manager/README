@@ -1,6 +1,6 @@
 Installation
 ============
 
-Inside groundwork_tutorial run::
+Inside csv_manager run::
 
     python setup.py develop

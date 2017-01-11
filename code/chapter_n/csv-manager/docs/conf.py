@@ -51,9 +51,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'groundwork-tutorial'
-copyright = u'2015 - {0}, team useblocks'.format(datetime.utcnow().year)
-author = 'team useblocks'
+project = 'csv-manager'
+copyright = u'2015 - {0}, team awesome'.format(datetime.utcnow().year)
+author = 'team awesome'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -61,9 +61,9 @@ author = 'team useblocks'
 #
 # The short X.Y version.
 try:
-    release = pkg_resources.get_distribution('groundwork_tutorial').version
+    release = pkg_resources.get_distribution('csv_manager').version
 except pkg_resources.DistributionNotFound:
-    print('groundwork-tutorial must be installed to build the documentation.')
+    print('csv-manager must be installed to build the documentation.')
     print('Install from source using `pip install -e .` in a virtualenv.')
     sys.exit(1)
 
@@ -171,9 +171,9 @@ if html_theme == 'gw':
 #
 html_theme_options = {
     "contribute": True,
-    "github_fork": "useblocks/groundwork-tutorial",
+    "github_fork": "team_awesome/csv_manager",
     "github_ribbon_color": "white_ffffff",
-    "github_user": "useblocks",
+    "github_user": "team_awesome",
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -182,7 +182,7 @@ html_theme_path = ['_themes']
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'groundwork-tutorial v0.1'
+# html_title = 'csv-manager v0.1'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -282,7 +282,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'groundwork-tutorialdocs'
+htmlhelp_basename = 'csv-managerdocs'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -308,7 +308,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'groundwork-tutorial.tex', 'groundwork-tutorial Documentation',
+    (master_doc, 'csv-manager.tex', 'csv-manager Documentation',
      'team useblocks', 'manual'),
 ]
 
@@ -350,7 +350,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'groundwork-tutorial', 'groundwork-tutorial Documentation',
+    (master_doc, 'csv-manager', 'csv-manager Documentation',
      [author], 1)
 ]
 
@@ -365,8 +365,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'groundwork-tutorial', 'groundwork-tutorial Documentation',
-     author, 'groundwork-tutorial', 'One line description of project.',
+    (master_doc, 'csv-manager', 'csv-manager Documentation',
+     author, 'csv-manager', 'One line description of project.',
      'Miscellaneous'),
 ]
 

@@ -1,5 +1,5 @@
-Chapter 1 - groundwork
-======================
+groundwork basics
+=================
 
 
 .. toctree::
@@ -7,4 +7,7 @@ Chapter 1 - groundwork
    :caption: Contents:
 
    introduction
+   installation
+   usage
+   first_package
    architecture

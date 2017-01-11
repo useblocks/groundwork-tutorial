@@ -1,6 +1,6 @@
 """
-groundwork-tutorial
-===================
+csv-manager
+===========
 """
 from setuptools import setup, find_packages
 import re
@@ -14,11 +14,11 @@ with open('csv_manager/version.py', 'rb') as f:
 setup(
     name='csv_manager',
     version=version,
-    url='http://groundwork_tutorial.readthedocs.org',
+    url='http://csv_manager.readthedocs.org',
     license='MIT license',
-    author='team useblocks',
-    author_email='info@useblocks.com',
-    description="Reading and managing csv file readers",
+    author='team awesome',
+    author_email='team_awesome@provider.com',
+    description="Package for hosting groundwork apps and plugins like csv_manager_app or csv_manager_plugin.",
     long_description=__doc__,
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     include_package_data=True,
@@ -39,9 +39,9 @@ setup(
     ],
     entry_points={
         'console_scripts': ["csv_manager = "
-                            "csv_manager.applications.csv_manager:start_app"],
+                            "csv_manager.applications.csv_manager_app:start_app"],
         'groundwork.plugin': ["csv_manager_plugin = "
-                              "csv_manager.plugins.csv_reader:"
-                              "csv_reader"],
+                              "csv_manager.plugins.csv_manager_plugin:"
+                              "csv_manager_plugin"],
     }
 )
