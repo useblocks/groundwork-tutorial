@@ -1,0 +1,21 @@
+@startuml
+    skinparam backgroundColor transparent
+    skinparam shadowing false
+
+    class CsvManager
+
+    class CsvWatcher
+    class CsvHistory
+    class CsvDiff
+
+    class CsvWatchPattern
+
+    CsvManager --> CsvWatcher
+    CsvManager --> CsvHistory
+    CsvManager --> CsvDiff
+
+    CsvWatcher --> CsvWatchPattern
+    CsvHistory --> CsvWatchPattern
+    CsvDiff --> CsvWatchPattern
+
+@enduml
