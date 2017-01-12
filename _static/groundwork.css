@@ -530,3 +530,7 @@ div.sidebar div.topic ul {
 div.sidebar div.topic p.topic-title {
     display: none;
 }
+
+table.indextable tr.cap {
+    background-color: transparent !important;
+}

@@ -1,7 +1,7 @@
 .. _chapter_n:
 
-Chapter N: Final solution
-=========================
+Final solution
+==============
 
 This chapter contains the documentation of the final solution for our CSV Manager.
 

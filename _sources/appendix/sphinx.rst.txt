@@ -3,7 +3,6 @@
 Sphinx
 ======
 
-
 Introduction
 ------------
 
@@ -20,6 +19,9 @@ Usage
 
 Restructured text (rst)
 -----------------------
+
+API documentation
+-----------------
 
 
 Useful Extensions

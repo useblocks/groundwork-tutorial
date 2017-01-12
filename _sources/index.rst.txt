@@ -6,6 +6,12 @@
 Welcome to the groundwork tutorial
 ==================================
 
+.. warning::
+
+   This tutorial is currently under heavy construction. Updates will be deployed nearly each hour.
+
+   So please come back in 3-4 days, if something is still missing.
+
 This tutorial guides you through the creation of a groundwork based application.
 
 It starts with a simple commandline script for monitoring csv file changes,
@@ -19,8 +25,6 @@ https://github.com/useblocks/groundwork-tutorial.
 If you only want to see the final source code and used architecture,
 take a look into :ref:`chapter_n`.
 
-
-
 .. sidebar:: groundwork framework
 
    groundwork is a plugin-based Python Application framework.
@@ -31,9 +35,13 @@ take a look into :ref:`chapter_n`.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :numbered:
 
    chapter_1/index
    chapter_2/index
    chapter_3/index
    chapter_n/index
    appendix/index
+   api/index
+
+:ref:`modindex`
