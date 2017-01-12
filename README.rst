@@ -52,4 +52,7 @@ To build the documentation, simply do::
     # Build documentation
     make html
 
+It may be also good to let sphinx-apidoc generate a fresh set of new api-rst files::
+
+    sphinx-apidoc -o source/api ../code/chapter_n/csv-manager/csv_manager
 
