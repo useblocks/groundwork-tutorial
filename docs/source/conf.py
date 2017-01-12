@@ -112,7 +112,7 @@ if html_theme == 'gw':
     print("Getting latest version of groundwork sphinx theme")
     try:
         print("  Checking for gitpython library... ", end="")
-        from git import Repo
+        from git import Repo, GitCommandError
         print("done")
         print("  Checking for working internet connection... ", end="")
         from urllib.request import urlopen
@@ -134,8 +134,13 @@ if html_theme == 'gw':
         Repo.clone_from(git_url, repo_dir)
     else:
         repo = Repo(repo_dir)
-        origin = repo.remotes.origin
-        origin.pull()
+        try:
+            origin = repo.remotes.origin
+            origin.pull()
+        except GitCommandError as e:
+            print("git problems: %s" % e)
+            print("Using existing _themes folder")
+
     print("done")
 
 html_logo = "/_static/gw_logo.png"
