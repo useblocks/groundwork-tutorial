@@ -1,4 +1,4 @@
-.. _first_package:
+.. _first_project:
 
 First own project
 =================
@@ -23,7 +23,7 @@ groundwork provides only one recipe, called ``gw_package``, which contains every
 
 Use gw_package recipe
 ~~~~~~~~~~~~~~~~~~~~~~
-*"That's one small step your you, one giant leap for your project"* or something similar Armstrong has already told us.
+*"That's one small step for you, one giant leap for your project"* or something similar Armstrong has already told us.
 So, lets start the build of the recipe::
 
     >>> groundwork recipe_build gw_package
@@ -31,8 +31,8 @@ So, lets start the build of the recipe::
     github_user [team_awesome]:
     email [team_awesome@provider.com]:
     project_name [My Package]: CSV-Manager
-    project_slug [csv-manager]: csv_manager
-    github_project_name [csv_manager]: csv-manager
+    project_slug [csv_manager]:
+    github_project_name [csv-manager]:
     project_app [csv_manager_app]:
     project_plugin [csv_manager_plugin]:
     project_short_description [Package for hosting groundwork apps and plugins like csv_manager_app or csv_manager_plugin.]:
@@ -64,7 +64,7 @@ So, lets start the build of the recipe::
     Have fun with your groundwork package.
 
 As you see, you will get asked some questions during the build. The answers are used to name directories and files or to
-write related data inside some files.
+write related data into some files.
 
 For each question, groundwork provides a proposal. Just press ENTER to accept this as input.
 
@@ -96,44 +96,42 @@ Project content
 
 Lets take a look into the newly created folder ``CSV-Manager``::
 
-    >>> cd CSV-Manager
-    >>> tree  # Linux command
-    .
-    ├── bootstrap.py
-    ├── buildout.cfg
-    ├── csv_manager
-    │   ├── applications
-    │   │   ├── configuration.py
-    │   │   ├── csv_manager_app.py
-    │   │   └── __init__.py
-    │   ├── __init__.py
-    │   ├── patterns
-    │   │   └── __init__.py
-    │   ├── plugins
-    │   │   ├── csv_manager_plugin.py
-    │   │   └── __init__.py
-    │   ├── recipes
-    │   │   └── __init__.py
-    │   └── version.py
-    ├── doc-requirements.txt
-    ├── docs
-    │   ├── conf.py
-    │   ├── index.rst
-    │   ├── Makefile
-    │   └── _static
-    │       ├── gw_logo.png
-    │       └── gw_slogan.png
-    ├── __init__.py
-    ├── README
-    ├── setup.py
-    ├── test-requirements.txt
-    ├── tests
-    │   ├── __init__.py
-    │   ├── __pycache__
-    │   │   └── __init__.cpython-35.pyc
-    │   └── test_app.py
-    ├── tox.ini
-    └── versions.cfg
+   >>> cd CSV-Manager
+   >>> tree --dirsfirst  # linux command
+   .
+   ├── csv_manager
+   │   ├── applications
+   │   │   ├── configuration.py
+   │   │   ├── csv_manager_app.py
+   │   │   └── __init__.py
+   │   ├── patterns
+   │   │   └── __init__.py
+   │   ├── plugins
+   │   │   ├── csv_manager_plugin.py
+   │   │   └── __init__.py
+   │   ├── recipes
+   │   │   └── __init__.py
+   │   ├── __init__.py
+   │   └── version.py
+   ├── docs
+   │   ├── _static
+   │   │   ├── gw_logo.png
+   │   │   └── gw_slogan.png
+   │   ├── conf.py
+   │   ├── index.rst
+   │   └── Makefile
+   ├── tests
+   │   ├── __init__.py
+   │   └── test_app.py
+   ├── bootstrap.py
+   ├── buildout.cfg
+   ├── doc-requirements.txt
+   ├── README
+   ├── setup.py
+   ├── test-requirements.txt
+   ├── tox.ini
+   └── versions.cfg
+
 
 Code structure
 ~~~~~~~~~~~~~~
@@ -155,13 +153,13 @@ Lets take a look into the application. Open `csv_manager_app.py`:
    :language: python
    :linenos:
 
-The most important part is between line 11-13. There we create our groundwork App object [11] and tell the app, which
-plugins shall be activated [12]. Finally we start the command line interface to interact with the user [13].
+The most important part is between line 14-16. There we create our groundwork App object [14] and tell the app, which
+plugins shall be activated [15]. Finally we start the command line interface to interact with the user [16].
 
-The lines 3 and 8+9 are responsible for creating the working directory of our App, which is defined as ``APP_PATH``
+The lines 3 and 10+11 are responsible for creating the working directory of our App, which is defined as ``APP_PATH``
 in the configuration file.
 
-Configuration files were provided to the App during class initialisation [11].
+Configuration files were provided to the App during class initialisation [12].
 
 Application configuration
 +++++++++++++++++++++++++
@@ -199,7 +197,7 @@ therefore we need the pattern ``GwCommandsPattern`` [1].
 
 Line 4 shows us the definition of your class, which inherits from ``GwCommandsPattern``.
 
-Inside the ``__init__`` routine [4-7] we give our plugin a name. In this case it is the class name.
+Inside the ``__init__`` routine [5-7] we give our plugin a name. In this case it is the class name.
 The used GwCommandsPattern has also an own ``__init__`` routine and we must be sure that this gets also called [7].
 
 Each plugin must have a ``activate`` and ``deactivate`` function. They get called, if a plugin is going to be
@@ -346,10 +344,8 @@ with different configurations (e.g. with Python 3.4 and Python 3.5).
    ERROR:   py34: InterpreterNotFound: python3.4
      py35: commands succeeded
 
-
-
-Install and run  project
-------------------------
+Install and run our project
+---------------------------
 
 It's time for installing our CSV-Manager and start working and coding with it::
 
@@ -431,6 +427,11 @@ You got three new commands by just adding the related plugin ``GwDocumentsInfo``
 
 Add web interface
 ~~~~~~~~~~~~~~~~~
+
+.. Note::
+   For this example the python package ``groundwork-web`` must be installed.
+   You can do this easily with ``pip install groundwork-web``.
+
 Lets do one last example to show you how powerful your application can become by just adding plugins.
 
 Again open ``csv_manager/applications/configuration.py`` and add the plugin ``GwWeb`` and ``GwWebManager`` to the
@@ -511,7 +512,7 @@ Ohh nice, we got commands to start a webserver. Lets do it::
 
 So we got a running webserver and therefore there should be an available website.
 
-Open a browser and visit http://127.0.0.1:5000/webmanager/. You should see a page look like this:
+Open a browser and visit http://127.0.0.1:5000/webmanager/. You should see a page looking like this:
 
 .. figure:: /_static/webmanager_screenshot.png
 
@@ -524,7 +525,7 @@ Cleaning up
 ~~~~~~~~~~~
 
 For the next chapters, we do not need the just added plugins. If you like you can edit
-``csv_manager/applications/configuration.py`` and remove not need plugins::
+``csv_manager/applications/configuration.py`` and remove not needed plugins::
 
    PLUGINS = ["csv_manager_plugin", "GwPluginsInfo"]
 
