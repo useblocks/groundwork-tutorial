@@ -66,19 +66,139 @@
             
   <div class="section" id="usage">
 <span id="id1"></span><h1>1.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
-<ol class="arabic simple">
-<li>call <code class="docutils literal"><span class="pre">groundwork</span></code></li>
-<li>Explain help message</li>
-<li>Call <code class="docutils literal"><span class="pre">groundwork</span> <span class="pre">docs</span></code></li>
-<li>Explain what doc is</li>
-<li>Show plugin_class and explain. Show plugins and explain.</li>
-<li>Explain, why dynamic documents are awesome</li>
-<li>Explain, documents exist in memory and it can have different viewer (cli, writer, html, ...)</li>
-<li>Call <code class="docutils literal"><span class="pre">groundwork</span> <span class="pre">doc_write</span></code></li>
-<li>Call and explain <code class="docutils literal"><span class="pre">groundwork</span> <span class="pre">doc_write</span> <span class="pre">--help</span></code></li>
-<li>Call <code class="docutils literal"><span class="pre">mkdir</span> <span class="pre">temp</span></code> and <code class="docutils literal"><span class="pre">groundwork</span> <span class="pre">doc_write</span> <span class="pre">-h</span> <span class="pre">temp</span></code></li>
-<li>Show temp folder content and open one html file in browser</li>
-</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For the following steps groundwork must be installed.</p>
+<p class="last">If not done yet, please follow <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a>.</p>
+</div>
+<p>In the last chapter <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> you may have already noticed that groundwork has its own little execution
+command. groundwork tries to help you as early as possible inside your personal development process.</p>
+<p>This means it is not only focused on providing functions for your code.
+It can also help you with setting up new projects or analysing and understanding existing projects.</p>
+<p>But lets start with the basics by calling it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span>
+<span class="go">Usage: groundwork [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">Options:</span>
+<span class="go">  --help  Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  doc            Shows the documentation</span>
+<span class="go">  doc_list       List all documents</span>
+<span class="go">  doc_write      Stores documents as files</span>
+<span class="go">  plugin_list    List all plugins</span>
+<span class="go">  receiver_list  List of all signal receivers</span>
+<span class="go">  recipe_build   Builds a given recipe</span>
+<span class="go">  recipe_list    Lists all recipes</span>
+<span class="go">  signal_list    List of all signals</span>
+</pre></div>
+</div>
+<p>Calling groundwork without any parameters will show you the above help message.
+As you can see, you get a nice list of available commands.</p>
+<p>If you need more information to a specific command, execute <code class="docutils literal"><span class="pre">groundwork</span> <span class="pre">&lt;command&gt;</span> <span class="pre">--help</span></code>. Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">doc_write</span> <span class="o">--</span><span class="n">help</span>
+<span class="go">Usage: groundwork doc_write [OPTIONS] PATH</span>
+
+<span class="go">  Stores documents as files</span>
+
+<span class="go">Options:</span>
+<span class="go">  -h, --html       Will output html instead of rst</span>
+<span class="go">  -o, --overwrite  Will overwrite existing files</span>
+<span class="go">  -q, --quiet      Will suppress any user interaction</span>
+<span class="go">  --help           Show this message and exit.</span>
+</pre></div>
+</div>
+<div class="section" id="real-time-documentation">
+<h2>1.3.1. Real-time documentation<a class="headerlink" href="#real-time-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Plugins are allowed to register documents, which can contain static text or dynamic information like currently active
+plugins.</p>
+<p>Because the command <cite>groundwork</cite> starts itself a groundwork based application, we can easily examine this application
+by taking a look into the registered documents:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">doc</span>
+<span class="go">groundwork basic app</span>
+<span class="go">====================</span>
+
+<span class="go">Application overview</span>
+<span class="go">--------------------</span>
+
+<span class="go">Path: /.</span>
+
+<span class="go">Active plugins: 5</span>
+
+<span class="go">Registered commands: 8</span>
+
+<span class="go">Registered signals: 4</span>
+<span class="go">Registered receivers: 10</span>
+
+<span class="go">Registered documents: 7</span>
+
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">This document is registered by &#39;groundwork basic app&#39; under the name &#39;main&#39;</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">Actions: [N]ext, E[x]it</span>
+<span class="go">Select your action [N]:</span>
+</pre></div>
+</div>
+<p>This starts a console based document viewer and you can use the keys <strong>N</strong> and <strong>P</strong> + <strong>ENTER</strong>
+to see next or previous chapter.
+To exit just type <strong>x</strong> and press <strong>ENTER</strong></p>
+<p>In one of the last lines you see which plugin has registered the currently showed document and you see the internal,
+unique document name.</p>
+<p>You will find documents for registered commands, signals or plugins.</p>
+<p>The page <code class="docutils literal"><span class="pre">plugin_classes</span></code> shows you an overview about all registered plugins inside the currently used
+Python Environment. This means each groundwork application could use this plugins by just adding their names to
+its config. We will do this in the next chapter <a class="reference internal" href="first_project.html#first-project"><span class="std std-ref">First own project</span></a>.</p>
+<p>To get an overview about all used plugins by the current application, open the page <code class="docutils literal"><span class="pre">plugins_overviews</span></code>.</p>
+<p>Documents are supporting RST and Jinja and therefore can be easily transformed to any kind of presentation.
+You can view them on console, export them to sphinx or read them on a webpage.
+And documents are always up to date, as their content is mostly calculated during runtime.</p>
+<div class="section" id="exporting-documents">
+<h3>1.3.1.1. Exporting documents<a class="headerlink" href="#exporting-documents" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">GwDocumentInfo</span></code> plugin has registerd a command, which exports and stores documents on a hard disk.</p>
+<p>Lets say we want the documents as RST output in the folder temp:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mkdir</span> <span class="n">temp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">doc_write</span> <span class="o">-</span><span class="n">h</span> <span class="n">temp</span>
+<span class="go">Storing groundwork application documents</span>
+
+<span class="go">Application: groundwork basic app</span>
+<span class="go">Number of documents: 7</span>
+
+<span class="go">Going to write to following files:</span>
+<span class="go">  signals_overview.rst</span>
+<span class="go">  main.rst</span>
+<span class="go">  plugins_classes.rst</span>
+<span class="go">  documents_overview.rst</span>
+<span class="go">  plugins_overview.rst</span>
+<span class="go">  receivers_overview.rst</span>
+<span class="go">  commands_overview.rst</span>
+
+<span class="go">Target directory: /.../temp</span>
+<span class="go">Shall we go on? [Y]es, [N]o: : y</span>
+<span class="go">signals_overview.rst stored.</span>
+<span class="go">main.rst stored.</span>
+<span class="go">plugins_classes.rst stored.</span>
+<span class="go">documents_overview.rst stored.</span>
+<span class="go">plugins_overview.rst stored.</span>
+<span class="go">receivers_overview.rst stored.</span>
+<span class="go">commands_overview.rst stored.</span>
+</pre></div>
+</div>
+<p>As you can see, for each virtual document a rst file was created:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="n">temp</span>  <span class="c1"># linux command</span>
+<span class="go">temp</span>
+<span class="go">├── commands_overview.rst</span>
+<span class="go">├── documents_overview.rst</span>
+<span class="go">├── main.rst</span>
+<span class="go">├── plugins_classes.rst</span>
+<span class="go">├── plugins_overview.rst</span>
+<span class="go">├── receivers_overview.rst</span>
+<span class="go">└── signals_overview.rst</span>
+</pre></div>
+</div>
+<p>That&#8217;s it. On the next chapter we will use the <code class="docutils literal"><span class="pre">recipe_build</span></code> command to create our first own groundwork project.
+Go on with <a class="reference internal" href="first_project.html#first-project"><span class="std std-ref">First own project</span></a>.</p>
+</div>
+</div>
 </div>
 
 
@@ -89,7 +209,18 @@
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/gw_logo.png" alt="Logo"/>
-            </a></p><h3>Related Topics</h3>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.3. Usage</a><ul>
+<li><a class="reference internal" href="#real-time-documentation">1.3.1. Real-time documentation</a><ul>
+<li><a class="reference internal" href="#exporting-documents">1.3.1.1. Exporting documents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">1. groundwork basics</a><ul>

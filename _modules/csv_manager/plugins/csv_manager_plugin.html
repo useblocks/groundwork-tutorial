@@ -68,6 +68,9 @@
 <div class="viewcode-block" id="csv_manager_plugin.activate"><a class="viewcode-back" href="../../../api/csv_manager.plugins.html#csv_manager.plugins.csv_manager_plugin.csv_manager_plugin.activate">[docs]</a>    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;hello_world&quot;</span><span class="p">,</span> <span class="s2">&quot;Prints hello world&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hello</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="csv_manager_plugin.deactivate"><a class="viewcode-back" href="../../../api/csv_manager.plugins.html#csv_manager.plugins.csv_manager_plugin.csv_manager_plugin.deactivate">[docs]</a>    <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
     <span class="k">def</span> <span class="nf">_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello World. It&#39;s me, csv_manager_plugin!&quot;</span><span class="p">)</span></div>
 </pre></div>

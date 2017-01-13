@@ -65,7 +65,7 @@
           <div class="body" role="main">
             
   <div class="section" id="first-own-project">
-<span id="first-package"></span><h1>1.4. First own project<a class="headerlink" href="#first-own-project" title="Permalink to this headline">¶</a></h1>
+<span id="first-project"></span><h1>1.4. First own project<a class="headerlink" href="#first-own-project" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we will create our first project, start our first application and
 add new plugins to the application to enhance its functionality.</p>
 <div class="section" id="using-recipes">
@@ -84,15 +84,15 @@ add new plugins to the application to enhance its functionality.</p>
 </div>
 <div class="section" id="use-gw-package-recipe">
 <h3>1.4.1.2. Use gw_package recipe<a class="headerlink" href="#use-gw-package-recipe" title="Permalink to this headline">¶</a></h3>
-<p><em>&#8220;That&#8217;s one small step your you, one giant leap for your project&#8221;</em> or something similar Armstrong has already told us.
+<p><em>&#8220;That&#8217;s one small step for you, one giant leap for your project&#8221;</em> or something similar Armstrong has already told us.
 So, lets start the build of the recipe:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">recipe_build</span> <span class="n">gw_package</span>
 <span class="go">full_name [My Name]: Team Awesome</span>
 <span class="go">github_user [team_awesome]:</span>
 <span class="go">email [team_awesome@provider.com]:</span>
 <span class="go">project_name [My Package]: CSV-Manager</span>
-<span class="go">project_slug [csv-manager]: csv_manager</span>
-<span class="go">github_project_name [csv_manager]: csv-manager</span>
+<span class="go">project_slug [csv_manager]:</span>
+<span class="go">github_project_name [csv-manager]:</span>
 <span class="go">project_app [csv_manager_app]:</span>
 <span class="go">project_plugin [csv_manager_plugin]:</span>
 <span class="go">project_short_description [Package for hosting groundwork apps and plugins like csv_manager_app or csv_manager_plugin.]:</span>
@@ -125,7 +125,7 @@ So, lets start the build of the recipe:</p>
 </pre></div>
 </div>
 <p>As you see, you will get asked some questions during the build. The answers are used to name directories and files or to
-write related data inside some files.</p>
+write related data into some files.</p>
 <p>For each question, groundwork provides a proposal. Just press ENTER to accept this as input.</p>
 <p>Please answer the questions as followed:</p>
 <div class="line-block">
@@ -155,16 +155,13 @@ write related data inside some files.</p>
 <h2>1.4.2. Project content<a class="headerlink" href="#project-content" title="Permalink to this headline">¶</a></h2>
 <p>Lets take a look into the newly created folder <code class="docutils literal"><span class="pre">CSV-Manager</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">CSV</span><span class="o">-</span><span class="n">Manager</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span>  <span class="c1"># Linux command</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">--</span><span class="n">dirsfirst</span>  <span class="c1"># linux command</span>
 <span class="go">.</span>
-<span class="go">├── bootstrap.py</span>
-<span class="go">├── buildout.cfg</span>
 <span class="go">├── csv_manager</span>
 <span class="go">│   ├── applications</span>
 <span class="go">│   │   ├── configuration.py</span>
 <span class="go">│   │   ├── csv_manager_app.py</span>
 <span class="go">│   │   └── __init__.py</span>
-<span class="go">│   ├── __init__.py</span>
 <span class="go">│   ├── patterns</span>
 <span class="go">│   │   └── __init__.py</span>
 <span class="go">│   ├── plugins</span>
@@ -172,24 +169,24 @@ write related data inside some files.</p>
 <span class="go">│   │   └── __init__.py</span>
 <span class="go">│   ├── recipes</span>
 <span class="go">│   │   └── __init__.py</span>
+<span class="go">│   ├── __init__.py</span>
 <span class="go">│   └── version.py</span>
-<span class="go">├── doc-requirements.txt</span>
 <span class="go">├── docs</span>
+<span class="go">│   ├── _static</span>
+<span class="go">│   │   ├── gw_logo.png</span>
+<span class="go">│   │   └── gw_slogan.png</span>
 <span class="go">│   ├── conf.py</span>
 <span class="go">│   ├── index.rst</span>
-<span class="go">│   ├── Makefile</span>
-<span class="go">│   └── _static</span>
-<span class="go">│       ├── gw_logo.png</span>
-<span class="go">│       └── gw_slogan.png</span>
-<span class="go">├── __init__.py</span>
+<span class="go">│   └── Makefile</span>
+<span class="go">├── tests</span>
+<span class="go">│   ├── __init__.py</span>
+<span class="go">│   └── test_app.py</span>
+<span class="go">├── bootstrap.py</span>
+<span class="go">├── buildout.cfg</span>
+<span class="go">├── doc-requirements.txt</span>
 <span class="go">├── README</span>
 <span class="go">├── setup.py</span>
 <span class="go">├── test-requirements.txt</span>
-<span class="go">├── tests</span>
-<span class="go">│   ├── __init__.py</span>
-<span class="go">│   ├── __pycache__</span>
-<span class="go">│   │   └── __init__.cpython-35.pyc</span>
-<span class="go">│   └── test_app.py</span>
 <span class="go">├── tox.ini</span>
 <span class="go">└── versions.cfg</span>
 </pre></div>
@@ -254,11 +251,11 @@ It is also responsible for registering plugins in the python environment during 
     <span class="n">start_app</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>The most important part is between line 11-13. There we create our groundwork App object [11] and tell the app, which
-plugins shall be activated [12]. Finally we start the command line interface to interact with the user [13].</p>
-<p>The lines 3 and 8+9 are responsible for creating the working directory of our App, which is defined as <code class="docutils literal"><span class="pre">APP_PATH</span></code>
+<p>The most important part is between line 14-16. There we create our groundwork App object [14] and tell the app, which
+plugins shall be activated [15]. Finally we start the command line interface to interact with the user [16].</p>
+<p>The lines 3 and 10+11 are responsible for creating the working directory of our App, which is defined as <code class="docutils literal"><span class="pre">APP_PATH</span></code>
 in the configuration file.</p>
-<p>Configuration files were provided to the App during class initialisation [11].</p>
+<p>Configuration files were provided to the App during class initialisation [12].</p>
 </div>
 <div class="section" id="application-configuration">
 <h4>1.4.2.1.2. Application configuration<a class="headerlink" href="#application-configuration" title="Permalink to this headline">¶</a></h4>
@@ -414,7 +411,10 @@ We will add some additional plugins in a few moments.</p>
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span>
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span>
 
 
 <span class="k">class</span> <span class="nc">csv_manager_plugin</span><span class="p">(</span><span class="n">GwCommandsPattern</span><span class="p">):</span>
@@ -425,6 +425,9 @@ We will add some additional plugins in a few moments.</p>
     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;hello_world&quot;</span><span class="p">,</span> <span class="s2">&quot;Prints hello world&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hello</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
     <span class="k">def</span> <span class="nf">_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hello World. It&#39;s me, csv_manager_plugin!&quot;</span><span class="p">)</span>
 </pre></div>
@@ -432,7 +435,7 @@ We will add some additional plugins in a few moments.</p>
 <p>Our plugin will register a command for the command line interface,
 therefore we need the pattern <code class="docutils literal"><span class="pre">GwCommandsPattern</span></code> [1].</p>
 <p>Line 4 shows us the definition of your class, which inherits from <code class="docutils literal"><span class="pre">GwCommandsPattern</span></code>.</p>
-<p>Inside the <code class="docutils literal"><span class="pre">__init__</span></code> routine [4-7] we give our plugin a name. In this case it is the class name.
+<p>Inside the <code class="docutils literal"><span class="pre">__init__</span></code> routine [5-7] we give our plugin a name. In this case it is the class name.
 The used GwCommandsPattern has also an own <code class="docutils literal"><span class="pre">__init__</span></code> routine and we must be sure that this gets also called [7].</p>
 <p>Each plugin must have a <code class="docutils literal"><span class="pre">activate</span></code> and <code class="docutils literal"><span class="pre">deactivate</span></code> function. They get called, if a plugin is going to be
 activated or deactivated.</p>
@@ -599,8 +602,8 @@ with different configurations (e.g. with Python 3.4 and Python 3.5).</p>
 </div>
 </div>
 </div>
-<div class="section" id="install-and-run-project">
-<h2>1.4.3. Install and run  project<a class="headerlink" href="#install-and-run-project" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-and-run-our-project">
+<h2>1.4.3. Install and run our project<a class="headerlink" href="#install-and-run-our-project" title="Permalink to this headline">¶</a></h2>
 <p>It&#8217;s time for installing our CSV-Manager and start working and coding with it:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">CSV</span><span class="o">-</span><span class="n">Manager</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
@@ -677,6 +680,11 @@ Execute it with:</p>
 </div>
 <div class="section" id="add-web-interface">
 <h3>1.4.4.2. Add web interface<a class="headerlink" href="#add-web-interface" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For this example the python package <code class="docutils literal"><span class="pre">groundwork-web</span></code> must be installed.
+You can do this easily with <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">groundwork-web</span></code>.</p>
+</div>
 <p>Lets do one last example to show you how powerful your application can become by just adding plugins.</p>
 <p>Again open <code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and add the plugin <code class="docutils literal"><span class="pre">GwWeb</span></code> and <code class="docutils literal"><span class="pre">GwWebManager</span></code> to the
 plugin list:</p>
@@ -755,7 +763,7 @@ plugin list:</p>
 </pre></div>
 </div>
 <p>So we got a running webserver and therefore there should be an available website.</p>
-<p>Open a browser and visit <a class="reference external" href="http://127.0.0.1:5000/webmanager/">http://127.0.0.1:5000/webmanager/</a>. You should see a page look like this:</p>
+<p>Open a browser and visit <a class="reference external" href="http://127.0.0.1:5000/webmanager/">http://127.0.0.1:5000/webmanager/</a>. You should see a page looking like this:</p>
 <div class="figure" id="id2">
 <img alt="../_images/webmanager_screenshot.png" src="../_images/webmanager_screenshot.png" />
 <p class="caption"><span class="caption-text">Overview web page of the plugin <strong>WebManager</strong></span></p>
@@ -768,7 +776,7 @@ plugin list:</p>
 <div class="section" id="cleaning-up">
 <h3>1.4.4.3. Cleaning up<a class="headerlink" href="#cleaning-up" title="Permalink to this headline">¶</a></h3>
 <p>For the next chapters, we do not need the just added plugins. If you like you can edit
-<code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and remove not need plugins:</p>
+<code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and remove not needed plugins:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -806,7 +814,7 @@ Go on with <a class="reference internal" href="first_plugin.html#first-plugin"><
 <li><a class="reference internal" href="#tests">1.4.2.3. Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-and-run-project">1.4.3. Install and run  project</a></li>
+<li><a class="reference internal" href="#install-and-run-our-project">1.4.3. Install and run our project</a></li>
 <li><a class="reference internal" href="#enhance-application">1.4.4. Enhance application</a><ul>
 <li><a class="reference internal" href="#add-document-viewer">1.4.4.1. Add document viewer</a></li>
 <li><a class="reference internal" href="#add-web-interface">1.4.4.2. Add web interface</a></li>
