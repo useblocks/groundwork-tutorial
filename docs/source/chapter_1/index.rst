@@ -13,5 +13,6 @@ And finally we will extend this package with our first own pattern and plugins.
    introduction
    installation
    usage
-   first_package
-   architecture
+   first_project
+   first_plugin
+   first_pattern

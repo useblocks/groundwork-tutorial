@@ -76,4 +76,4 @@ Finally lets check if groundwork was installed correctly, by trying to execute t
       signal_list    List of all signals
 
 If you see the above output, congratulation!
-groundwork ist installed and we can go to examine the ``groundwork`` command in the next chapter :ref:`usage`.
+groundwork is installed and we can go on to examine the ``groundwork`` command in the chapter :ref:`usage`.
