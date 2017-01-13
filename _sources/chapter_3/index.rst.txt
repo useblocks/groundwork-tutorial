@@ -1,3 +1,5 @@
+.. _chapter_3:
+
 groundwork and the web
 ======================
 

@@ -1,0 +1,867 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.4. First own project &#8212; groundwork tutorial 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1.5. First own Plugin" href="first_plugin.html" />
+    <link rel="prev" title="1.3. Usage" href="usage.html" />
+     
+        
+    <link rel="apple-touch-icon" href="../_static/""" />
+        
+    <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="first_plugin.html" title="1.5. First own Plugin"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="1.3. Usage"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">groundwork tutorial 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. groundwork basics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="first-own-project">
+<span id="first-package"></span><h1>1.4. First own project<a class="headerlink" href="#first-own-project" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter we will create our first project, start our first application and
+add new plugins to the application to enhance its functionality.</p>
+<div class="section" id="using-recipes">
+<h2>1.4.1. Using recipes<a class="headerlink" href="#using-recipes" title="Permalink to this headline">¶</a></h2>
+<p>Luckily we do not need to create even one single file by hand.</p>
+<p>groundwork knows project templates, called recipes, and we will use one of them to set up our first project.</p>
+<div class="section" id="list-all-known-recipes">
+<h3>1.4.1.1. List all known recipes<a class="headerlink" href="#list-all-known-recipes" title="Permalink to this headline">¶</a></h3>
+<p>Lets find out, which recipes are available in groundwork itself:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">recipe_list</span>
+<span class="go">Recipes:</span>
+<span class="go">  gw_package by plugin &#39;GwRecipesBuilder&#39; - Groundwork basic package. Includes places for apps, plugins, patterns and recipes.</span>
+</pre></div>
+</div>
+<p>groundwork provides only one recipe, called <code class="docutils literal"><span class="pre">gw_package</span></code>, which contains everything we need for a fast project setup.</p>
+</div>
+<div class="section" id="use-gw-package-recipe">
+<h3>1.4.1.2. Use gw_package recipe<a class="headerlink" href="#use-gw-package-recipe" title="Permalink to this headline">¶</a></h3>
+<p><em>&#8220;That&#8217;s one small step your you, one giant leap for your project&#8221;</em> or something similar Armstrong has already told us.
+So, lets start the build of the recipe:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">recipe_build</span> <span class="n">gw_package</span>
+<span class="go">full_name [My Name]: Team Awesome</span>
+<span class="go">github_user [team_awesome]:</span>
+<span class="go">email [team_awesome@provider.com]:</span>
+<span class="go">project_name [My Package]: CSV-Manager</span>
+<span class="go">project_slug [csv-manager]: csv_manager</span>
+<span class="go">github_project_name [csv_manager]: csv-manager</span>
+<span class="go">project_app [csv_manager_app]:</span>
+<span class="go">project_plugin [csv_manager_plugin]:</span>
+<span class="go">project_short_description [Package for hosting groundwork apps and plugins like csv_manager_app or csv_manager_plugin.]:</span>
+<span class="go">test_folder [tests]:</span>
+<span class="go">test_prefix [test_]:</span>
+<span class="go">version [0.1.0]:</span>
+<span class="go">Select license:</span>
+<span class="go">1 - MIT license</span>
+<span class="go">2 - BSD license</span>
+<span class="go">3 - ISC license</span>
+<span class="go">4 - Apache Software License 2.0</span>
+<span class="go">5 - GNU General Public License v3</span>
+<span class="go">6 - Not open source</span>
+<span class="go">Choose from 1, 2, 3, 4, 5, 6 [1]: 1</span>
+
+<span class="go">Recipe Installation is done.</span>
+
+<span class="go">During development use buildout:</span>
+<span class="go">Run: python bootstrap.py</span>
+<span class="go">Then: bin/buildout</span>
+<span class="go">Start the app: bin/app</span>
+
+<span class="go">For installation run: &#39;python setup.py install&#39;</span>
+<span class="go">For documentation run: &#39;make html&#39; inside doc folder (after installation!)</span>
+
+<span class="go">For more information, please take a look into the README file to know how to go on.</span>
+<span class="go">For help visit: https://groundwork.readthedocs.io</span>
+
+<span class="go">Have fun with your groundwork package.</span>
+</pre></div>
+</div>
+<p>As you see, you will get asked some questions during the build. The answers are used to name directories and files or to
+write related data inside some files.</p>
+<p>For each question, groundwork provides a proposal. Just press ENTER to accept this as input.</p>
+<p>Please answer the questions as followed:</p>
+<div class="line-block">
+<div class="line">full_name: <strong>Team Awesome</strong></div>
+<div class="line">github_user: <strong>ENTER</strong></div>
+<div class="line">email: <strong>ENTER</strong></div>
+<div class="line">project_name: <strong>CSV-Manager</strong></div>
+<div class="line">project_slug: <strong>ENTER</strong>  # IMPORTANT: No minus in name!</div>
+<div class="line">github_project_name: <strong>ENTER</strong></div>
+<div class="line">project_app: <strong>ENTER</strong></div>
+<div class="line">project_plugin: <strong>ENTER</strong></div>
+<div class="line">project_short_description: <strong>ENTER</strong></div>
+<div class="line">test_folder: <strong>ENTER</strong></div>
+<div class="line">test_prefix: <strong>ENTER</strong></div>
+<div class="line">version: <strong>ENTER</strong></div>
+<div class="line">Select license: <strong>ENTER</strong></div>
+</div>
+<p>The output should look like the above example.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more information about recipes read the
+<a class="reference external" href="https://groundwork.readthedocs.io/en/latest/recipes.html">technical documentation about recipes</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="project-content">
+<h2>1.4.2. Project content<a class="headerlink" href="#project-content" title="Permalink to this headline">¶</a></h2>
+<p>Lets take a look into the newly created folder <code class="docutils literal"><span class="pre">CSV-Manager</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">CSV</span><span class="o">-</span><span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span>  <span class="c1"># Linux command</span>
+<span class="go">.</span>
+<span class="go">├── bootstrap.py</span>
+<span class="go">├── buildout.cfg</span>
+<span class="go">├── csv_manager</span>
+<span class="go">│   ├── applications</span>
+<span class="go">│   │   ├── configuration.py</span>
+<span class="go">│   │   ├── csv_manager_app.py</span>
+<span class="go">│   │   └── __init__.py</span>
+<span class="go">│   ├── __init__.py</span>
+<span class="go">│   ├── patterns</span>
+<span class="go">│   │   └── __init__.py</span>
+<span class="go">│   ├── plugins</span>
+<span class="go">│   │   ├── csv_manager_plugin.py</span>
+<span class="go">│   │   └── __init__.py</span>
+<span class="go">│   ├── recipes</span>
+<span class="go">│   │   └── __init__.py</span>
+<span class="go">│   └── version.py</span>
+<span class="go">├── doc-requirements.txt</span>
+<span class="go">├── docs</span>
+<span class="go">│   ├── conf.py</span>
+<span class="go">│   ├── index.rst</span>
+<span class="go">│   ├── Makefile</span>
+<span class="go">│   └── _static</span>
+<span class="go">│       ├── gw_logo.png</span>
+<span class="go">│       └── gw_slogan.png</span>
+<span class="go">├── __init__.py</span>
+<span class="go">├── README</span>
+<span class="go">├── setup.py</span>
+<span class="go">├── test-requirements.txt</span>
+<span class="go">├── tests</span>
+<span class="go">│   ├── __init__.py</span>
+<span class="go">│   ├── __pycache__</span>
+<span class="go">│   │   └── __init__.cpython-35.pyc</span>
+<span class="go">│   └── test_app.py</span>
+<span class="go">├── tox.ini</span>
+<span class="go">└── versions.cfg</span>
+</pre></div>
+</div>
+<div class="section" id="code-structure">
+<h3>1.4.2.1. Code structure<a class="headerlink" href="#code-structure" title="Permalink to this headline">¶</a></h3>
+<p>You will find all important python code inside the folder <code class="docutils literal"><span class="pre">csv_manager</span></code>, which is a normal, importable python package.</p>
+<p>Inside this package there are 4 sub-packages: <code class="docutils literal"><span class="pre">applications</span></code>, <code class="docutils literal"><span class="pre">patterns</span></code>, <code class="docutils literal"><span class="pre">plugins</span></code> and <code class="docutils literal"><span class="pre">recipes</span></code>.
+Currently only <code class="docutils literal"><span class="pre">applications</span></code> and <code class="docutils literal"><span class="pre">plugins</span></code> have some content. All others are not used yet.</p>
+<p>There is also one <code class="docutils literal"><span class="pre">setup.py</span></code> file on the root level of your project.
+This file stores all your project meta data and is used by <code class="docutils literal"><span class="pre">pip</span></code> to install your project.
+It is also responsible for registering plugins in the python environment during installation.</p>
+<div class="section" id="application-csv-manager-app-py">
+<h4>1.4.2.1.1. Application: csv_manager_app.py<a class="headerlink" href="#application-csv-manager-app-py" title="Permalink to this headline">¶</a></h4>
+<p>Lets take a look into the application. Open <cite>csv_manager_app.py</cite>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">groundwork</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">csv_manager.applications.configuration</span> <span class="kn">import</span> <span class="n">APP_PATH</span>
+
+
+<span class="k">class</span> <span class="nc">CSV_MANAGER_APP</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Let&#39;s be sure our APP_PATH really exists</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">APP_PATH</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">APP_PATH</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s2">&quot;configuration.py&quot;</span><span class="p">)])</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PLUGINS&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">start_cli</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">start_app</span><span class="p">():</span>
+    <span class="n">CSV_MANAGER_APP</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="s2">&quot;main&quot;</span> <span class="ow">in</span> <span class="n">__name__</span><span class="p">:</span>
+    <span class="n">start_app</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>The most important part is between line 11-13. There we create our groundwork App object [11] and tell the app, which
+plugins shall be activated [12]. Finally we start the command line interface to interact with the user [13].</p>
+<p>The lines 3 and 8+9 are responsible for creating the working directory of our App, which is defined as <code class="docutils literal"><span class="pre">APP_PATH</span></code>
+in the configuration file.</p>
+<p>Configuration files were provided to the App during class initialisation [11].</p>
+</div>
+<div class="section" id="application-configuration">
+<h4>1.4.2.1.2. Application configuration<a class="headerlink" href="#application-configuration" title="Permalink to this headline">¶</a></h4>
+<p>Now take a look into the configuration file <code class="docutils literal"><span class="pre">configuration.py</span></code>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">APP_NAME</span> <span class="o">=</span> <span class="s2">&quot;csv_manager_app&quot;</span>
+<span class="n">APP_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;groundwork application of package CSV-Manager&quot;</span>
+<span class="n">APP_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span> <span class="s2">&quot;CSV-Manager&quot;</span><span class="p">)</span>
+
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">]</span>
+
+<span class="n">GROUNDWORK_LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;standard&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)-5s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;debug&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)-5s</span><span class="s2"> - </span><span class="si">%(name)-40s</span><span class="s2"> - </span><span class="si">%(message)-80s</span><span class="s2"> - </span><span class="si">%(module)s</span><span class="s2">:%(&quot;</span>
+                      <span class="s2">&quot;funcName)s(</span><span class="si">%(lineno)s</span><span class="s2">)&quot;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;console_stdout&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;standard&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;stream&#39;</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;INFO&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;logging.handlers.RotatingFileHandler&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;formatter&quot;</span><span class="p">:</span> <span class="s2">&quot;debug&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">APP_PATH</span><span class="p">,</span> <span class="s2">&quot;csv_manager.log&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;maxBytes&quot;</span><span class="p">:</span> <span class="mi">1024000</span><span class="p">,</span>
+            <span class="s2">&quot;backupCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span>
+        <span class="p">},</span>
+        <span class="c1"># &#39;file_my_plugin&#39;: {</span>
+        <span class="c1">#     &quot;class&quot;: &quot;logging.handlers.RotatingFileHandler&quot;,</span>
+        <span class="c1">#     &quot;formatter&quot;: &quot;debug&quot;,</span>
+        <span class="c1">#     &quot;filename&quot;: &quot;logs/my_plugin.log&quot;,</span>
+        <span class="c1">#     &quot;maxBytes&quot;: 1024000,</span>
+        <span class="c1">#     &quot;backupCount&quot;: 3,</span>
+        <span class="c1">#     &#39;level&#39;: &#39;DEBUG&#39;</span>
+        <span class="c1"># },</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;loggers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console_stdout&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="bp">False</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;groundwork&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console_stdout&#39;</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="bp">False</span>
+        <span class="p">},</span>
+        <span class="c1"># &#39;MyPlugin&#39;: {</span>
+        <span class="c1">#     &#39;handlers&#39;: [&#39;console_stdout&#39;, &#39;file_my_plugin&#39;],</span>
+        <span class="c1">#     &#39;level&#39;: &#39;DEBUG&#39;,</span>
+        <span class="c1">#     &#39;propagate&#39;: False</span>
+        <span class="c1"># },</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>Line 10 to end is all about configuring the python logging. If you want to change the layout of the log messages,
+the logging level or the logging destination, this is the place to make changes.</p>
+<p>However the most important configuration parameters are <code class="docutils literal"><span class="pre">APP_NAME</span></code>, <code class="docutils literal"><span class="pre">APP_PATH</span></code> and <code class="docutils literal"><span class="pre">PLUGINS</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">APP_NAME</span></code> is used to give your application a meaningful name in documentation and interfaces.</p>
+<p><code class="docutils literal"><span class="pre">APP_PATH</span></code> can be used by plugins to store some specific data into it. For example the default logging configuration
+stores a debug log into it (see line 32).</p>
+<p>And <code class="docutils literal"><span class="pre">PLUGINS</span></code> defines a list of plugins, which shall be loaded and activated during application start up.
+We will add some additional plugins in a few moments.</p>
+</div>
+<div class="section" id="plugin-csv-manager-plugin-py">
+<h4>1.4.2.1.3. Plugin: csv_manager_plugin.py<a class="headerlink" href="#plugin-csv-manager-plugin-py" title="Permalink to this headline">¶</a></h4>
+<p>Finally lets take a look into our plugin <code class="docutils literal"><span class="pre">csv_manager_plugin.py</span></code>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span>
+
+
+<span class="k">class</span> <span class="nc">csv_manager_plugin</span><span class="p">(</span><span class="n">GwCommandsPattern</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;hello_world&quot;</span><span class="p">,</span> <span class="s2">&quot;Prints hello world&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hello</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hello World. It&#39;s me, csv_manager_plugin!&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Our plugin will register a command for the command line interface,
+therefore we need the pattern <code class="docutils literal"><span class="pre">GwCommandsPattern</span></code> [1].</p>
+<p>Line 4 shows us the definition of your class, which inherits from <code class="docutils literal"><span class="pre">GwCommandsPattern</span></code>.</p>
+<p>Inside the <code class="docutils literal"><span class="pre">__init__</span></code> routine [4-7] we give our plugin a name. In this case it is the class name.
+The used GwCommandsPattern has also an own <code class="docutils literal"><span class="pre">__init__</span></code> routine and we must be sure that this gets also called [7].</p>
+<p>Each plugin must have a <code class="docutils literal"><span class="pre">activate</span></code> and <code class="docutils literal"><span class="pre">deactivate</span></code> function. They get called, if a plugin is going to be
+activated or deactivated.</p>
+<p>In our <code class="docutils literal"><span class="pre">activation</span></code> routine a command is registered [10].
+<code class="docutils literal"><span class="pre">self.commands.register</span></code> is available, because our plugin inherits from <code class="docutils literal"><span class="pre">GwCommandsPattern</span></code>.
+Other patterns would provide other functions, like <code class="docutils literal"><span class="pre">self.documents.get()</span></code> when using the <code class="docutils literal"><span class="pre">GwDocumentsPattern</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>A plugin can inherit from as much patterns as it likes.</p>
+<p class="last">Pattern-Inheritance is the default way in groundwork to enhance your plugin with useful and time-saving functions
+during development.</p>
+</div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h3>1.4.2.2. Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>Beside the code, our groundwork package also contains a ready-to-use sphinx documentation project.</p>
+<p>You can find it in <code class="docutils literal"><span class="pre">/docs</span></code> and you are free to generate it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">docs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">make</span> <span class="n">html</span>
+<span class="go">sphinx-build -b html -d _build/doctrees   . _build/html</span>
+<span class="go">Running Sphinx v1.5.1</span>
+<span class="go">making output directory...</span>
+<span class="go">Getting latest version of groundwork sphinx theme</span>
+<span class="go">  Checking for gitpython library... done</span>
+<span class="go">  Checking for working internet connection... done</span>
+<span class="go">  Getting latest theme updates... done</span>
+<span class="go">loading pickled environment... not yet created</span>
+<span class="go">building [mo]: targets for 0 po files that are out of date</span>
+<span class="go">building [html]: targets for 2 source files that are out of date</span>
+<span class="go">updating environment: 2 added, 0 changed, 0 removed</span>
+<span class="go">reading sources... [100%] index</span>
+<span class="go">looking for now-outdated files... none found</span>
+<span class="go">pickling environment... done</span>
+<span class="go">checking consistency... done</span>
+<span class="go">preparing documents... done</span>
+<span class="go">writing output... [100%] index</span>
+<span class="go">generating indices... genindex</span>
+<span class="go">writing additional pages... search</span>
+<span class="go">copying images... [100%] _themes/screenshot.png</span>
+<span class="go">copying static files... WARNING: logo file &#39;/_static/gw_logo.png&#39; does not exist</span>
+<span class="go">done</span>
+<span class="go">copying extra files... done</span>
+<span class="go">dumping search index in English (code: en) ... done</span>
+<span class="go">dumping object inventory... done</span>
+<span class="go">build succeeded, 2 warnings.</span>
+</pre></div>
+</div>
+<p>You can open the generated html website in any browser. Just open <code class="docutils literal"><span class="pre">_build/html/index.html</span></code>.</p>
+<div class="figure" id="id1">
+<img alt="../_images/sphinx_initial_doc_screenshot.png" src="../_images/sphinx_initial_doc_screenshot.png" />
+<p class="caption"><span class="caption-text">Generated documentation website of a fresh created groundwork project</span></p>
+</div>
+<p>Looks awesome? Read <a class="reference internal" href="../appendix/sphinx.html#sphinx"><span class="std std-ref">Sphinx</span></a> for more awesomeness.</p>
+</div>
+<div class="section" id="tests">
+<h3>1.4.2.3. Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
+<p>Your project has also a preconfigured test-environment with a test example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">tests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span>  <span class="c1"># linux command</span>
+<span class="go">├── __init__.py</span>
+<span class="go">└── test_app.py</span>
+</pre></div>
+</div>
+<p>Lets take a look into the test file <code class="docutils literal"><span class="pre">test_app</span></code>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_import_csv_manager</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">csv_manager</span>
+    <span class="k">assert</span> <span class="n">csv_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+
+
+<span class="k">def</span> <span class="nf">test_csv_manager_plugin_activation</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">csv_manager.applications</span> <span class="kn">import</span> <span class="n">CSV_MANAGER_APP</span>
+    <span class="kn">from</span> <span class="nn">csv_manager.plugins</span> <span class="kn">import</span> <span class="n">csv_manager_plugin</span>
+
+    <span class="n">my_app</span> <span class="o">=</span> <span class="n">CSV_MANAGER_APP</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">my_app</span><span class="o">.</span><span class="n">app</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">activate</span><span class="p">([</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">])</span>
+    <span class="n">plugin</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">plugin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">csv_manager_plugin</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>groundwork uses <a class="reference internal" href="../appendix/pytest.html#pytest"><span class="std std-ref">PyTest</span></a> for its tests. The important tests are done in the line with <code class="docutils literal"><span class="pre">assert</span></code> in it (3, 14, 15).</p>
+<p>To run the tests simply execute the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">tests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pytest</span>
+<span class="go">==================== test session starts =====================</span>
+<span class="go">platform linux -- Python 3.5.2, pytest-3.0.5, py-1.4.32, pluggy-0.4.0</span>
+<span class="go">rootdir: /.../groundwork-tutorial/code/chapter_1/01_first_project/CSV-Manager, inifile: tox.ini</span>
+<span class="go">collected 2 items</span>
+
+<span class="go">test_app.py ..</span>
+
+<span class="go">================== 2 passed in 0.28 seconds ===================</span>
+</pre></div>
+</div>
+<p>The tests will fail, if the CSV-Manager is not installed. Which should be the case right now.</p>
+<p>Instead of <a class="reference internal" href="../appendix/pytest.html#pytest"><span class="std std-ref">PyTest</span></a> you could also use <a class="reference internal" href="../appendix/tox.html#tox"><span class="std std-ref">Tox</span></a>, which cares about correct installation and can run your tests
+with different configurations (e.g. with Python 3.4 and Python 3.5).</p>
+<p><a class="reference internal" href="../appendix/tox.html#tox"><span class="std std-ref">Tox</span></a> is also preconfigured to use FLAKE8, which checks your coding styles, and to generate a coverage report:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">tests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tox</span>
+<span class="go">GLOB sdist-make: /.../groundwork-tutorial/code/chapter_1/01_first_project/CSV-Manager/setup.py</span>
+<span class="go">py34 create: /.../groundwork-tutorial/code/chapter_1/01_first_project/CSV-Manager/.tox/py34</span>
+<span class="go">ERROR: InterpreterNotFound: python3.4</span>
+<span class="go">py35 inst-nodeps: /.../groundwork-tutorial/code/chapter_1/01_first_project/CSV-Manager/.tox/dist/csv_manager-0.1.0.zip</span>
+<span class="go">py35 installed: alabaster==0.7.9,arrow==0.10.0,Babel==2.3.4,binaryornot==0.4.0,blinker==1.4,chardet==2.3.0,click==6.7,cookiecutter==1.5.0,coverage==4.3.1,csv-manager==0.1.0,docutils==0.13.1,flake8==3.2.1,future==0.16.0,gitdb2==2.0.0,GitPython==2.1.1,groundwork==0.1.5,imagesize==0.7.1,Jinja2==2.9.4,jinja2-time==0.2.0,MarkupSafe==0.23,mccabe==0.5.3,poyo==0.4.0,py==1.4.32,pycodestyle==2.2.0,pyflakes==1.3.0,Pygments==2.1.3,pytest==3.0.5,pytest-flake8==0.8.1,pytest-runner==2.9,python-coveralls==2.9.0,python-dateutil==2.6.0,pytz==2016.10,PyYAML==3.12,requests==2.12.4,six==1.10.0,smmap2==2.0.1,snowballstemmer==1.2.1,Sphinx==1.5.1,whichcraft==0.4.0</span>
+<span class="go">py35 runtests: PYTHONHASHSEED=&#39;1116081422&#39;</span>
+<span class="go">py35 runtests: commands[0] | coverage run --source csv_manager -m py.test --flake8</span>
+<span class="go">==================================== test session starts =====================================</span>
+<span class="go">platform linux -- Python 3.5.2, pytest-3.0.5, py-1.4.32, pluggy-0.4.0</span>
+<span class="go">rootdir: /.../groundwork-tutorial/code/chapter_1/01_first_project/CSV-Manager, inifile: tox.ini</span>
+<span class="go">plugins: flake8-0.8.1</span>
+<span class="go">collected 16 items</span>
+
+<span class="go">__init__.py s</span>
+<span class="go">setup.py s</span>
+<span class="go">csv_manager/__init__.py s</span>
+<span class="go">csv_manager/version.py s</span>
+<span class="go">csv_manager/applications/__init__.py s</span>
+<span class="go">csv_manager/applications/configuration.py s</span>
+<span class="go">csv_manager/applications/csv_manager_app.py s</span>
+<span class="go">csv_manager/patterns/__init__.py s</span>
+<span class="go">csv_manager/plugins/__init__.py s</span>
+<span class="go">csv_manager/plugins/csv_manager_plugin.py s</span>
+<span class="go">csv_manager/recipes/__init__.py s</span>
+<span class="go">docs/conf.py s</span>
+<span class="go">tests/__init__.py s</span>
+<span class="go">tests/test_app.py s..</span>
+
+<span class="go">============================ 2 passed, 14 skipped in 0.21 seconds ============================</span>
+<span class="go">py35 runtests: commands[1] | coverage report</span>
+<span class="go">Name                                          Stmts   Miss  Cover</span>
+<span class="go">-----------------------------------------------------------------</span>
+<span class="go">csv_manager/__init__.py                           0      0   100%</span>
+<span class="go">csv_manager/applications/__init__.py              1      0   100%</span>
+<span class="go">csv_manager/applications/configuration.py         7      0   100%</span>
+<span class="go">csv_manager/applications/csv_manager_app.py      15      5    67%</span>
+<span class="go">csv_manager/patterns/__init__.py                  0      0   100%</span>
+<span class="go">csv_manager/plugins/__init__.py                   1      0   100%</span>
+<span class="go">csv_manager/plugins/csv_manager_plugin.py         9      1    89%</span>
+<span class="go">csv_manager/recipes/__init__.py                   0      0   100%</span>
+<span class="go">csv_manager/version.py                            1      1     0%</span>
+<span class="go">-----------------------------------------------------------------</span>
+<span class="go">TOTAL                                            34      7    79%</span>
+<span class="go">__________________________________________ summary ___________________________________________</span>
+<span class="go">ERROR:   py34: InterpreterNotFound: python3.4</span>
+<span class="go">  py35: commands succeeded</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="install-and-run-project">
+<h2>1.4.3. Install and run  project<a class="headerlink" href="#install-and-run-project" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s time for installing our CSV-Manager and start working and coding with it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">CSV</span><span class="o">-</span><span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+<span class="go"># A lot of output</span>
+</pre></div>
+</div>
+<p>This will install the CSV-Manager inside the current Python environment.</p>
+<p>By using the option <code class="docutils literal"><span class="pre">-e</span></code> no files will be copied, instead pip sets some links to our code.
+This allows us to make changes to the code without the need of reinstallation.</p>
+<p>And finally:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span>
+<span class="go">2017-01-13 09:55:24,533 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-13 09:55:24,715 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-13 09:55:24,716 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-13 09:55:24,716 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-13 09:55:24,716 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-13 09:55:24,717 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo</span>
+<span class="go">Usage: csv_manager [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">Options:</span>
+<span class="go">  --help  Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  hello_world  Prints hello world</span>
+<span class="go">  plugin_list  List all plugins</span>
+</pre></div>
+</div>
+<p>Yeah, our app is running and the plugin <code class="docutils literal"><span class="pre">csv_manager_plugin</span></code> has already registered a command.
+Execute it with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">hello_world</span>
+<span class="go">2017-01-13 17:12:11,857 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-13 17:12:12,039 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-13 17:12:12,039 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-13 17:12:12,040 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-13 17:12:12,040 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-13 17:12:12,041 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo</span>
+<span class="go">Hello World. It&#39;s me, csv_manager_plugin!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enhance-application">
+<h2>1.4.4. Enhance application<a class="headerlink" href="#enhance-application" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s time for pimping our app. All we need is to load additional plugins...</p>
+<div class="section" id="add-document-viewer">
+<h3>1.4.4.1. Add document viewer<a class="headerlink" href="#add-document-viewer" title="Permalink to this headline">¶</a></h3>
+<p>Open <code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and add the plugin <code class="docutils literal"><span class="pre">GwDocumentsInfo</span></code> to the plugins list:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># PLUGINS = [&quot;csv_manager_plugin&quot;, &quot;GwPluginsInfo&quot;]  # Old config</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;GwDocumentsInfo&quot;</span><span class="p">]</span>  <span class="c1"># New config</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal"><span class="pre">csv_manager</span></code> again:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span>
+<span class="go">2017-01-13 10:04:53,729 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-13 10:04:53,925 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-13 10:04:53,925 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-13 10:04:53,926 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-13 10:04:53,926 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-13 10:04:53,927 - INFO  - Plugins initialised: GwDocumentsInfo</span>
+<span class="go">2017-01-13 10:04:53,928 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, GwDocumentsInfo</span>
+<span class="go">Usage: csv_manager [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">Options:</span>
+<span class="go">  --help  Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  doc          Shows the documentation</span>
+<span class="go">  doc_list     List all documents</span>
+<span class="go">  doc_write    Stores documents as files</span>
+<span class="go">  hello_world  Prints hello world</span>
+<span class="go">  plugin_list  List all plugins</span>
+</pre></div>
+</div>
+<p>You got three new commands by just adding the related plugin <code class="docutils literal"><span class="pre">GwDocumentsInfo</span></code> to your config.</p>
+</div>
+<div class="section" id="add-web-interface">
+<h3>1.4.4.2. Add web interface<a class="headerlink" href="#add-web-interface" title="Permalink to this headline">¶</a></h3>
+<p>Lets do one last example to show you how powerful your application can become by just adding plugins.</p>
+<p>Again open <code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and add the plugin <code class="docutils literal"><span class="pre">GwWeb</span></code> and <code class="docutils literal"><span class="pre">GwWebManager</span></code> to the
+plugin list:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># PLUGINS = [&quot;csv_manager_plugin&quot;, &quot;GwPluginsInfo&quot;, &quot;GwDocumentsInfo&quot;]  # Old config</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;GwDocumentsInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;GwWeb&quot;</span><span class="p">,</span> <span class="s2">&quot;GwWebManager&quot;</span><span class="p">]</span>  <span class="c1"># New config</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal"><span class="pre">csv_manager</span></code> again:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span>
+<span class="go">2017-01-13 10:10:35,117 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-13 10:10:35,315 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-13 10:10:35,315 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-13 10:10:35,315 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-13 10:10:35,316 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-13 10:10:35,316 - INFO  - Plugins initialised: GwDocumentsInfo</span>
+<span class="go">2017-01-13 10:10:35,317 - INFO  - Plugins initialised: GwWeb</span>
+<span class="go">2017-01-13 10:10:35,319 - INFO  - Using FLASK_SERVER_NAME=127.0.0.1:5000</span>
+<span class="go">2017-01-13 10:10:35,319 - INFO  - Route registered:  /test for context web (/)</span>
+<span class="go">2017-01-13 10:10:35,320 - INFO  - Plugins initialised: GwWebManager</span>
+<span class="go">2017-01-13 10:10:35,320 - INFO  - Route registered:  / for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,320 - INFO  - Route registered:  /command for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,321 - INFO  - Route registered:  /plugin for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,321 - INFO  - Route registered:  /plugin/class/&lt;clazz&gt; for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,321 - INFO  - Route registered:  /plugin/instance/&lt;plugin_name&gt; for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,322 - INFO  - Route registered:  /signal for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,322 - INFO  - Route registered:  /receiver for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,322 - INFO  - Route registered:  /document for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,323 - INFO  - Route registered:  /route for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,323 - INFO  - Route registered:  /menu for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,324 - INFO  - Route registered:  /context for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,324 - INFO  - Route registered:  /server for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:10:35,325 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, GwDocumentsInfo, GwWeb, GwWebManager</span>
+<span class="go">Usage: csv_manager [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">Options:</span>
+<span class="go">  --help  Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  doc           Shows the documentation</span>
+<span class="go">  doc_list      List all documents</span>
+<span class="go">  doc_write     Stores documents as files</span>
+<span class="go">  hello_world   Prints hello world</span>
+<span class="go">  plugin_list   List all plugins</span>
+<span class="go">  server_list   prints a list of registered server</span>
+<span class="go">  server_start  starts a given server</span>
+</pre></div>
+</div>
+<p>Ohh nice, we got commands to start a webserver. Lets do it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">server_start</span> <span class="n">flask_debug</span>
+<span class="go">2017-01-13 10:11:44,562 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-13 10:11:44,745 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-13 10:11:44,745 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-13 10:11:44,746 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-13 10:11:44,746 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-13 10:11:44,747 - INFO  - Plugins initialised: GwDocumentsInfo</span>
+<span class="go">2017-01-13 10:11:44,748 - INFO  - Plugins initialised: GwWeb</span>
+<span class="go">2017-01-13 10:11:44,749 - INFO  - Using FLASK_SERVER_NAME=127.0.0.1:5000</span>
+<span class="go">2017-01-13 10:11:44,749 - INFO  - Route registered:  /test for context web (/)</span>
+<span class="go">2017-01-13 10:11:44,750 - INFO  - Plugins initialised: GwWebManager</span>
+<span class="go">2017-01-13 10:11:44,751 - INFO  - Route registered:  / for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,751 - INFO  - Route registered:  /command for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,751 - INFO  - Route registered:  /plugin for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,752 - INFO  - Route registered:  /plugin/class/&lt;clazz&gt; for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,752 - INFO  - Route registered:  /plugin/instance/&lt;plugin_name&gt; for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,752 - INFO  - Route registered:  /signal for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,753 - INFO  - Route registered:  /receiver for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,753 - INFO  - Route registered:  /document for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,754 - INFO  - Route registered:  /route for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,754 - INFO  - Route registered:  /menu for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,754 - INFO  - Route registered:  /context for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,755 - INFO  - Route registered:  /server for context webmanager (/webmanager)</span>
+<span class="go">2017-01-13 10:11:44,756 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, GwDocumentsInfo, GwWeb, GwWebManager</span>
+<span class="go">Starting server flask_debug</span>
+<span class="go">2017-01-13 10:11:44,756 - INFO  - Flask Server Name: 127.0.0.1:5000</span>
+<span class="go">2017-01-13 10:11:44,764 - INFO  -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)</span>
+</pre></div>
+</div>
+<p>So we got a running webserver and therefore there should be an available website.</p>
+<p>Open a browser and visit <a class="reference external" href="http://127.0.0.1:5000/webmanager/">http://127.0.0.1:5000/webmanager/</a>. You should see a page look like this:</p>
+<div class="figure" id="id2">
+<img alt="../_images/webmanager_screenshot.png" src="../_images/webmanager_screenshot.png" />
+<p class="caption"><span class="caption-text">Overview web page of the plugin <strong>WebManager</strong></span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is a whole chapter <a class="reference internal" href="../chapter_3/index.html#chapter-3"><span class="std std-ref">groundwork and the web</span></a>, which cares about the topic web and lets you create your own web plugin.</p>
+</div>
+</div>
+<div class="section" id="cleaning-up">
+<h3>1.4.4.3. Cleaning up<a class="headerlink" href="#cleaning-up" title="Permalink to this headline">¶</a></h3>
+<p>For the next chapters, we do not need the just added plugins. If you like you can edit
+<code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and remove not need plugins:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Great, we are done with this chapter. Ready for python coding and creating your own plugin?
+Go on with <a class="reference internal" href="first_plugin.html#first-plugin"><span class="std std-ref">First own Plugin</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/gw_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.4. First own project</a><ul>
+<li><a class="reference internal" href="#using-recipes">1.4.1. Using recipes</a><ul>
+<li><a class="reference internal" href="#list-all-known-recipes">1.4.1.1. List all known recipes</a></li>
+<li><a class="reference internal" href="#use-gw-package-recipe">1.4.1.2. Use gw_package recipe</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#project-content">1.4.2. Project content</a><ul>
+<li><a class="reference internal" href="#code-structure">1.4.2.1. Code structure</a><ul>
+<li><a class="reference internal" href="#application-csv-manager-app-py">1.4.2.1.1. Application: csv_manager_app.py</a></li>
+<li><a class="reference internal" href="#application-configuration">1.4.2.1.2. Application configuration</a></li>
+<li><a class="reference internal" href="#plugin-csv-manager-plugin-py">1.4.2.1.3. Plugin: csv_manager_plugin.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation">1.4.2.2. Documentation</a></li>
+<li><a class="reference internal" href="#tests">1.4.2.3. Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-and-run-project">1.4.3. Install and run  project</a></li>
+<li><a class="reference internal" href="#enhance-application">1.4.4. Enhance application</a><ul>
+<li><a class="reference internal" href="#add-document-viewer">1.4.4.1. Add document viewer</a></li>
+<li><a class="reference internal" href="#add-web-interface">1.4.4.2. Add web interface</a></li>
+<li><a class="reference internal" href="#cleaning-up">1.4.4.3. Cleaning up</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">1. groundwork basics</a><ul>
+      <li>Previous: <a href="usage.html" title="previous chapter">1.3. Usage</a></li>
+      <li>Next: <a href="first_plugin.html" title="next chapter">1.5. First own Plugin</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/chapter_1/first_project.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+    
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+    
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ 
+        <div class="github_fork">
+            <a href="http://github.com/useblocks/groundwork-tutorial">
+                <img style="position: fixed; top: 0; right: 0; border: 0;"
+                     src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+                     alt="Fork me on GitHub">
+            </a>
+        </div>
+    
+
+
+    <div class="footer">
+      &copy; Copyright 2017, team useblocks.
+    </div>
+  </body>
+</html>

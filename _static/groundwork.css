@@ -494,6 +494,7 @@ code.descname {
 .highlight .k { color: #918a6f !important; } /*  class, def name */
 .highlight .o { color: #ffffff !important; } /* function name */
 .highlight .nb { color: #ffffff !important; } /* super, print name */
+.highlight .go { color: #aaaaaa !important; } /* super, print name */
 
 
 /*
@@ -533,4 +534,39 @@ div.sidebar div.topic p.topic-title {
 
 table.indextable tr.cap {
     background-color: transparent !important;
+}
+
+div.figure p.caption {
+    text-align: center
+}
+
+table.highlighttable pre {
+    margin: 0;
+}
+
+table.highlighttable {
+    margin: 0;
+    width: 100%;
+    border-spacing: 0px;
+}
+
+div.highlight-python {
+    margin: 0 -30px 0 -30px;
+}
+
+table.highlighttable td {
+ padding: 0;
+}
+
+div.linenodiv {
+    background-color: #2b2b2b;
+    padding: 0;
+}
+
+td.linenos pre  {
+    padding: 7px 5px;
+}
+td.code div.highlight pre {
+    width: 717px;
+    overflow: visible;
 }
