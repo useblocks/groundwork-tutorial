@@ -1,9 +1,9 @@
-.. _first_plugin:
-
 .. sidebar:: Content
 
    .. contents:: ""
       :backlinks: none
+
+.. _first_plugin:
 
 First own Plugin
 ================
