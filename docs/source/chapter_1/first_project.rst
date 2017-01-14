@@ -13,7 +13,7 @@ groundwork knows project templates, called recipes, and we will use one of them 
 
 List all known recipes
 ~~~~~~~~~~~~~~~~~~~~~~
-Lets find out, which recipes are available in groundwork itself::
+Let's find out, which recipes are available in groundwork itself::
 
     >>> groundwork recipe_list
     Recipes:
@@ -94,7 +94,7 @@ The output should look like the above example.
 Project content
 ---------------
 
-Lets take a look into the newly created folder ``CSV-Manager``::
+Let's take a look into the newly created folder ``CSV-Manager``::
 
    >>> cd CSV-Manager
    >>> tree --dirsfirst  # linux command
@@ -147,7 +147,7 @@ It is also responsible for registering plugins in the python environment during 
 
 Application: csv_manager_app.py
 +++++++++++++++++++++++++++++++
-Lets take a look into the application. Open `csv_manager_app.py`:
+Let's take a look into the application. Open `csv_manager_app.py`:
 
 .. literalinclude:: /../../code/chapter_1/01_first_project/CSV-Manager/csv_manager/applications/csv_manager_app.py
    :language: python
@@ -267,7 +267,7 @@ Your project has also a preconfigured test-environment with a test example::
    ├── __init__.py
    └── test_app.py
 
-Lets take a look into the test file ``test_app``:
+Let's take a look into the test file ``test_app``:
 
 .. literalinclude:: /../../code/chapter_1/01_first_project/CSV-Manager/tests/test_app.py
    :language: python
@@ -432,7 +432,7 @@ Add web interface
    For this example the python package ``groundwork-web`` must be installed.
    You can do this easily with ``pip install groundwork-web``.
 
-Lets do one last example to show you how powerful your application can become by just adding plugins.
+Let's do one last example to show you how powerful your application can become by just adding plugins.
 
 Again open ``csv_manager/applications/configuration.py`` and add the plugin ``GwWeb`` and ``GwWebManager`` to the
 plugin list::
@@ -480,7 +480,7 @@ Run ``csv_manager`` again::
       server_list   prints a list of registered server
       server_start  starts a given server
 
-Ohh nice, we got commands to start a webserver. Lets do it::
+Ohh nice, we got commands to start a webserver. Let's do it::
 
     >>> csv_manager server_start flask_debug
     2017-01-13 10:11:44,562 - INFO  - Application signals initialised

@@ -5,7 +5,7 @@ APP_NAME = "csv_manager_app"
 APP_DESCRIPTION = "groundwork application of package CSV-Manager"
 APP_PATH = os.path.join(os.path.expanduser('~'), "CSV-Manager")
 
-PLUGINS = ["csv_manager_plugin", "GwPluginsInfo", "GwDocumentsInfo", "GwWeb", "GwWebManager"]
+PLUGINS = ["csv_manager_plugin", "GwPluginsInfo", "CsvWatcherPlugin"]
 
 GROUNDWORK_LOGGING = {
     'version': 1,

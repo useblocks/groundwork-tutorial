@@ -1,3 +1,4 @@
+pillow
 gitpython
 sphinxcontrib-plantuml
 sphinxcontrib-needs

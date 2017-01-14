@@ -42,6 +42,21 @@ setup(
                             "csv_manager.applications.csv_manager_app:start_app"],
         'groundwork.plugin': ["csv_manager_plugin = "
                               "csv_manager.plugins.csv_manager_plugin:"
-                              "csv_manager_plugin"],
+                              "csv_manager_plugin",  # Do not forget the "," here!
+                              "csv_watcher_plugin = "
+                              "csv_manager.plugins.csv_watcher_plugin.csv_watcher_plugin:CsvWatcherPlugin"
+                              ],
     }
+
+    # entry_points={
+    #     'console_scripts': ["csv_manager = "
+    #                         "csv_manager.applications.csv_manager_app:start_app"],
+    #     'groundwork.plugin': ["csv_manager_plugin = "
+    #                           "csv_manager.plugins.csv_manager_plugin:"
+    #                           "csv_manager_plugin",
+    #
+    #                           "csv_watcher_plugin = "
+    #                           "csv_manager.plugins.csv_watcher_plugin.csv_watcher.plugin:CsvWatcherPlugin"
+    #                           ]
+    # }
 )
