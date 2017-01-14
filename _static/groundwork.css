@@ -240,7 +240,7 @@ div.admonition p.last {
 
 div.highlight {
     /*background-color: white;*/
-    background-color: none;
+    background-color: #444;
     text-shadow: none;
     color: #fff;
 }
@@ -552,6 +552,7 @@ table.highlighttable {
 
 div.highlight-python {
     margin: 0 -30px 0 -30px;
+    overflow: auto;
 }
 
 table.highlighttable td {

@@ -74,7 +74,7 @@ add new plugins to the application to enhance its functionality.</p>
 <p>groundwork knows project templates, called recipes, and we will use one of them to set up our first project.</p>
 <div class="section" id="list-all-known-recipes">
 <h3>1.4.1.1. List all known recipes<a class="headerlink" href="#list-all-known-recipes" title="Permalink to this headline">¶</a></h3>
-<p>Lets find out, which recipes are available in groundwork itself:</p>
+<p>Let&#8217;s find out, which recipes are available in groundwork itself:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">recipe_list</span>
 <span class="go">Recipes:</span>
 <span class="go">  gw_package by plugin &#39;GwRecipesBuilder&#39; - Groundwork basic package. Includes places for apps, plugins, patterns and recipes.</span>
@@ -153,7 +153,7 @@ write related data into some files.</p>
 </div>
 <div class="section" id="project-content">
 <h2>1.4.2. Project content<a class="headerlink" href="#project-content" title="Permalink to this headline">¶</a></h2>
-<p>Lets take a look into the newly created folder <code class="docutils literal"><span class="pre">CSV-Manager</span></code>:</p>
+<p>Let&#8217;s take a look into the newly created folder <code class="docutils literal"><span class="pre">CSV-Manager</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">CSV</span><span class="o">-</span><span class="n">Manager</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">--</span><span class="n">dirsfirst</span>  <span class="c1"># linux command</span>
 <span class="go">.</span>
@@ -201,7 +201,7 @@ This file stores all your project meta data and is used by <code class="docutils
 It is also responsible for registering plugins in the python environment during installation.</p>
 <div class="section" id="application-csv-manager-app-py">
 <h4>1.4.2.1.1. Application: csv_manager_app.py<a class="headerlink" href="#application-csv-manager-app-py" title="Permalink to this headline">¶</a></h4>
-<p>Lets take a look into the application. Open <cite>csv_manager_app.py</cite>:</p>
+<p>Let&#8217;s take a look into the application. Open <cite>csv_manager_app.py</cite>:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -500,7 +500,7 @@ during development.</p>
 <span class="go">└── test_app.py</span>
 </pre></div>
 </div>
-<p>Lets take a look into the test file <code class="docutils literal"><span class="pre">test_app</span></code>:</p>
+<p>Let&#8217;s take a look into the test file <code class="docutils literal"><span class="pre">test_app</span></code>:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -685,7 +685,7 @@ Execute it with:</p>
 <p class="last">For this example the python package <code class="docutils literal"><span class="pre">groundwork-web</span></code> must be installed.
 You can do this easily with <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">groundwork-web</span></code>.</p>
 </div>
-<p>Lets do one last example to show you how powerful your application can become by just adding plugins.</p>
+<p>Let&#8217;s do one last example to show you how powerful your application can become by just adding plugins.</p>
 <p>Again open <code class="docutils literal"><span class="pre">csv_manager/applications/configuration.py</span></code> and add the plugin <code class="docutils literal"><span class="pre">GwWeb</span></code> and <code class="docutils literal"><span class="pre">GwWebManager</span></code> to the
 plugin list:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># PLUGINS = [&quot;csv_manager_plugin&quot;, &quot;GwPluginsInfo&quot;, &quot;GwDocumentsInfo&quot;]  # Old config</span>
@@ -732,7 +732,7 @@ plugin list:</p>
 <span class="go">  server_start  starts a given server</span>
 </pre></div>
 </div>
-<p>Ohh nice, we got commands to start a webserver. Lets do it:</p>
+<p>Ohh nice, we got commands to start a webserver. Let&#8217;s do it:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">server_start</span> <span class="n">flask_debug</span>
 <span class="go">2017-01-13 10:11:44,562 - INFO  - Application signals initialised</span>
 <span class="go">2017-01-13 10:11:44,745 - INFO  - Application commands initialised</span>

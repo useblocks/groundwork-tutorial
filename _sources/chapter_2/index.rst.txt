@@ -1,3 +1,5 @@
+.. _chapter_2:
+
 groundwork and databases
 ========================
 

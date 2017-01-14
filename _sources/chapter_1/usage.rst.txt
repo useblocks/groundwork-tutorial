@@ -104,7 +104,7 @@ Exporting documents
 
 The ``GwDocumentInfo`` plugin has registerd a command, which exports and stores documents on a hard disk.
 
-Lets say we want the documents as RST output in the folder temp::
+Let's say we want the documents as RST output in the folder temp::
 
    >>> mkdir temp
    >>> groundwork doc_write -h temp

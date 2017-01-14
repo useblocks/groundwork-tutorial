@@ -64,8 +64,879 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="first-own-plugin">
+  <div class="sidebar">
+<p class="first sidebar-title">Content</p>
+<div class="contents last topic" id="id1">
+<p class="topic-title first">&#8220;&#8221;</p>
+<ul class="simple">
+<li><a class="reference internal" href="#first-own-plugin" id="id2">First own Plugin</a><ul>
+<li><a class="reference internal" href="#example-application" id="id3">Example Application</a><ul>
+<li><a class="reference internal" href="#sequence-diagram" id="id4">Sequence diagram</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preparation" id="id5">Preparation</a></li>
+<li><a class="reference internal" href="#birth-of-a-plugin" id="id6">Birth of a plugin</a><ul>
+<li><a class="reference internal" href="#plugin-registration" id="id7">Plugin registration</a></li>
+<li><a class="reference internal" href="#first-run" id="id8">First run</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-commands" id="id9">Using commands</a><ul>
+<li><a class="reference internal" href="#adding-a-command-argument" id="id10">Adding a command argument</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-csv-files" id="id11">Handling csv files</a><ul>
+<li><a class="reference internal" href="#making-csv-diffs" id="id12">Making csv diffs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-threads" id="id13">Working with threads</a></li>
+<li><a class="reference internal" href="#add-interval-option" id="id14">Add interval option</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="first-own-plugin">
 <span id="first-plugin"></span><h1>1.5. First own Plugin<a class="headerlink" href="#first-own-plugin" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter we will create our first plugin, register a command, work with csv files and create a thread.</p>
+<p>But before we start, let&#8217;s take a look what kind of application and plugins we want to build.</p>
+<div class="section" id="example-application">
+<h2>1.5.1. Example Application<a class="headerlink" href="#example-application" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial uses one single example application, which gets extend by each chapter.</p>
+<p>The overall use case of the example application is the monitoring of changes on comma separated files (CSV files).</p>
+<p>CSV files represent a table of information and can be read and saved by office tools like Microsoft Excel, Libreoffice
+Calc an others.
+They are often used in automation processes and in a lot of cases they are created and updated by scripts.</p>
+<p>We want to be able to get notified, if a monitored CSV file gets changed and we also want to know the changes.
+In later chapters we will also store these changes in a database, so that we know the history of a CSV file.
+And we will also add some kind of a web interface to watch files and history in the browser.</p>
+<div class="section" id="sequence-diagram">
+<h3>1.5.1.1. Sequence diagram<a class="headerlink" href="#sequence-diagram" title="Permalink to this headline">¶</a></h3>
+<p>The following sequence diagram shows how user, application and plugin interacts with each other and what kind of tasks
+must be done during which step.</p>
+<p>But don&#8217;t worry, we will implement these features step by step.</p>
+<p class="plantuml">
+<a href="../_images/plantuml-41e248d0c15d8e375d79fd5e8b93354fc81864de.png"><img src="../_images/plantuml-41e248d0c15d8e375d79fd5e8b93354fc81864de.png" alt="&#64;startuml
+autonumber
+
+participant user as u
+participant csv_manager as cm
+participant csv_watcher_plugin as cwp
+participant csv_watcher_plugin.thread as cwpt
+
+u -&gt; cm : Starts app with\n&quot;csv_watch example.csv&quot;
+cm -&gt; cwp: csv_watcher_plugin.~__init__()
+cm -&gt; cwp: csv_watcher_plugin.activate()
+cwp -&gt; cwp: Register command &quot;csv_watch&quot;
+cm -&gt; cm: starts cli
+cm -&gt; cm: cli checks user command
+cm -&gt; cwp: cli calls csv_watcher_plugin.csv_watcher_command()
+cwp -&gt; cwp: Register new thread &quot;csv_thread&quot;
+cwp -&gt; cwpt: Start thread &quot;csv_thread&quot;
+loop endless
+    cwpt -&gt; cwpt: Check given file for changes
+        group if changes found
+        cwp -&gt; u: Log message &quot;csv file has changed&quot;
+        end
+    cwpt -&gt; cwpt: Sleep x seconds
+end
+&#64;enduml" width="875.2px" height="482.4px"/></a>
+</p>
+</div>
+</div>
+<div class="section" id="preparation">
+<h2>1.5.2. Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
+<p>Before we can start coding, we have to create a place for our plugin.</p>
+<p>Create a folder <code class="docutils literal"><span class="pre">csv_watcher_plugin</span></code> inside the folder <code class="docutils literal"><span class="pre">CSV-Manager/csv_manager/plugins/</span></code>.</p>
+<p>Inside the newly created folder create two new files: <code class="docutils literal"><span class="pre">__init__.py</span></code> and <code class="docutils literal"><span class="pre">csv_manager_plugin.py</span></code>.</p>
+<p>At the end your CSV-Manager should look like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>CSV-Manager/
+├── csv_manager
+│   ├── applications
+│   │   ├── configuration.py
+│   │   ├── csv_manager_app.py
+│   │   └── __init__.py
+│   ├── patterns
+│   │   └── __init__.py
+│   ├── plugins
+│   │   ├── csv_watcher_plugin  # We added this
+│   │   │   ├── csv_watcher_plugin.py  # We added this
+│   │   │   └── __init__.py  # We added this
+│   │   ├── csv_manager_plugin.py
+│   │   └── __init__.py
+│   └─ ...
+└─ ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="birth-of-a-plugin">
+<h2>1.5.3. Birth of a plugin<a class="headerlink" href="#birth-of-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Now we can start to write our first plugin. Let&#8217;s start with an empty plugin and add needed functions step by step.</p>
+<p>Open <code class="docutils literal"><span class="pre">csv_watcher_plugin.py</span></code> and add the following:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwBasePattern</span>
+
+
+<span class="k">class</span> <span class="nc">CsvWatcherPlugin</span><span class="p">(</span><span class="n">GwBasePattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A plugin for monitoring csv files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>Each plugin and pattern must inherit from <cite>GwBasePattern</cite>. If you inherit from another pattern, GwBasePattern gets
+automatically loaded, because the other pattern already inherits from it [1+4].</p>
+<p>There are 4 rules, each plugin must follow:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>A name is available in self.name [9]</li>
+<li>The __init__() routine of patterns gets called [10]</li>
+<li>An activate() routine exists [12]</li>
+<li>A deactivate() routine exists [15]</li>
+</ol>
+</div></blockquote>
+<p>Rule 1,3 and 4 were checked by GwBasePattern during initialisation. If they are not passed, your plugin can not be used.</p>
+<p>A missing call of the __init__() routine of patterns (rule 2) may lead to not correct initialised patterns.
+For example a database pattern has not initiated its database, because its __init__() routine was not called.</p>
+<div class="section" id="plugin-registration">
+<h3>1.5.3.1. Plugin registration<a class="headerlink" href="#plugin-registration" title="Permalink to this headline">¶</a></h3>
+<p>Right now, your plugin exists only in a code file and groundwork does not know it.</p>
+<p>But we want be able to load our plugins inside a groundwork app by just adding its name into the related
+configuration parameter.</p>
+<p>So we have to tell groundwork or better the used Python environment that there is a new plugin.
+This can only be done during installation of the CSV-Manager package. And the installation gets its information from
+our <code class="docutils literal"><span class="pre">setup.py</span></code> file.</p>
+<p>So open <code class="docutils literal"><span class="pre">CSV-Manager/setup.py</span></code> and take a look on the parameter <code class="docutils literal"><span class="pre">entry_points</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager = &quot;</span>
+                        <span class="s2">&quot;csv_manager.applications.csv_manager_app:start_app&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;groundwork.plugin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin = &quot;</span>
+                          <span class="s2">&quot;csv_manager.plugins.csv_manager_plugin:&quot;</span>
+                          <span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">entry_points</span></code> is a python dictionary, which has 2 keys: <code class="docutils literal"><span class="pre">console_scripts</span></code> and <code class="docutils literal"><span class="pre">groundwork.plugin</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">console_scripts</span></code> are used to register commands for the command line. In this case, it allows us to use
+<code class="docutils literal"><span class="pre">csv_manager</span></code> as command instead of calling the needed python file with
+<code class="docutils literal"><span class="pre">python</span> <span class="pre">csv_manager/applications/csv_manager_app</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">groundwork.plugins</span></code> is the place where all the magic happens.
+It is a python list and there we need to add our plugin.</p>
+<p>An entry of this list is a normal string, which must follow the syntax <code class="docutils literal"><span class="pre">&lt;name&gt;</span> <span class="pre">=</span> <span class="pre">&lt;packages&gt;:&lt;plugin_class&gt;</span></code>.
+&lt;name&gt; is not used by groundwork and can be everything.</p>
+<p>The needed entry for our plugin is
+<code class="docutils literal"><span class="pre">csv_watcher_plugin</span> <span class="pre">=</span> <span class="pre">csv_manager.plugins.csv_watcher_plugin.csv_watcher_plugin:CsvWatcherPlugin</span></code>.</p>
+<p>Let&#8217;s add it to our setup.py:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager = &quot;</span>
+                        <span class="s2">&quot;csv_manager.applications.csv_manager_app:start_app&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;groundwork.plugin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin = &quot;</span>
+                          <span class="s2">&quot;csv_manager.plugins.csv_manager_plugin:&quot;</span>
+                          <span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span>  <span class="c1"># Do not forget the &quot;,&quot; here!</span>
+                          <span class="s2">&quot;csv_watcher_plugin = &quot;</span>
+                          <span class="s2">&quot;csv_manager.plugins.csv_watcher_plugin.csv_watcher_plugin:CsvWatcherPlugin&quot;</span>
+                          <span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>After saving <code class="docutils literal"><span class="pre">setup.py</span></code> we have to reinstall the <code class="docutils literal"><span class="pre">CSV-Manager</span></code>::</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">CSV</span><span class="o">-</span><span class="n">Manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>And we also need to add our plugin to the application configuration, so that it gets activated.
+Open <code class="docutils literal"><span class="pre">CSV-Manager/csv_manager/applications/configurations.py</span></code> and change the <code class="docutils literal"><span class="pre">PLUGINS</span> <span class="pre">=</span> <span class="pre">[...]</span></code> line to</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="first-run">
+<h3>1.5.3.2. First run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h3>
+<p>Ok, that&#8217;s it. Let&#8217;s see if our plugin really gets activated:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span>
+<span class="go">2017-01-14 13:08:14,221 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 13:08:14,407 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 13:08:14,407 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 13:08:14,408 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 13:08:14,408 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 13:08:14,409 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 13:08:14,409 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">Usage: csv_manager [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">Options:</span>
+<span class="go">  --help  Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  hello_world  Prints hello world</span>
+<span class="go">  plugin_list  List all plugins</span>
+</pre></div>
+</td></tr></table></div>
+<p>Line 7 shows us, that the plugin was found and initiated.
+And in line 8 we see that it also got activated.</p>
+</div>
+</div>
+<div class="section" id="using-commands">
+<h2>1.5.4. Using commands<a class="headerlink" href="#using-commands" title="Permalink to this headline">¶</a></h2>
+<p>Now we can start to bring some functionality to our plugin.</p>
+<p>At first we should make sure that our functions can be called by the user. For this we need to register a command.</p>
+<p>To give our plugin access to command registration, we only need to make sure that our plugin class inherits from
+<code class="docutils literal"><span class="pre">GwCommandsPattern</span></code>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span>
+
+
+ <span class="k">class</span> <span class="nc">CsvWatcherPlugin</span><span class="p">(</span><span class="n">GwCommandsPattern</span><span class="p">):</span>
+     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     A plugin for monitoring csv files.</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>
+
+     <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>We have changed line 1 and 3 to use <code class="docutils literal"><span class="pre">GwCommandsPattern</span></code> instead of <code class="docutils literal"><span class="pre">GwBasePattern</span></code></p>
+<p>The registration of commands should be done inside the <code class="docutils literal"><span class="pre">activation()</span></code> routine to make sure that our commands are only
+available, if our plugin really got activated:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span>
+
+
+ <span class="k">class</span> <span class="nc">CsvWatcherPlugin</span><span class="p">(</span><span class="n">GwCommandsPattern</span><span class="p">):</span>
+     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     A plugin for monitoring csv files.</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_watch&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Monitors csv files&quot;</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_command</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;watcher command called&quot;</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>And again a test:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span>
+<span class="go">2017-01-14 15:29:32,742 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 15:29:32,956 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 15:29:32,957 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 15:29:32,957 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 15:29:32,958 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 15:29:32,958 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 15:29:32,959 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">Usage: csv_manager [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">Options:</span>
+<span class="go">  --help  Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  csv_watch    Monitors csv files  # &lt;--- That&#39;s our command.</span>
+<span class="go">  hello_world  Prints hello world</span>
+<span class="go">  plugin_list  List all plugins</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span>
+<span class="go">2017-01-14 15:30:47,952 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 15:30:48,134 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 15:30:48,135 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 15:30:48,135 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 15:30:48,136 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 15:30:48,137 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 15:30:48,137 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">2017-01-14 15:30:48,137 - INFO  - watcher command called  # &lt;--- That&#39;s our output</span>
+</pre></div>
+</div>
+<div class="section" id="adding-a-command-argument">
+<h3>1.5.4.1. Adding a command argument<a class="headerlink" href="#adding-a-command-argument" title="Permalink to this headline">¶</a></h3>
+<p>Our command gets called, but we still need the information which file our plugin must monitor.
+Let&#8217;s add an argument to our command:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span>  <span class="n">Argument</span>
+<span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span>
+
+
+<span class="k">class</span> <span class="nc">CsvWatcherPlugin</span><span class="p">(</span><span class="n">GwCommandsPattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A plugin for monitoring csv files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Argument for our command, which stores the csv file path.</span>
+        <span class="n">path_argument</span> <span class="o">=</span> <span class="n">Argument</span><span class="p">((</span><span class="s2">&quot;csv_file&quot;</span><span class="p">,),</span>
+                                 <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                 <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_watch&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;Monitors csv files&quot;</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_command</span><span class="p">,</span>
+                               <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">path_argument</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;watcher command called with csv_path: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>groundwork use the library <a class="reference external" href="http://click.pocoo.org/">click</a> for handling the command line interface.
+Therefore arguments are defined by using the <code class="docutils literal"><span class="pre">Argument</span></code> class from click [1].</p>
+<p>In line 16 - 18 we define our argument. It gets a name and is marked as required. We also define the type, so that we
+can be sure that our function always gets a string.</p>
+<p>The <code class="docutils literal"><span class="pre">self.commands.register()</span></code> function has a parameters called <code class="docutils literal"><span class="pre">params</span></code>, which takes a list of
+arguments and options [23].</p>
+<p>We have also updated our command function to accept the argument as function parameter [25].
+The given csv file location will also be used inside our log message [26].</p>
+<p>Time for a small test:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
+<span class="go">2017-01-14 15:51:40,617 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 15:51:40,820 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 15:51:40,821 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 15:51:40,821 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 15:51:40,821 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 15:51:40,822 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 15:51:40,823 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">2017-01-14 15:51:40,823 - INFO  - watcher command called with csv_path: test.csv  # &lt;-- It works!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="handling-csv-files">
+<h2>1.5.5. Handling csv files<a class="headerlink" href="#handling-csv-files" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s time to start coding the csv handling part of our plugin.
+At first we need a way to read the content of a csv file.
+Luckily Python provides a built-in solution for this: <a class="reference external" href="https://docs.python.org/3/library/csv.html">The csv module</a></p>
+<p>But before we start, we need a <code class="docutils literal"><span class="pre">test.csv</span></code> file. Create one in the <code class="docutils literal"><span class="pre">CSV-Manager</span></code> folder
+and add the following content:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">,</span><span class="n">city</span><span class="p">,</span><span class="n">phone</span>
+<span class="n">Daniel</span><span class="p">,</span><span class="n">Munich</span><span class="p">,</span><span class="mi">123</span><span class="o">-</span><span class="mi">456</span>
+<span class="n">Maria</span><span class="p">,</span><span class="n">Cologne</span><span class="p">,</span><span class="mi">111</span><span class="o">/</span><span class="mi">222</span>
+<span class="n">Richard</span><span class="p">,</span><span class="n">Paris</span><span class="p">,</span><span class="mi">0445</span><span class="o">-</span><span class="mi">4545</span><span class="o">-</span><span class="mi">4545</span>
+<span class="n">Anabel</span><span class="p">,</span><span class="n">London</span><span class="p">,</span><span class="o">-</span>
+</pre></div>
+</div>
+<p>Now we can write the part for reading the csv file:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">):</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;watcher command called with csv_path: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+     <span class="c1"># Check if the given csv_file really exists</span>
+     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">csv_file</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;CSV file </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file_object</span><span class="p">:</span>
+         <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csv_file_object</span><span class="p">)</span>
+         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Ok that wasn&#8217;t much code and all the magic is done in the lines 8-11. As you can see, we read the csv file and
+log every single line. Nothing more yet.</p>
+<p>And again the test on the command line:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
+<span class="go">2017-01-14 16:32:35,179 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 16:32:35,361 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 16:32:35,362 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 16:32:35,362 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 16:32:35,363 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 16:32:35,364 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 16:32:35,364 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">2017-01-14 16:32:35,364 - INFO  - watcher command called with csv_path: test.csv</span>
+<span class="go">2017-01-14 16:32:35,365 - INFO  - {&#39;name&#39;: &#39;Daniel&#39;, &#39;city&#39;: &#39;Munich&#39;, &#39;phone&#39;: &#39;123-456&#39;}</span>
+<span class="go">2017-01-14 16:32:35,365 - INFO  - {&#39;name&#39;: &#39;Maria&#39;, &#39;city&#39;: &#39;Cologne&#39;, &#39;phone&#39;: &#39;111/222&#39;}</span>
+<span class="go">2017-01-14 16:32:35,365 - INFO  - {&#39;name&#39;: &#39;Richard&#39;, &#39;city&#39;: &#39;Paris&#39;, &#39;phone&#39;: &#39;0445-4545-4545&#39;}</span>
+<span class="go">2017-01-14 16:32:35,365 - INFO  - {&#39;name&#39;: &#39;Anabel&#39;, &#39;city&#39;: &#39;London&#39;, &#39;phone&#39;: &#39;-&#39;}</span>
+</pre></div>
+</div>
+<p>As you can see, each row is a dictionary and the first row of our csv-file was selected to hold the needed
+dictionary key names.</p>
+<div class="section" id="making-csv-diffs">
+<h3>1.5.5.1. Making csv diffs<a class="headerlink" href="#making-csv-diffs" title="Permalink to this headline">¶</a></h3>
+<p>Our application shall monitor csv files for changes. Therefore it must periodically read a file and compare its
+current content with an old, stored content. Let&#8217;s add this to our <code class="docutils literal"><span class="pre">csv_watcher_command</span></code> function:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;watcher command called with csv_path: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+    <span class="c1"># Check if the given csv_file really exists</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">csv_file</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;CSV file </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+    <span class="c1"># Start with an &quot;empty csv file&quot;</span>
+    <span class="n">old_content</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">csv_file_object</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span>
+        <span class="n">new_content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csv_file_object</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">new_content</span> <span class="o">!=</span> <span class="n">old_content</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Change detected&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Check if there are new/changed rows</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">new_content</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_content</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;New row: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">row</span><span class="p">)</span>
+
+            <span class="c1"># Check if old rows are missing</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">old_content</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_content</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Missing row: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">row</span><span class="p">)</span>
+
+            <span class="c1"># Store the current csv file content as old content</span>
+            <span class="n">old_content</span> <span class="o">=</span> <span class="n">new_content</span>
+
+        <span class="n">csv_file_object</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># Wait 2 seconds</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>To allow the easiest way of comparision, the csv content is transformed to a python list, where each list element
+represents a single row [13]. After that we compare the old and the new list [15].</p>
+<p>The code detects changes per row. If one single value has changed, the whole row is detected as &#8220;New row&#8221; [19-21].
+And the old row is detected as &#8220;Missing row&#8221; [24-26].</p>
+<p>Let&#8217;s see an output example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
+<span class="go">2017-01-14 17:20:17,477 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 17:20:17,660 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 17:20:17,660 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 17:20:17,661 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 17:20:17,661 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 17:20:17,662 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 17:20:17,662 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">2017-01-14 17:20:17,663 - INFO  - watcher command called with csv_path: test.csv</span>
+<span class="go">2017-01-14 17:20:17,663 - INFO  - Change detected</span>
+<span class="go">2017-01-14 17:20:17,663 - INFO  - New row: {&#39;city&#39;: &#39;Munich&#39;, &#39;name&#39;: &#39;Daniel&#39;, &#39;phone&#39;: &#39;123-456&#39;}</span>
+<span class="go">2017-01-14 17:20:17,663 - INFO  - New row: {&#39;city&#39;: &#39;Cologne&#39;, &#39;name&#39;: &#39;Maria&#39;, &#39;phone&#39;: &#39;111/222&#39;}</span>
+<span class="go">2017-01-14 17:20:17,663 - INFO  - New row: {&#39;city&#39;: &#39;Paris&#39;, &#39;name&#39;: &#39;Richard&#39;, &#39;phone&#39;: &#39;0445-4545-4545&#39;}</span>
+<span class="go">2017-01-14 17:20:17,663 - INFO  - New row: {&#39;city&#39;: &#39;London&#39;, &#39;name&#39;: &#39;Anabel&#39;, &#39;phone&#39;: &#39;-&#39;}</span>
+<span class="go">2017-01-14 17:20:33,682 - INFO  - Change detected</span>
+<span class="go">2017-01-14 17:20:33,682 - INFO  - New row: {&#39;city&#39;: &#39;London&#39;, &#39;name&#39;: &#39;Anabel&#39;, &#39;phone&#39;: &#39;777-888888&#39;}</span>
+<span class="go">2017-01-14 17:20:33,683 - INFO  - Missing row: {&#39;city&#39;: &#39;London&#39;, &#39;name&#39;: &#39;Anabel&#39;, &#39;phone&#39;: &#39;-&#39;}</span>
+<span class="go">^C</span>
+<span class="go">Aborted!</span>
+</pre></div>
+</div>
+<p>At the beginning the whole csv file content is detected as change, because we compared its content to an empty list.
+In <a class="reference internal" href="../chapter_2/index.html#chapter-2"><span class="std std-ref">groundwork and databases</span></a> we will fix this behavior by using a database to store old csv content.</p>
+<p>Another problem is that we are using an infinite loop to check our csv-file. See lines 11 and 34 in the code example
+above (<code class="docutils literal"><span class="pre">while</span> <span class="pre">True</span> <span class="pre">...</span></code>). Therefore we have to hardly stop our application by pressing <strong>Ctrl + C</strong>.
+Also other code from plugins is blocked, too. So in a complex application nothing would work anymore except our
+csv watcher code.</p>
+<p>Let&#8217;s fix this by using a thread.</p>
+</div>
+</div>
+<div class="section" id="working-with-threads">
+<h2>1.5.6. Working with threads<a class="headerlink" href="#working-with-threads" title="Permalink to this headline">¶</a></h2>
+<p>Threads can be used on a computer to execute something in parallel to the current execution.
+They are an ideal solution for long running tasks like our csv watcher.</p>
+<p>groundwork makes the usage of threads very easy. All we need is the <code class="docutils literal"><span class="pre">GwThreadPattern</span></code> and a python function, which
+shall be executed in the new thread.</p>
+<p>To see the whole picture, here is the complete code of our plugin <code class="docutils literal"><span class="pre">CsvWatcherPlugin</span></code>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">os</span>
+ <span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span>  <span class="n">Argument</span>
+ <span class="kn">import</span> <span class="nn">csv</span>
+ <span class="kn">import</span> <span class="nn">time</span>
+ <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwCommandsPattern</span><span class="p">,</span> <span class="n">GwThreadsPattern</span>
+
+
+ <span class="k">class</span> <span class="nc">CsvWatcherPlugin</span><span class="p">(</span><span class="n">GwCommandsPattern</span><span class="p">,</span> <span class="n">GwThreadsPattern</span><span class="p">):</span>
+     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     A plugin for monitoring csv files.</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="bp">None</span>
+
+     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+         <span class="c1"># Argument for our command, which stores the csv file path.</span>
+         <span class="n">path_argument</span> <span class="o">=</span> <span class="n">Argument</span><span class="p">((</span><span class="s2">&quot;csv_file&quot;</span><span class="p">,),</span>
+                                  <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                  <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+         <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_watch&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Monitors csv files&quot;</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_command</span><span class="p">,</span>
+                                <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">path_argument</span><span class="p">])</span>
+
+     <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
+
+         <span class="c1"># Register thread</span>
+         <span class="n">csv_thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_thread&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_thread</span><span class="p">,</span>
+                                            <span class="s2">&quot;Thread for monitoring a csv file in background&quot;</span><span class="p">)</span>
+         <span class="c1"># Start thread</span>
+         <span class="n">csv_thread</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+     <span class="k">def</span> <span class="nf">csv_watcher_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
+         <span class="n">csv_file</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">csv_file</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;watcher command called with csv_path: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+         <span class="c1"># Check if the given csv_file really exists</span>
+         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">csv_file</span><span class="p">):</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;CSV file </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
+
+         <span class="c1"># Start with an &quot;empty csv file&quot;</span>
+         <span class="n">old_content</span> <span class="o">=</span> <span class="p">[]</span>
+
+         <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+             <span class="n">csv_file_object</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span>
+             <span class="n">new_content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csv_file_object</span><span class="p">))</span>
+
+             <span class="k">if</span> <span class="n">new_content</span> <span class="o">!=</span> <span class="n">old_content</span><span class="p">:</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Change detected&quot;</span><span class="p">)</span>
+
+                 <span class="c1"># Check if there are new/changed rows</span>
+                 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">new_content</span><span class="p">:</span>
+                     <span class="k">if</span> <span class="n">row</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_content</span><span class="p">:</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;New row: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">row</span><span class="p">)</span>
+
+                 <span class="c1"># Check if old rows are missing</span>
+                 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">old_content</span><span class="p">:</span>
+                     <span class="k">if</span> <span class="n">row</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_content</span><span class="p">:</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Missing row: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">row</span><span class="p">)</span>
+
+                 <span class="c1"># Store the current csv file content as old content</span>
+                 <span class="n">old_content</span> <span class="o">=</span> <span class="n">new_content</span>
+
+             <span class="n">csv_file_object</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+             <span class="c1"># Wait 2 seconds</span>
+             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>We have created a new function <code class="docutils literal"><span class="pre">csv_watcher_thread()</span></code> and moved all code from
+<code class="docutils literal"><span class="pre">csv_watcher_command()</span></code> to it (see lines 29-72).</p>
+<p><code class="docutils literal"><span class="pre">csv_watcher_command()</span></code> is now responsible for registering and starting the thread [32-36].
+It also stores the received csv_file to the plugin class itself, so that the thread has access to it [39].</p>
+<p>The thread function <code class="docutils literal"><span class="pre">csv_watcher_thread()</span></code> gets a plugin instance as second parameter when the function is called
+by the thread-handler. This plugin instance is the instance which has registered the thread.
+As our plugin class has done this, the thread function has now access to all plugin variables and functions.
+So also to <code class="docutils literal"><span class="pre">csv_file</span></code> [39].</p>
+<p>We still have an infinite loop in the thread. Therefore we still must exit our application with <strong>Ctrl + c</strong>.
+But compared to the old version, our watcher is not blocking the rest of our application anymore.</p>
+</div>
+<div class="section" id="add-interval-option">
+<h2>1.5.7. Add interval option<a class="headerlink" href="#add-interval-option" title="Permalink to this headline">¶</a></h2>
+<p>Currently our application checks the file every 2 seconds. This value is hard coded and that&#8217;s not a good idea.
+We should allow the user to define the interval. So let&#8217;s change the code a little bit and add an optional command option.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span> <span class="n">Argument</span><span class="p">,</span> <span class="n">Option</span>
+
+ <span class="o">...</span>
+
+     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+     <span class="c1"># Argument for our command, which stores the csv file path.</span>
+     <span class="n">path_argument</span> <span class="o">=</span> <span class="n">Argument</span><span class="p">((</span><span class="s2">&quot;csv_file&quot;</span><span class="p">,),</span>
+                              <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                              <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+     <span class="n">interval_option</span> <span class="o">=</span> <span class="n">Option</span><span class="p">((</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--interval&quot;</span><span class="p">),</span>
+                              <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Sets the time between two checks in seconds&quot;</span><span class="p">)</span>
+
+     <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_watch&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;Monitors csv files&quot;</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_command</span><span class="p">,</span>
+                            <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">path_argument</span><span class="p">,</span> <span class="n">interval_option</span><span class="p">])</span>
+
+     <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">csv_interval</span> <span class="o">=</span> <span class="n">interval</span>
+         <span class="o">...</span>
+
+     <span class="k">def</span> <span class="nf">csv_watcher_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
+         <span class="o">...</span>
+         <span class="c1"># Wait x seconds</span>
+         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">plugin</span><span class="o">.</span><span class="n">csv_interval</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s check, if the new option is mentioned in the help text for the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="o">--</span><span class="n">help</span>
+<span class="go">2017-01-14 18:49:03,390 - INFO  - Application signals initialised</span>
+<span class="go">2017-01-14 18:49:03,595 - INFO  - Application commands initialised</span>
+<span class="go">2017-01-14 18:49:03,595 - INFO  - Plugins initialised: csv_manager_plugin</span>
+<span class="go">2017-01-14 18:49:03,595 - INFO  - Application documents initialised</span>
+<span class="go">2017-01-14 18:49:03,596 - INFO  - Plugins initialised: GwPluginsInfo</span>
+<span class="go">2017-01-14 18:49:03,596 - INFO  - Application threads initialised</span>
+<span class="go">2017-01-14 18:49:03,597 - INFO  - Plugins initialised: CsvWatcherPlugin</span>
+<span class="go">2017-01-14 18:49:03,597 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo, CsvWatcherPlugin</span>
+<span class="go">Usage: csv_manager csv_watch [OPTIONS] CSV_FILE</span>
+
+<span class="go">  Monitors csv files</span>
+
+<span class="go">Options:</span>
+<span class="go">  -i, --interval INTEGER  Sets the time between two checks in seconds</span>
+<span class="go">  --help                  Show this message and exit.</span>
+</pre></div>
+</div>
+<p>That&#8217;s it, We have created an awesome plugin, which can be started and configured via a command on the command line.</p>
+<p>On the next chapter <a class="reference internal" href="first_pattern.html#first-pattern"><span class="std std-ref">First own Pattern</span></a> we take a look into patterns and make our csv-watcher code reusable for other
+plugins.</p>
+</div>
 </div>
 
 
@@ -76,7 +947,34 @@
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/gw_logo.png" alt="Logo"/>
-            </a></p><h3>Related Topics</h3>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.5. First own Plugin</a><ul>
+<li><a class="reference internal" href="#example-application">1.5.1. Example Application</a><ul>
+<li><a class="reference internal" href="#sequence-diagram">1.5.1.1. Sequence diagram</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preparation">1.5.2. Preparation</a></li>
+<li><a class="reference internal" href="#birth-of-a-plugin">1.5.3. Birth of a plugin</a><ul>
+<li><a class="reference internal" href="#plugin-registration">1.5.3.1. Plugin registration</a></li>
+<li><a class="reference internal" href="#first-run">1.5.3.2. First run</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-commands">1.5.4. Using commands</a><ul>
+<li><a class="reference internal" href="#adding-a-command-argument">1.5.4.1. Adding a command argument</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-csv-files">1.5.5. Handling csv files</a><ul>
+<li><a class="reference internal" href="#making-csv-diffs">1.5.5.1. Making csv diffs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-threads">1.5.6. Working with threads</a></li>
+<li><a class="reference internal" href="#add-interval-option">1.5.7. Add interval option</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">1. groundwork basics</a><ul>
