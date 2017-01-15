@@ -16,4 +16,5 @@ And finally we will extend this package with our first own pattern and plugins.
    first_project
    first_plugin
    first_pattern
+   signals_receivers
    second_plugin
