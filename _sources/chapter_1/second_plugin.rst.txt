@@ -1,6 +1,6 @@
 .. _second_plugin:
 
-Second Plugin
+Second plugin
 =============
 
 1. Second plugin shall perform output and provide a document

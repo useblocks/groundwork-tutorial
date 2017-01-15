@@ -5,7 +5,7 @@
 
 .. _first_plugin:
 
-First own Plugin
+First own plugin
 ================
 
 In this chapter we will create our first plugin, register a command, work with csv files and create a thread.
