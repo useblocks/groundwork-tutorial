@@ -38,9 +38,6 @@ class CsvWatcherPlugin(GwCommandsPattern, CsvWatcherPattern):
                              description="Gets called for each csv change")
 
     def csv_watcher_command(self, csv_file, interval=10):
-        self.csv_file = csv_file
-        self.csv_interval = interval
-
         # Register thread
         self.watcher_thread = self.csv_watcher.register(csv_file, interval, "Watcher for %s" % csv_file)
 

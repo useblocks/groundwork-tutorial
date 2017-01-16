@@ -80,7 +80,7 @@ class CsvWatcher:
         self.description = description
 
         # Register thread
-        self.csv_thread = plugin.threads.register("csv_thread", self._csv_watcher_thread,
+        self.csv_thread = plugin.threads.register("csv_thread_%s" % csv_file, self._csv_watcher_thread,
                                                   "Thread for monitoring a csv file in background")
 
         self.running = self.csv_thread.running
@@ -89,12 +89,12 @@ class CsvWatcher:
         self.csv_thread.run()
 
     def _csv_watcher_thread(self, plugin):
-        csv_file = plugin.csv_file
-        interval = plugin.csv_interval
+        csv_file = self.csv_file
+        interval = self.interval
 
         # Check if the given csv_file really exists
         if not os.path.exists(csv_file):
-            self.log.error("CSV file %s does not exist" % csv_file)
+            plugin.log.error("CSV file %s does not exist" % csv_file)
 
         # Start with an "empty csv file"
         old_content = []

@@ -94,7 +94,7 @@ class CsvWatcher:
 
         # Check if the given csv_file really exists
         if not os.path.exists(csv_file):
-            self.log.error("CSV file %s does not exist" % csv_file)
+            plugin.log.error("CSV file %s does not exist" % csv_file)
 
         # Start with an "empty csv file"
         old_content = []

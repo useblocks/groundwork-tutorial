@@ -34,9 +34,6 @@ class CsvWatcherPlugin(GwCommandsPattern, GwThreadsPattern):
                                params=[path_argument, interval_option])
 
     def csv_watcher_command(self, csv_file, interval=10):
-        self.csv_file = csv_file
-        self.csv_interval = interval
-
         # Register thread
         csv_thread = self.threads.register("csv_thread", self.csv_watcher_thread,
                                            "Thread for monitoring a csv file in background")

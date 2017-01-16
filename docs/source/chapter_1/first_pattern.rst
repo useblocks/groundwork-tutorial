@@ -158,8 +158,8 @@ So it is very easy for a plugin to request a single watcher and get all needed s
             self.description = description
 
             # Register thread
-            self.csv_thread = plugin.threads.register("csv_thread", self._csv_watcher_thread,
-                                                      "Thread for monitoring a csv file in background")
+            self.csv_thread = plugin.threads.register("csv_thread_%s" % csv_file, self._csv_watcher_thread,
+                                                  "Thread for monitoring a csv file in background")
 
             self.running = self.csv_thread.running
 
@@ -256,9 +256,6 @@ Now let's take a look into our cleaned plugin class:
                                    params=[path_argument, interval_option])
 
         def csv_watcher_command(self, csv_file, interval=10):
-            self.csv_file = csv_file
-            self.csv_interval = interval
-
             # Register thread
             self.watcher_thread = self.csv_watcher.register(csv_file, interval, "Watcher for %s" % csv_file)
 

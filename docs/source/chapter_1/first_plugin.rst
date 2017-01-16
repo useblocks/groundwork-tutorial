@@ -552,11 +552,9 @@ To see the whole picture, here is the complete code of our plugin ``CsvWatcherPl
                                    params=[path_argument])
 
         def csv_watcher_command(self, csv_file):
-            self.csv_file = csv_file
-
             # Register thread
-            csv_thread = self.threads.register("csv_thread", self.csv_watcher_thread,
-                                               "Thread for monitoring a csv file in background")
+            self.csv_thread = plugin.threads.register("csv_thread_%s" % csv_file, self._csv_watcher_thread,
+                                                      "Thread for monitoring a csv file in background")
             # Start thread
             csv_thread.run()
 
@@ -644,8 +642,6 @@ We should allow the user to define the interval. So let's change the code a litt
                                params=[path_argument, interval_option])
 
         def csv_watcher_command(self, csv_file, interval=10):
-            self.csv_file = csv_file
-            self.csv_interval = interval
             ...
 
         def csv_watcher_thread(self, plugin):
