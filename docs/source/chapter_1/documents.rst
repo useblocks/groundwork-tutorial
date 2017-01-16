@@ -11,12 +11,34 @@ Using the config
 Right now our plugin ``CsvWathcerPlugin`` only monitors a file, if the user has requested this by calling the related
 command ``csv_watch``.
 
-Let's add the possibility to define a list of file in the configuration, which shall be always monitored.
+Let's add the possibility to define a list of files in the configuration, which shall be always monitored.
 
-Open ``csv_watcher_plugin.py`` and add the following code.
+Open ``csv_watcher_plugin.py`` and add the following code at the end of the ``activation`` routine::
 
-Preparation
------------
+    csv_files_by_config = self.app.config.get("CSV_FILES", [])
+    csv_interval_by_config = self.app.config.get("CSV_INTERVAL", 5)
+
+    for csv_file in csv_files_by_config:
+        self.csv_watcher_command(csv_file, csv_interval_by_config
+
+In the first two lines we requested two configuration values. for the case that a requested
+configuration parameter is not available in the config, we have defined a default value.
+
+In the last 2 lines we execute our command for each configured file.
+As the command routine only registers a new thread and starts it, reusing of this function isn't a problem.
+
+From now on our plugin will always watch configured files, even if the command ``csv_watch`
+itself is not used by the user.
+
+.. note::
+   Do not run ``csv_watch`` onf a file, which is also configured to be watched.
+   This would result in an exception, as it is not supported to monitor a file more than once.
+
+Preparation for documents
+-------------------------
+
+Let's create a second plugin, which will show the csv_watcher results inside an document.
+Later we will also create some kind of a change history for csv files.
 
 Create a folder ``csv_document_plugin`` inside the plugin folder of your csv_manager package.
 
@@ -107,7 +129,7 @@ Attention, we have added 2 plugins: ``CsvDocumentsPlugin`` and ``GwDocumentsInfo
 
 Now we are ready to test it::
 
-    >>> csv_manager docs
+    >>> csv_manager doc
     CsvDocument Content
     -------------------------------------------------------------------------------
     This document is registered by 'CsvDocumentPlugin' under the name 'CsvDocument'
@@ -132,7 +154,7 @@ So let's create it and add the following content::
 
 groundwork uses `restructured text (rst) <http://docutils.sourceforge.net/rst.html>`_ as syntax.
 rst was designed to create human and machine readable text files, which can be transformed to other outputs like
-html, pdf, docx, ...n
+html, pdf, docx, ...
 
 A `brief overview <http://www.sphinx-doc.org/en/1.5.1/rest.html>`_ can be found in the sphinx documentation.
 
@@ -140,7 +162,7 @@ However, you see the two **??** ?. There should be a number, but this numbers de
 value may change during runtime.
 
 Luckily groundwork documents are also supporting `jinja <http://jinja.pocoo.org/docs/2.9/templates/>`_, which is
-a template language and allows use to use the content of given python variables.
+a template language and allows us to use the content of given python variables.
 
 Change the content to::
 
@@ -149,10 +171,25 @@ Change the content to::
 
     Registered csv watchers: {{ plugin.app.csv_watcher.get()|length}}
 
+.. hint::
+   Be sure to use ``plugin.app.csv_watcher.get()``! The ``app`` is important otherwise we would
+   only get csv_watchers, which were registered by our new plugin. And that's 0.
 
+Archive changes
+---------------
 
+Let's start to archive the changes from csv_files, so that we get a history of changes.
 
+All we need is:
 
+1. Listen to the signal ``csv_watcher_change``.
+2. Call a function, which archives the change.
+3. Create a archive data object.
+
+So open ``csv_document_plugin.py`` and modify the content to the following:
+
+.. literalinclude:: /../../code/chapter_1/05_documents/CSV-Manager/csv_manager/plugins/csv_document_plugin/csv_document_plugin.py
+   :linenos:
 
 1. Second plugin shall perform output and provide a document
 2. Create second plugin with just created pattern
