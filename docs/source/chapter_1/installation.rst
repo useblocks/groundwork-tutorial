@@ -7,10 +7,10 @@ Virtual Environment
 -------------------
 
 Before we will install groundwork, it would be great if we had a fresh and untouched Python installation.
-Luckily it is not necessary to do a complete new installation, because Python support virtual environments.
+Luckily it is not necessary to do a complete new installation, because Python supports virtual environments.
 
-These virtual environments are based on an already installed Python environment, but all additional
-installed packages are somehow wiped out.
+These virtual environments are based on an already installed Python installation, but all additional
+installed packages not visible within the virtual environment.
 
 .. note::
    groundwork supports Python >3.4 only. Please make sure your installed Python Environment is correct.
@@ -40,7 +40,7 @@ After activating your new virtual environment, we simply use ``pip`` to install 
 
     pip install groundwork
 
-This installs groundwork to the virtual environment.
+The virtual environment version of pip is used which installs groundwork to the virtual environment.
 
 Alternative: Installation from source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
