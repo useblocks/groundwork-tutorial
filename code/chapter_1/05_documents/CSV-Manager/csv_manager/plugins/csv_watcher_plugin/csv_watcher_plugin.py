@@ -37,9 +37,15 @@ class CsvWatcherPlugin(GwCommandsPattern, CsvWatcherPattern):
                              function=self.csv_change_monitor,
                              description="Gets called for each csv change")
 
+        csv_files_by_config = self.app.config.get("CSV_FILES", [])
+        csv_interval_by_config = self.app.config.get("CSV_INTERVAL", 5)
+
+        for csv_file in csv_files_by_config:
+            self.csv_watcher_command(csv_file, csv_interval_by_config)
+
     def csv_watcher_command(self, csv_file, interval=10):
-        self.csv_file = csv_file
-        self.csv_interval = interval
+        # self.csv_file = csv_file
+        # self.csv_interval = interval
 
         # Register thread
         self.watcher_thread = self.csv_watcher.register(csv_file, interval, "Watcher for %s" % csv_file)

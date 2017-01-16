@@ -22,7 +22,7 @@ class CsvWatcherPattern(GwThreadsPattern):
 
         # Registers a signal, which get s called every time a change
         # is detected inside an watched csv file.
-        if self.signals.get("csv_watcher_change") is None:
+        if self.app.signals.get("csv_watcher_change") is None:
             self.signals.register(signal="csv_watcher_change",
                                   description="indicates a change in a monitored csv file.")
 
@@ -43,10 +43,10 @@ class CsvWatcherPlugin:
         return self._app.csv_watcher.register(csv_file, interval, description, self._plugin)
 
     def unregister(self, csv_file):
-        self._app.csv_watcher.unregister(csv_file, self._plugin)
+        return self._app.csv_watcher.unregister(csv_file, self._plugin)
 
     def get(self, csv_file=None):
-        self._app.csv_watcher.get(csv_file, self._plugin)
+        return self._app.csv_watcher.get(csv_file, self._plugin)
 
 
 class CsvWatcherApplication:
@@ -69,7 +69,7 @@ class CsvWatcherApplication:
         pass
 
     def get(self, csv_file=None, plugin=None):
-        gw_get(self._watchers, csv_file, plugin)
+        return gw_get(self._watchers, csv_file, plugin)
 
 
 class CsvWatcher:
@@ -80,7 +80,7 @@ class CsvWatcher:
         self.description = description
 
         # Register thread
-        self.csv_thread = plugin.threads.register("csv_thread", self._csv_watcher_thread,
+        self.csv_thread = plugin.threads.register("csv_thread_%s" % csv_file, self._csv_watcher_thread,
                                                   "Thread for monitoring a csv file in background")
 
         self.running = self.csv_thread.running
@@ -89,8 +89,8 @@ class CsvWatcher:
         self.csv_thread.run()
 
     def _csv_watcher_thread(self, plugin):
-        csv_file = plugin.csv_file
-        interval = plugin.csv_interval
+        csv_file = self.csv_file
+        interval = self.interval
 
         # Check if the given csv_file really exists
         if not os.path.exists(csv_file):

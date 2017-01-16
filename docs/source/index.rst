@@ -43,5 +43,3 @@ take a look into :ref:`chapter_n`.
    chapter_n/index
    appendix/index
    api/index
-
-:ref:`modindex`
