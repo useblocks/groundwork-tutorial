@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.8. Using configs and documents &#8212; groundwork tutorial 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. groundwork and databases" href="../chapter_2/index.html" />
+    <link rel="prev" title="1.7. Adding signals and receivers" href="signals_receivers.html" />
+     
+        
+    <link rel="apple-touch-icon" href="../_static/""" />
+        
+    <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../chapter_2/index.html" title="2. groundwork and databases"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="signals_receivers.html" title="1.7. Adding signals and receivers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">groundwork tutorial 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. groundwork basics</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-configs-and-documents">
+<span id="documents"></span><h1>1.8. Using configs and documents<a class="headerlink" href="#using-configs-and-documents" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter we will learn how to get access on the application configuration,
+create a second plugin, which will archive csv changes and show them inside a groundwork document.</p>
+<div class="section" id="using-the-config">
+<h2>1.8.1. Using the config<a class="headerlink" href="#using-the-config" title="Permalink to this headline">¶</a></h2>
+<p>Right now our plugin <code class="docutils literal"><span class="pre">CsvWathcerPlugin</span></code> only monitors a file, if the user has requested this by calling the related
+command <code class="docutils literal"><span class="pre">csv_watch</span></code>.</p>
+<p>Let&#8217;s add the possibility to define a list of files in the configuration, which shall always be monitored.</p>
+<p>Open <code class="docutils literal"><span class="pre">csv_watcher_plugin.py</span></code> and add the following code at the end of the <code class="docutils literal"><span class="pre">activation()</span></code> routine:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">csv_files_by_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CSV_FILES&quot;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">csv_interval_by_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CSV_INTERVAL&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">csv_file</span> <span class="ow">in</span> <span class="n">csv_files_by_config</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_command</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">csv_interval_by_config</span>
+</pre></div>
+</div>
+<p>In the first two lines we requested two configuration values. For the case that a requested
+configuration parameter is not available in the config, we have defined a default value.</p>
+<p>In the last 2 lines we execute our command for each configured file.
+As the command routine only registers a new thread and starts it, reusing of this function isn&#8217;t a problem.</p>
+<p>And don&#8217;t forget to update your <code class="docutils literal"><span class="pre">configuration.py</span></code> file in the application folder:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CSV_FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">]</span>
+<span class="n">CSV_INTERVAL</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>From now on our plugin will always watch configured files, even if the command <code class="docutils literal"><span class="pre">csv_watch</span></code>
+itself is not used by the user.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do not run <code class="docutils literal"><span class="pre">csv_watch</span></code> on a file, which is also configured to be watched.
+This would result in an exception, as our plugin does not support to monitor a file more than once.</p>
+</div>
+</div>
+<div class="section" id="preparation-for-documents">
+<h2>1.8.2. Preparation for documents<a class="headerlink" href="#preparation-for-documents" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s create a second plugin, which will show the csv_watcher results inside a document.
+Later we will also create some kind of a change history for csv files.</p>
+<p>Create a folder <code class="docutils literal"><span class="pre">csv_document_plugin</span></code> inside the plugin folder of your csv_manager package.</p>
+<p>Then add two files: <code class="docutils literal"><span class="pre">__init__.py</span></code> and <code class="docutils literal"><span class="pre">csv_document_plugin.py</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>CSV-Manager
+├── csv_manager
+│   ├── applications
+│   │   ├── configuration.py
+│   │   ├── csv_manager_app.py
+│   │   └── __init__.py
+│   ├── patterns
+│   │   ├── csv_watcher_pattern
+│   │   │   ├── csv_watcher_pattern.py
+│   │   │   ├── __init__.py
+│   │   │   └── __init__.py
+│   ├── plugins
+│   │   ├── csv_document_plugin
+│   │   │   ├── csv_document_plugin.py
+│   │   │   └── __init__.py
+│   │   ├── csv_watcher_plugin
+│   │   │   ├── csv_watcher_plugin.py
+│   │   │   └── __init__.py
+│   │   ├── csv_manager_plugin.py
+│   │   └── __init__.py
+│   └ ...
+└ ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-document">
+<h2>1.8.3. Create a document<a class="headerlink" href="#create-a-document" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s open <code class="docutils literal"><span class="pre">csv_document_plugin.py</span></code> and add the following:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwDocumentsPattern</span>
+
+
+ <span class="k">class</span> <span class="nc">CsvDocumentPlugin</span><span class="p">(</span><span class="n">GwDocumentsPattern</span><span class="p">):</span>
+     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CsvDocument&quot;</span><span class="p">,</span>
+                                 <span class="n">content</span><span class="o">=</span><span class="s2">&quot;CsvDocument Content&quot;</span><span class="p">,</span>
+                                 <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stores pass csv watcher activities&quot;</span><span class="p">)</span>
+
+     <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>Except line 10, nothing new happened. But as you can see we already have registered a document.</p>
+<div class="section" id="plugin-activation">
+<h3>1.8.3.1. Plugin activation<a class="headerlink" href="#plugin-activation" title="Permalink to this headline">¶</a></h3>
+<p>Before we can see our new document, we have to add our new plugin to the entry_points of our <code class="docutils literal"><span class="pre">setup.py</span></code> file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager = &quot;</span>
+                        <span class="s2">&quot;csv_manager.applications.csv_manager_app:start_app&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;groundwork.plugin&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin = &quot;</span>
+                          <span class="s2">&quot;csv_manager.plugins.csv_manager_plugin:&quot;</span>
+                          <span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span>  <span class="c1"># Do not forget the &quot;,&quot; here!</span>
+                          <span class="s2">&quot;csv_watcher_plugin = &quot;</span>
+                          <span class="s2">&quot;csv_manager.plugins.csv_watcher_plugin.csv_watcher_plugin:CsvWatcherPlugin&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;csv_document_plugin = &quot;</span>
+                          <span class="s2">&quot;csv_manager.plugins.csv_document_plugin.csv_document_plugin:CsvDocumentPlugin&quot;</span>
+                          <span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then we have to reinstall our csv_manager:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>And finally we have to add our plugin to the configuration of our application. So open <code class="docutils literal"><span class="pre">config.py</span></code> and
+add the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;csv_manager_plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwPluginsInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span><span class="p">,</span> <span class="s2">&quot;CsvDocumentPlugin&quot;</span><span class="p">,</span> <span class="s2">&quot;GwDocumentsInfo&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Attention, we have added 2 plugins: <code class="docutils literal"><span class="pre">CsvDocumentsPlugin</span></code> and <code class="docutils literal"><span class="pre">GwDocumentsInfo</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">GwDocumentsInfo</span></code> provides the <code class="docutils literal"><span class="pre">doc</span></code> command, which allows us to view documents on the console.</p>
+<p>Now we are ready to test it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">doc</span>
+<span class="go">CsvDocument Content</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">This document is registered by &#39;CsvDocumentPlugin&#39; under the name &#39;CsvDocument&#39;</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">Actions: [N]ext, E[x]it</span>
+<span class="go">Select your action [N]:</span>
+</pre></div>
+</div>
+<p>Yeah, that looks great.</p>
+</div>
+</div>
+<div class="section" id="using-rst-and-jinja">
+<h2>1.8.4. Using rst and jinja<a class="headerlink" href="#using-rst-and-jinja" title="Permalink to this headline">¶</a></h2>
+<p>Right now we do not have really helpful content in our document.
+As the content can be huge, we will store it in a new file called <code class="docutils literal"><span class="pre">cvs_document_content.rst</span></code> in our plugin folder.</p>
+<p>So let&#8217;s create it and add the following content:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>CSV Watcher Documentation
+=========================
+
+Registered csv watchers: ??
+</pre></div>
+</div>
+<p>groundwork uses <a class="reference external" href="http://docutils.sourceforge.net/rst.html">restructured text (rst)</a> as syntax.
+rst was designed to create human and machine readable text files, which can be transformed to other outputs like
+html, pdf, docx, ...</p>
+<p>A <a class="reference external" href="http://www.sphinx-doc.org/en/1.5.1/rest.html">brief overview</a> can be found in the sphinx documentation.</p>
+<p>However, you see the two <strong>??</strong> ?. There should be a number, but this number depends on registered watchers. So this
+value may change during runtime and can not be hard coded by ourselfs.</p>
+<p>Luckily groundwork documents are also supporting <a class="reference external" href="http://jinja.pocoo.org/docs/2.9/templates/">jinja</a>, which is
+a template language and allows us to use the content of given python variables.</p>
+<p>Change the content to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CSV</span> <span class="n">Watcher</span> <span class="n">Documentation</span>
+<span class="o">=========================</span>
+
+<span class="n">Registered</span> <span class="n">csv</span> <span class="n">watchers</span><span class="p">:</span> <span class="p">{{</span> <span class="n">plugin</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">csv_watcher</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">|</span><span class="n">length</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>In jinja <code class="docutils literal"><span class="pre">{{</span> <span class="pre">VARIABLE/FUNCTION</span> <span class="pre">}}</span></code> outputs the data of the given variable or function.
+And we use our plugin and its data structure to provide needed data.</p>
+<p>As <cite>get()</cite> will deliver a dictionary, we use <code class="docutils literal"><span class="pre">|length</span></code> to get the amount of entries.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be sure to use <code class="docutils literal"><span class="pre">plugin.app.csv_watcher.get()</span></code>! The <code class="docutils literal"><span class="pre">app</span></code> is important otherwise we would
+only get csv_watchers, which were registered by our new plugin. And that&#8217;s 0.</p>
+</div>
+<p>Ok, this value will still be somehow static, because we do not register new csv_watcher during runtime.</p>
+<p>One last thing, we have to mention our new content file during document registration.
+So we add it like this in our <code class="docutils literal"><span class="pre">csv_document_plugin.py</span></code>:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+     <span class="n">content_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_dir</span><span class="p">,</span> <span class="s1">&#39;csv_document_content.rst&#39;</span><span class="p">)</span>
+
+     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">content_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_content</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CsvDocument&quot;</span><span class="p">,</span>
+                                 <span class="n">content</span><span class="o">=</span><span class="n">doc_content</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+                                 <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stores pass csv watcher activities&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>There are some challenges to get the correct path for our file:</p>
+<ul class="simple">
+<li>We can not use a hard coded path here, because on another system this would be different</li>
+<li>We can also not use a relative path, because it would be relative to the working directory. And this can change.</li>
+</ul>
+<p>But we can get the absolute location of the python file, which contains our plugin class.
+And we know that our file is stored in the same directory.</p>
+<p>Line 2 extracts this directory and line 3 concatenate the folder and the file name. Please do not try to use
+string operations for creating a path. In most cases the calculated path would only work on a specific operating system
+(e.g. windows uses \ and linux uses / in paths).</p>
+</div>
+<div class="section" id="archive-changes">
+<h2>1.8.5. Archive changes<a class="headerlink" href="#archive-changes" title="Permalink to this headline">¶</a></h2>
+<p>To change the static behavior let&#8217;s start to archive the changes from csv_files,
+so that we get a living history of changes.</p>
+<p>All we need is:</p>
+<ol class="arabic simple">
+<li>Listen to the signal <code class="docutils literal"><span class="pre">csv_watcher_change</span></code>.</li>
+<li>Call a function, which archives the change.</li>
+<li>Create a archive data object.</li>
+</ol>
+<p>So open <code class="docutils literal"><span class="pre">csv_document_plugin.py</span></code> and modify the content to the following:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwDocumentsPattern</span>
+<span class="kn">from</span> <span class="nn">csv_manager.patterns</span> <span class="kn">import</span> <span class="n">CsvWatcherPattern</span>
+
+
+<span class="k">class</span> <span class="nc">CsvDocumentPlugin</span><span class="p">(</span><span class="n">CsvWatcherPattern</span><span class="p">,</span> <span class="n">GwDocumentsPattern</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">archive</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+        <span class="n">content_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_dir</span><span class="p">,</span> <span class="s1">&#39;csv_document_content.rst&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">content_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_content</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CsvDocument&quot;</span><span class="p">,</span>
+                                    <span class="n">content</span><span class="o">=</span><span class="n">doc_content</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+                                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stores pass csv watcher activities&quot;</span><span class="p">)</span>
+
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;csv_archive_receiver&quot;</span><span class="p">,</span> <span class="s2">&quot;csv_watcher_change&quot;</span><span class="p">,</span>
+</span><span class="hll">                             <span class="bp">self</span><span class="o">.</span><span class="n">_archive_csv_change</span><span class="p">,</span> <span class="s2">&quot;listen to changes to archive them.&quot;</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="k">def</span> <span class="nf">_archive_csv_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class="hll">        <span class="n">csv_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;csv_file&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class="hll">        <span class="n">new_rows</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_rows&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class="hll">        <span class="n">missing_rows</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;missing_rows&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="k">if</span> <span class="n">csv_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="hll">            <span class="k">if</span> <span class="n">csv_file</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span class="hll">                <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;current_version&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class="hll">                                          <span class="s2">&quot;versions&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+</span><span class="hll">
+</span><span class="hll">            <span class="n">current_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;current_version&quot;</span><span class="p">]</span>
+</span><span class="hll">            <span class="n">new_version</span> <span class="o">=</span> <span class="n">current_version</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;versions&quot;</span><span class="p">][</span><span class="n">new_version</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;new_rows&quot;</span><span class="p">:</span> <span class="n">new_rows</span><span class="p">,</span>
+</span><span class="hll">                                                               <span class="s2">&quot;missing_rows&quot;</span><span class="p">:</span> <span class="n">missing_rows</span><span class="p">}</span>
+</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;current_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+</span>
+    <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<p>The <code class="docutils literal"><span class="pre">_archive_csv_change</span></code> function will add all csv changes to a dictionary.
+For each file it will store the current version number (just an integer beginning at 0)
+and the related new and missing rows for each version.</p>
+<p>This information is also available in a groundwork documents, so let&#8217;s update our document content file to:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">CSV</span> <span class="n">Watcher</span> <span class="n">Documentation</span>
+<span class="o">=========================</span>
+
+<span class="n">Registered</span> <span class="n">csv</span> <span class="n">watchers</span><span class="p">:</span> <span class="p">{{</span> <span class="n">plugin</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">csv_watcher</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">|</span><span class="n">length</span><span class="p">}}</span>
+
+<span class="n">Files</span> <span class="ow">and</span> <span class="n">versions</span>
+<span class="o">------------------</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">csv_file</span> <span class="ow">in</span> <span class="n">plugin</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span><span class="n">key</span><span class="p">}}</span>
+    <span class="p">{{</span><span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="n">key</span><span class="o">|</span><span class="n">length</span><span class="p">}}</span>
+
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">csv_file</span><span class="p">[</span><span class="s2">&quot;versions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+        <span class="p">{{</span><span class="n">key</span><span class="p">}}</span>
+        <span class="n">Missing</span><span class="p">:</span> <span class="p">{{</span><span class="n">version</span><span class="p">[</span><span class="s2">&quot;missing_rows&quot;</span><span class="p">]}}</span>
+        <span class="n">New</span><span class="p">:</span> <span class="p">{{</span><span class="n">version</span><span class="p">[</span><span class="s2">&quot;new_rows&quot;</span><span class="p">]}}</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>We use some loops here to output our data.</p>
+<p>For each csv_file, we write the name and create an underline for it [9-10].
+Then for each version inside this csv_file we write the version and after that the missing rows and new rows.</p>
+<p>Let&#8217;s test it and see the output:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">doc</span>
+<span class="go">CSV Watcher Documentation</span>
+<span class="go">=========================</span>
+
+<span class="go">Registered csv watchers: 1</span>
+
+<span class="go">Files and versions</span>
+<span class="go">------------------</span>
+
+<span class="go">    test2.csv</span>
+<span class="go">    ~~~~~~~~~</span>
+
+
+<span class="go">        1</span>
+<span class="go">        Missing: [{&#39;city&#39;: &#39;London&#39;, &#39;name&#39;: &#39;Paula&#39;, &#39;phone&#39;: &#39;1111-222111&#39;}]</span>
+<span class="go">        New: [{&#39;city&#39;: &#39;London&#39;, &#39;name&#39;: &#39;Paula&#39;, &#39;phone&#39;: &#39;1111-22211&#39;}]</span>
+
+<span class="go">        2</span>
+<span class="go">        Missing: [{&#39;city&#39;: &#39;Cologne&#39;, &#39;name&#39;: &#39;Jeanette&#39;, &#39;phone&#39;: &#39;111/22223&#39;}]</span>
+<span class="go">        New: [{&#39;city&#39;: &#39;Cologne&#39;, &#39;name&#39;: &#39;Julia&#39;, &#39;phone&#39;: &#39;111/22223&#39;}]</span>
+
+
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">This document is registered by &#39;CsvDocumentPlugin&#39; under the name &#39;CsvDocument&#39;</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">Actions: [N]ext, E[x]it</span>
+<span class="go">Select your action [N]:</span>
+</pre></div>
+</div>
+<p>At the beginning there is no csv_file/version shown on the document page, because no change happened yet.
+So for the above output we have changed twice our csv file.</p>
+<p>The document must be rendered again, so to perform a &#8220;reload&#8221; we simply open the next page
+and then the previous page again: <strong>n + ENTER; p + ENTER</strong>;</p>
+<p>And that&#8217;s it. You have created a real time documentation of your csv_watcher and you are able
+to define files for monitoring in your application configuration.</p>
+<p>There is nothing more you could learn about the groundwork framework itself.
+But luckily there are still some groundwork extensions: groundwork-database and groundwork-web.</p>
+<p>On the next chapter <a class="reference internal" href="../chapter_2/index.html#chapter-2"><span class="std std-ref">groundwork and databases</span></a> we will use a database to store our history
+and we take a small look into the database-viewer for web applications.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/gw_logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.8. Using configs and documents</a><ul>
+<li><a class="reference internal" href="#using-the-config">1.8.1. Using the config</a></li>
+<li><a class="reference internal" href="#preparation-for-documents">1.8.2. Preparation for documents</a></li>
+<li><a class="reference internal" href="#create-a-document">1.8.3. Create a document</a><ul>
+<li><a class="reference internal" href="#plugin-activation">1.8.3.1. Plugin activation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-rst-and-jinja">1.8.4. Using rst and jinja</a></li>
+<li><a class="reference internal" href="#archive-changes">1.8.5. Archive changes</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">1. groundwork basics</a><ul>
+      <li>Previous: <a href="signals_receivers.html" title="previous chapter">1.7. Adding signals and receivers</a></li>
+      <li>Next: <a href="../chapter_2/index.html" title="next chapter">2. groundwork and databases</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/chapter_1/documents.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+    
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+    
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+ 
+        <div class="github_fork">
+            <a href="http://github.com/useblocks/groundwork-tutorial">
+                <img style="position: fixed; top: 0; right: 0; border: 0;"
+                     src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"
+                     alt="Fork me on GitHub">
+            </a>
+        </div>
+    
+
+
+    <div class="footer">
+      &copy; Copyright 2017, team useblocks.
+    </div>
+  </body>
+</html>

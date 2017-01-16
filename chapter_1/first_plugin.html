@@ -759,9 +759,7 @@ shall be executed in the new thread.</p>
 70
 71
 72
-73
-74
-75</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">os</span>
+73</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">os</span>
  <span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span>  <span class="n">Argument</span>
  <span class="kn">import</span> <span class="nn">csv</span>
  <span class="kn">import</span> <span class="nn">time</span>
@@ -790,11 +788,9 @@ shall be executed in the new thread.</p>
                                 <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">path_argument</span><span class="p">])</span>
 
      <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">):</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
-
          <span class="c1"># Register thread</span>
-         <span class="n">csv_thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_thread&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_watcher_thread</span><span class="p">,</span>
-                                            <span class="s2">&quot;Thread for monitoring a csv file in background&quot;</span><span class="p">)</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">csv_thread</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_thread_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_csv_watcher_thread</span><span class="p">,</span>
+                                                   <span class="s2">&quot;Thread for monitoring a csv file in background&quot;</span><span class="p">)</span>
          <span class="c1"># Start thread</span>
          <span class="n">csv_thread</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
@@ -880,9 +876,7 @@ We should allow the user to define the interval. So let&#8217;s change the code 
 25
 26
 27
-28
-29
-30</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span> <span class="n">Argument</span><span class="p">,</span> <span class="n">Option</span>
+28</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">click</span> <span class="kn">import</span> <span class="n">Argument</span><span class="p">,</span> <span class="n">Option</span>
 
  <span class="o">...</span>
 
@@ -904,8 +898,6 @@ We should allow the user to define the interval. So let&#8217;s change the code 
                             <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">path_argument</span><span class="p">,</span> <span class="n">interval_option</span><span class="p">])</span>
 
      <span class="k">def</span> <span class="nf">csv_watcher_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">csv_interval</span> <span class="o">=</span> <span class="n">interval</span>
          <span class="o">...</span>
 
      <span class="k">def</span> <span class="nf">csv_watcher_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>

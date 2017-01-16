@@ -571,3 +571,7 @@ td.code div.highlight pre {
     width: 717px;
     overflow: visible;
 }
+
+.highlight .hll {
+    background-color: #353535 !important;
+ }
