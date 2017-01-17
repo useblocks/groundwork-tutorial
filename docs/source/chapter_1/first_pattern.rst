@@ -11,15 +11,15 @@ First own pattern
 
 Patterns are used to provide technical, reusable resources to plugins. They are not related to the content of data,
 which they handle. And they provide no final interfaces to the users.
-Instead they inject some kind of an API into plugins, which inherit from them.
+Instead they inject an API into plugins, which inherit from them.
 
-A pattern gets automatically loaded when the first plugin, which inherit from it, gets initiated and activated.
+A pattern gets automatically loaded when the first plugin, which inherits from it, gets initiated and activated.
 And it gets deactivated when the last plugin, which inherit from it, gets deactivated.
 
 For our code example this means that the csv watcher would be the perfect pattern.
 There are several use cases, where a specific plugin could need the help of a csv watcher pattern.
 For instance to monitor measurement results or
-to import periodically user data from a provided tool export to another tool.
+to periodically import data from a tool which exports it's data to a file.
 
 Preparation
 -----------
@@ -44,8 +44,8 @@ In the new folder create two additional files: ``__init__.py`` and ``csv_watcher
     │   └ ...
     └ ...
 
-Code the pattern basement
--------------------------
+Code the pattern base
+---------------------
 
 Open the ``csv_watcher_pattern.py`` file and add the following:
 
