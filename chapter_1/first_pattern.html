@@ -71,7 +71,7 @@
 <ul class="simple">
 <li><a class="reference internal" href="#first-own-pattern" id="id2">First own pattern</a><ul>
 <li><a class="reference internal" href="#preparation" id="id3">Preparation</a></li>
-<li><a class="reference internal" href="#code-the-pattern-basement" id="id4">Code the pattern basement</a></li>
+<li><a class="reference internal" href="#code-the-pattern-base" id="id4">Code the pattern base</a></li>
 <li><a class="reference internal" href="#moving-the-csv-logic" id="id5">Moving the csv logic</a></li>
 <li><a class="reference internal" href="#all-changed-files" id="id6">All changed files</a><ul>
 <li><a class="reference internal" href="#csv-watcher-pattern-py" id="id7">csv_watcher_pattern.py</a></li>
@@ -89,13 +89,13 @@
 <span id="first-pattern"></span><h1>1.6. First own pattern<a class="headerlink" href="#first-own-pattern" title="Permalink to this headline">¶</a></h1>
 <p>Patterns are used to provide technical, reusable resources to plugins. They are not related to the content of data,
 which they handle. And they provide no final interfaces to the users.
-Instead they inject some kind of an API into plugins, which inherit from them.</p>
-<p>A pattern gets automatically loaded when the first plugin, which inherit from it, gets initiated and activated.
+Instead they inject an API into plugins, which inherit from them.</p>
+<p>A pattern gets automatically loaded when the first plugin, which inherits from it, gets initiated and activated.
 And it gets deactivated when the last plugin, which inherit from it, gets deactivated.</p>
 <p>For our code example this means that the csv watcher would be the perfect pattern.
 There are several use cases, where a specific plugin could need the help of a csv watcher pattern.
 For instance to monitor measurement results or
-to import periodically user data from a provided tool export to another tool.</p>
+to periodically import data from a tool which exports it&#8217;s data to a file.</p>
 <div class="section" id="preparation">
 <h2>1.6.1. Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
 <p>Before we can start, let&#8217;s create the needed python packages and files.</p>
@@ -118,8 +118,8 @@ In the new folder create two additional files: <code class="docutils literal"><s
 </pre></div>
 </div>
 </div>
-<div class="section" id="code-the-pattern-basement">
-<h2>1.6.2. Code the pattern basement<a class="headerlink" href="#code-the-pattern-basement" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="code-the-pattern-base">
+<h2>1.6.2. Code the pattern base<a class="headerlink" href="#code-the-pattern-base" title="Permalink to this headline">¶</a></h2>
 <p>Open the <code class="docutils literal"><span class="pre">csv_watcher_pattern.py</span></code> file and add the following:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -868,7 +868,7 @@ messages. And we create a receiver in our plugin, so that the plugin can present
   <ul>
 <li><a class="reference internal" href="#">1.6. First own pattern</a><ul>
 <li><a class="reference internal" href="#preparation">1.6.1. Preparation</a></li>
-<li><a class="reference internal" href="#code-the-pattern-basement">1.6.2. Code the pattern basement</a></li>
+<li><a class="reference internal" href="#code-the-pattern-base">1.6.2. Code the pattern base</a></li>
 <li><a class="reference internal" href="#moving-the-csv-logic">1.6.3. Moving the csv logic</a></li>
 <li><a class="reference internal" href="#all-changed-files">1.6.4. All changed files</a><ul>
 <li><a class="reference internal" href="#csv-watcher-pattern-py">1.6.4.1. csv_watcher_pattern.py</a></li>

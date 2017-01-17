@@ -349,7 +349,7 @@ Let's add an argument to our command:
        def deactivate(self):
            pass
 
-groundwork use the library `click <http://click.pocoo.org/>`_ for handling the command line interface.
+groundwork uses the library `click <http://click.pocoo.org/>`_ for handling the command line interface.
 Therefore arguments are defined by using the ``Argument`` class from click [1].
 
 In line 16 - 18 we define our argument. It gets a name and is marked as required. We also define the type, so that we

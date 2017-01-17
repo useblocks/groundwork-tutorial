@@ -11,10 +11,12 @@ of this tutorial. They are here to provide you an easy accessible entry point to
    :maxdepth: 2
    :caption: Contents:
 
+   python
    sphinx
    pytest
    tox
    logging
+   buildout
    sqlalchemy
    cookiecutter
    jinja
