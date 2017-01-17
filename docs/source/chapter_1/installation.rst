@@ -54,10 +54,25 @@ and perform a development installation::
 ``pip install -e .`` sets only links from the source code to the used virtual environment.
 So changes on the code are directly available without any reinstallation (except if you have changed ``setup.py`` ).
 
+Packages for test execution and documentation building
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For a normal user the just installed packages are enough to run groundwork and all related applications.
+
+However, developers normally want also to run tests and maybe generate the documentation by their own.
+For this tasks additional python packages are needed, which are not needed for normal usage.
+Therefore these package are not part of the normal installation and must be installed by the developers.
+
+Luckily these dependencies are also collected in one single file, so that it can be used as input for ``pip``.
+Let's install these packages to be prepared::
+
+    pip install -r docs/doc-requirements.txt
+    pip install -r code/test-requirements.txt
+
 Tests
 -----
 
-Finally lets check if groundwork was installed correctly, by trying to execute the command ``groundwork``::
+Finally let's check if groundwork was installed correctly, by trying to execute the command ``groundwork``::
 
     >>> groundwork
     Usage: groundwork [OPTIONS] COMMAND [ARGS]...
