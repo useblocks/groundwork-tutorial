@@ -21,3 +21,6 @@ of this tutorial. They are here to provide you an easy accessible entry point to
    cookiecutter
    jinja
    rest
+   rules
+   agenda
+   links
