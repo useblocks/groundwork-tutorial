@@ -1,0 +1,37 @@
+{% extends 'master.html' %}
+
+{% block body %}
+<h1>CSV History <small>View and edit history</small></h1>
+
+<h2>History</h2>
+
+{% for watcher in watchers %}
+<h3>{{watcher.name}}</h3>
+    <form action="" method="post">
+        <input type="hidden" name="csv_file" value="{{watcher.name}}">
+        <input type="submit" value="Clean history">
+    </form>
+
+    {% for version in watcher.version %}
+        <h4>{{version.version}}</h4>
+        <h5>Missing rows</h5>
+        {% for row in version.missing_row %}
+            {% for key,value in row.row.items() %}
+            {{ key }} : <b>{{value}}</b>
+            {% endfor %}
+            <br>
+        {% endfor %}
+
+        <h5>New rows</h5>
+        {% for row in version.new_row %}
+            {% for key,value in row.row.items() %}
+            {{ key }} : <b>{{value}}</b>
+            {% endfor %}
+            <br>
+        {% endfor %}
+
+    {% endfor %}
+
+
+{% endfor %}
+{% endblock %}

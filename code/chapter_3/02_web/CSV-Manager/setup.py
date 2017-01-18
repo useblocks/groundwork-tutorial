@@ -25,7 +25,8 @@ setup(
     platforms='any',
     setup_requires=[],
     tests_require=[],
-    install_requires=['groundwork', 'sqlalchemy', 'pytest-runner', 'sphinx', 'gitpython'],
+    install_requires=['groundwork','groundwork-database', 'groundwork-web',
+                      'sqlalchemy', 'pytest-runner', 'sphinx', 'gitpython'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

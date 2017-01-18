@@ -1,0 +1,6 @@
+Installation
+============
+
+Inside csv_manager run::
+
+    python setup.py develop
