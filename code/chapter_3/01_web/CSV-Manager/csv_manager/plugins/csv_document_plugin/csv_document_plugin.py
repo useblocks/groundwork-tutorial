@@ -109,6 +109,8 @@ class CsvDocumentPlugin(CsvWatcherPattern, GwDocumentsPattern, GwSqlPattern, GwW
 
             self.db.commit()
 
+            self.log.debug("Change %s archived for %s" % (csv_file_object.current_version, csv_file_object.name))
+
     def get_csv_history(self):
         return self.CsvFile.query.all()
 

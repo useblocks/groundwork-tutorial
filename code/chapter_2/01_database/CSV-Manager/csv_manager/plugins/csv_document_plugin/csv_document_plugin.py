@@ -75,6 +75,7 @@ class CsvDocumentPlugin(CsvWatcherPattern, GwDocumentsPattern, GwSqlPattern):
 
             self.db.commit()
 
+
     def get_csv_history(self):
         return self.CsvFile.query.all()
 

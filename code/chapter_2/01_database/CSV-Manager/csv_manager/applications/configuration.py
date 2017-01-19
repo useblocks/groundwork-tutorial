@@ -40,7 +40,7 @@ GROUNDWORK_LOGGING = {
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
-            'level': 'DEBUG'
+            'level': 'INFO'
         },
         'file': {
             "class": "logging.handlers.RotatingFileHandler",
