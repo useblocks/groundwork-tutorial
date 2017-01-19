@@ -114,10 +114,23 @@ and perform a development installation:</p>
 <p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> sets only links from the source code to the used virtual environment.
 So changes on the code are directly available without any reinstallation (except if you have changed <code class="docutils literal"><span class="pre">setup.py</span></code> ).</p>
 </div>
+<div class="section" id="packages-for-test-execution-and-documentation-building">
+<h3>1.2.2.2. Packages for test execution and documentation building<a class="headerlink" href="#packages-for-test-execution-and-documentation-building" title="Permalink to this headline">¶</a></h3>
+<p>For a normal user the just installed packages are enough to run groundwork and all related applications.</p>
+<p>However, developers normally want also to run tests and maybe generate the documentation by their own.
+For this tasks additional python packages are needed, which are not needed for normal usage.
+Therefore these package are not part of the normal installation and must be installed by the developers.</p>
+<p>Luckily these dependencies are also collected in one single file, so that it can be used as input for <code class="docutils literal"><span class="pre">pip</span></code>.
+Let&#8217;s install these packages to be prepared:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">docs</span><span class="o">/</span><span class="n">doc</span><span class="o">-</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">code</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="tests">
 <h2>1.2.3. Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
-<p>Finally lets check if groundwork was installed correctly, by trying to execute the command <code class="docutils literal"><span class="pre">groundwork</span></code>:</p>
+<p>Finally let&#8217;s check if groundwork was installed correctly, by trying to execute the command <code class="docutils literal"><span class="pre">groundwork</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span>
 <span class="go">Usage: groundwork [OPTIONS] COMMAND [ARGS]...</span>
 
@@ -159,6 +172,7 @@ groundwork is installed and we can go on to examine the <code class="docutils li
 </li>
 <li><a class="reference internal" href="#groundwork-installation">1.2.2. groundwork Installation</a><ul>
 <li><a class="reference internal" href="#alternative-installation-from-source">1.2.2.1. Alternative: Installation from source</a></li>
+<li><a class="reference internal" href="#packages-for-test-execution-and-documentation-building">1.2.2.2. Packages for test execution and documentation building</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#tests">1.2.3. Tests</a></li>

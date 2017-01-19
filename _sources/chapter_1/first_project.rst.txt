@@ -24,7 +24,7 @@ groundwork provides only one recipe, called ``gw_package``, which contains every
 Use gw_package recipe
 ~~~~~~~~~~~~~~~~~~~~~~
 *"That's one small step for you, one giant leap for your project"* or something similar Armstrong has already told us.
-So, lets start the build of the recipe::
+So, let's start the build of the recipe::
 
     >>> groundwork recipe_build gw_package
     full_name [My Name]: Team Awesome
@@ -153,7 +153,7 @@ Let's take a look into the application. Open `csv_manager_app.py`:
    :language: python
    :linenos:
 
-The most important part is between line 14-16. There we create our groundwork App object [14] and tell the app, which
+The most important part is between line 12-16. There we create our groundwork App object [12] and tell the app, which
 plugins shall be activated [15]. Finally we start the command line interface to interact with the user [16].
 
 The lines 3 and 10+11 are responsible for creating the working directory of our App, which is defined as ``APP_PATH``
