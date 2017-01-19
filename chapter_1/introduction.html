@@ -17,14 +17,15 @@
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="groundwork tutorial 0.1 documentation" href="../index.html" />
-    <link rel="up" title="1. groundwork basics" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1.2. Installation" href="installation.html" />
     <link rel="prev" title="1. groundwork basics" href="index.html" />
      
@@ -75,9 +76,14 @@
 <li><a class="reference internal" href="#what-we-have-created" id="id6">What we have created</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#composition" id="id7">Composition</a></li>
-<li><a class="reference internal" href="#batteries-included" id="id8">Batteries included</a></li>
-<li><a class="reference internal" href="#extensions" id="id9">Extensions</a></li>
+<li><a class="reference internal" href="#composition" id="id7">Composition</a><ul>
+<li><a class="reference internal" href="#application" id="id8">Application</a></li>
+<li><a class="reference internal" href="#plugin" id="id9">Plugin</a></li>
+<li><a class="reference internal" href="#pattern" id="id10">Pattern</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#batteries-included" id="id11">Batteries included</a></li>
+<li><a class="reference internal" href="#extensions" id="id12">Extensions</a></li>
 </ul>
 </li>
 </ul>
@@ -89,26 +95,12 @@
 <h2>1.1.1. Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="what-we-needed">
 <h3>1.1.1.1. What we needed<a class="headerlink" href="#what-we-needed" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Python based plugin system</li>
-<li>use case unbound plugin system</li>
-<li>Combination of code, tests and documentation</li>
-<li>Access to plugin/system meta-data during runtime</li>
-<li>pythonic plugin system</li>
-<li>Plugin activation/deactivation during runtime</li>
-</ul>
 </div>
 <div class="section" id="what-we-have-found">
 <h3>1.1.1.2. What we have found<a class="headerlink" href="#what-we-have-found" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Plugin systems created for use cases: django, flask, qt, pytest ...</li>
-<li>Plugin systems with hard coded constraints (file structure, given names, ...)</li>
-<li>Activation only during application start up</li>
-</ul>
 </div>
 <div class="section" id="what-we-have-created">
 <h3>1.1.1.3. What we have created<a class="headerlink" href="#what-we-have-created" title="Permalink to this headline">¶</a></h3>
-<p>A pythonic plugin system, which is designed to be used for each use case and for each tool/library.</p>
 </div>
 </div>
 <div class="section" id="composition">
@@ -118,42 +110,15 @@
 <p class="last">A more detailed description can be found in the technical documentation of groundwork&#8217;s
 <a class="reference external" href="https://groundwork.readthedocs.io/en/latest/architecture.html">architecture</a>.</p>
 </div>
-<p class="plantuml">
-<img src="../_images/plantuml-670040a949999d4527e5dc352f2cbfdc1f067e19.png" alt="&#64;startuml
-
-title &quot;groundwork vs AUTOSAR architecture&quot;
-
-class &quot;Application\nWeather&quot; as app &lt;&lt;(A, #00aaaa)&gt;&gt;
-class &quot;Plugin\nRegistration&quot; as pa &lt;&lt;(P, #ffcc00)&gt;&gt;
-class &quot;Plugin\nNewsletter&quot; as pb &lt;&lt;(P, #ffcc00)&gt;&gt;
-class &quot;WebPattern&quot; as pta &lt;&lt;(P, #aaaaaa)&gt;&gt;
-class &quot;DatabasePattern&quot; as ptb &lt;&lt;(P, #aaaaaa)&gt;&gt;
-class &quot;EmailPattern&quot; as ptc &lt;&lt;(P, #aaaaaa)&gt;&gt;
-
-app &lt;-- pa
-app &lt;-- pb
-
-pa &lt;-- pta
-pa &lt;-- ptb
-pb &lt;-- ptb
-pb &lt;-- ptc
-
-class &quot;ECU&quot; as ecu &lt;&lt;(A, #00aaaa)&gt;&gt;
-class &quot;SWC A&quot; as sa &lt;&lt;(P, #ffcc00)&gt;&gt;
-class &quot;SWC B&quot; as sb &lt;&lt;(P, #ffcc00)&gt;&gt;
-class &quot;FEM&quot; as fem &lt;&lt;(P, #aaaaaa)&gt;&gt;
-class &quot;RTE&quot; as rte &lt;&lt;(P, #aaaaaa)&gt;&gt;
-class &quot;DEM&quot; as dem &lt;&lt;(P, #aaaaaa)&gt;&gt;
-
-ecu &lt;-- sa
-ecu &lt;-- sb
-
-sa &lt;-- fem
-sa &lt;-- rte
-sb &lt;-- rte
-sb &lt;-- dem
-&#64;enduml" />
-</p>
+<div class="section" id="application">
+<h3>1.1.2.1. Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="plugin">
+<h3>1.1.2.2. Plugin<a class="headerlink" href="#plugin" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="pattern">
+<h3>1.1.2.3. Pattern<a class="headerlink" href="#pattern" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 <div class="section" id="batteries-included">
 <h2>1.1.3. Batteries included<a class="headerlink" href="#batteries-included" title="Permalink to this headline">¶</a></h2>
@@ -161,17 +126,6 @@ sb &lt;-- dem
 <p class="first admonition-title">Note</p>
 <p class="last">Visit <a class="reference external" href="http://groundwork.useblocks.com">groundwork.useblocks.com</a> for a nice-looking list of integrated libraries.</p>
 </div>
-<ul class="simple">
-<li>sphinx</li>
-<li>cookiecutter</li>
-<li>click</li>
-<li>blinker</li>
-<li>jinja</li>
-<li>rst</li>
-<li>pytest</li>
-<li>tox</li>
-<li>buildout</li>
-</ul>
 </div>
 <div class="section" id="extensions">
 <h2>1.1.4. Extensions<a class="headerlink" href="#extensions" title="Permalink to this headline">¶</a></h2>
@@ -180,12 +134,6 @@ sb &lt;-- dem
 <p class="last">For a list of known extensions take a look into the
 <a class="reference external" href="https://groundwork.readthedocs.io/en/latest/packages.html">related chapter of groundwork&#8217;s technical documentation</a>.</p>
 </div>
-<ul class="simple">
-<li>groundwork-web</li>
-<li>groundwork-database</li>
-</ul>
-<p>That&#8217;s enough of the dry theory. Let&#8217;s start installing something.
-Open <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a>.</p>
 </div>
 </div>
 
@@ -207,7 +155,12 @@ Open <a class="reference internal" href="installation.html#installation"><span c
 <li><a class="reference internal" href="#what-we-have-created">1.1.1.3. What we have created</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#composition">1.1.2. Composition</a></li>
+<li><a class="reference internal" href="#composition">1.1.2. Composition</a><ul>
+<li><a class="reference internal" href="#application">1.1.2.1. Application</a></li>
+<li><a class="reference internal" href="#plugin">1.1.2.2. Plugin</a></li>
+<li><a class="reference internal" href="#pattern">1.1.2.3. Pattern</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#batteries-included">1.1.3. Batteries included</a></li>
 <li><a class="reference internal" href="#extensions">1.1.4. Extensions</a></li>
 </ul>
@@ -225,7 +178,7 @@ Open <a class="reference internal" href="installation.html#installation"><span c
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/chapter_1/introduction.txt"
+      <li><a href="../_sources/chapter_1/introduction.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>

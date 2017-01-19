@@ -107,7 +107,7 @@ The ``GwDocumentInfo`` plugin has registerd a command, which exports and stores 
 Let's say we want the documents as RST output in the folder temp::
 
    >>> mkdir temp
-   >>> groundwork doc_write temp
+   >>> groundwork doc_write -h temp
    Storing groundwork application documents
 
    Application: groundwork basic app

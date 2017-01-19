@@ -17,14 +17,15 @@
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="groundwork tutorial 0.1 documentation" href="../index.html" />
-    <link rel="up" title="1. groundwork basics" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1.4. First own project" href="first_project.html" />
     <link rel="prev" title="1.2. Installation" href="installation.html" />
      
@@ -156,7 +157,7 @@ And documents are always up to date, as their content is mostly calculated durin
 <p>The <code class="docutils literal"><span class="pre">GwDocumentInfo</span></code> plugin has registerd a command, which exports and stores documents on a hard disk.</p>
 <p>Let&#8217;s say we want the documents as RST output in the folder temp:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mkdir</span> <span class="n">temp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">doc_write</span> <span class="n">temp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groundwork</span> <span class="n">doc_write</span> <span class="o">-</span><span class="n">h</span> <span class="n">temp</span>
 <span class="go">Storing groundwork application documents</span>
 
 <span class="go">Application: groundwork basic app</span>
@@ -231,7 +232,7 @@ Go on with <a class="reference internal" href="first_project.html#first-project"
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/chapter_1/usage.txt"
+      <li><a href="../_sources/chapter_1/usage.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
