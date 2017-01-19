@@ -62,14 +62,14 @@ Composition
    class "ECU" as ecu <<(A, #00aaaa)>>
    class "SWC A" as sa <<(P, #ffcc00)>>
    class "SWC B" as sb <<(P, #ffcc00)>>
-   class "FEM" as fem <<(P, #aaaaaa)>>
+   class "DCM" as dcm <<(P, #aaaaaa)>>
    class "RTE" as rte <<(P, #aaaaaa)>>
    class "DEM" as dem <<(P, #aaaaaa)>>
 
    ecu <-- sa
    ecu <-- sb
 
-   sa <-- fem
+   sa <-- dcm
    sa <-- rte
    sb <-- rte
    sb <-- dem
