@@ -18,6 +18,9 @@ def get_models(db):
         # version_id = Column(ForeignKey(u'version.id'))
         version = relationship(u'Version')
 
+        def __str__(self):
+            return str(self.name)
+
     class Version(Base):
         __tablename__ = 'version'
 
@@ -29,6 +32,9 @@ def get_models(db):
 
         missing_row = relationship(u'MissingRow')
         new_row = relationship(u'NewRow')
+
+        def __str__(self):
+            return str(self.version)
 
     class MissingRow(Base):
         __tablename__ = 'missing_row'

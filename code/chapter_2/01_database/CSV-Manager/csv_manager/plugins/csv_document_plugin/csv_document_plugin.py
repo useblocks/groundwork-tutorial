@@ -1,6 +1,5 @@
 import os
 from _datetime import datetime
-from sqlalchemy import func
 
 from groundwork.patterns import GwDocumentsPattern
 from groundwork_database.patterns import GwSqlPattern

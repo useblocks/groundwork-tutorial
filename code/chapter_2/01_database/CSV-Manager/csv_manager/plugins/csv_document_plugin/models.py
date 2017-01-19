@@ -34,7 +34,7 @@ def get_models(db):
         new_row = relationship(u'NewRow')
 
         def __str__(self):
-            return str(self.name)
+            return str(self.version)
 
     class MissingRow(Base):
         __tablename__ = 'missing_row'
@@ -45,7 +45,7 @@ def get_models(db):
         version = relationship("Version", back_populates="missing_row")
 
         def __str__(self):
-            return str(self.name)
+            return str(self.row)
 
     class NewRow(Base):
         __tablename__ = 'new_row'
@@ -56,6 +56,6 @@ def get_models(db):
         version = relationship("Version", back_populates="new_row")
 
         def __str__(self):
-            return str(self.name)
+            return str(self.row)
 
     return CsvFile, Version, MissingRow, NewRow

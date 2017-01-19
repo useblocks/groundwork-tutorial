@@ -49,7 +49,10 @@ class CsvWatcherDbPlugin(GwCommandsPattern, CsvWatcherPattern, GwWebDbAdminPatte
         self.load_watchers()
 
         self.web.db.register(self.Watcher, self.db.session)
-        menu_csv = self.web.menus.register(name="CSV", link="#")
+        try:
+            menu_csv = self.web.menus.register(name="CSV", link="#")
+        except Exception:
+            menu_csv = self.web.menus.get("CSV")
         with self.app.web.flask.app_context():
             # Will be http://127.0.0.1:5000/admin/admin_csvwatchers/
             menu_csv.register(name="Watchers", link=url_for("admin_csvwatchers.index_view"))

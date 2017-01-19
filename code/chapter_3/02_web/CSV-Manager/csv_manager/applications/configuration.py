@@ -8,6 +8,10 @@ APP_PATH = os.path.join(os.path.expanduser('~'), "CSV-Manager")
 PLUGINS = ["csv_manager_plugin", "GwPluginsInfo", "CsvWatcherDbPlugin", "CsvDocumentPlugin", "GwDocumentsInfo",
            "GwWeb", "GwWebManager"]
 
+FLASK_SERVER_NAME = "127.0.0.1:5000"
+FLASK_HOST = "127.0.0.1"
+FLASK_PORT = 5000
+
 APP_STRICT = True
 
 CSV_FILES = ["test2.csv"]
