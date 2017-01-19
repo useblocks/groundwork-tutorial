@@ -67,8 +67,9 @@ class CsvDocumentPlugin(CsvWatcherPattern, GwDocumentsPattern, GwSqlPattern, GwW
         if request.method == 'POST':
             csv_file = request.form['csv_file']
             csv_file_object = self.CsvFile.query.filter_by(name=csv_file).first()
-            #self.db.query(self.Version).filter(self.Version.csv_file==csv_file_object).delete()
-            self.Version.query.filter_by(csv_file=csv_file_object).delete()
+            versions = self.Version.query.filter_by(csv_file=csv_file_object).all()
+            for version in versions:
+                self.db.session.delete(version)
             self.db.commit()
             flash("Versions of %s deleted" % request.form['csv_file'])
         watchers = self.get_csv_history()
