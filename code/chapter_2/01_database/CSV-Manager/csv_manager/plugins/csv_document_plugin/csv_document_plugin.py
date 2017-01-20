@@ -53,8 +53,8 @@ class CsvDocumentPlugin(CsvWatcherPattern, GwDocumentsPattern, GwSqlPattern):
                 csv_file_object = self.CsvFile(name=csv_file,
                                                created=datetime.now(),
                                                current_version=0)
-            else:
-                csv_file_object.current_version += 1
+
+            csv_file_object.current_version += 1
             self.db.add(csv_file_object)
 
             # Version
@@ -75,9 +75,12 @@ class CsvDocumentPlugin(CsvWatcherPattern, GwDocumentsPattern, GwSqlPattern):
 
             self.db.commit()
 
+            self.log.debug("Change %s archived for %s" % (csv_file_object.current_version, csv_file_object.name))
+            self.db.session.remove()
 
     def get_csv_history(self):
-        return self.CsvFile.query.all()
+        self.db.session.remove()
+        return self.db.query(self.CsvFile).all()
 
     def deactivate(self):
         pass

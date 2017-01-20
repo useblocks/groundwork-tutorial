@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, PickleType
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 
 def get_models(db):
@@ -16,7 +16,7 @@ def get_models(db):
         current_version = Column(Integer)
 
         # version_id = Column(ForeignKey(u'version.id'))
-        version = relationship(u'Version')
+        # version = relationship(u'Version')
 
         def __str__(self):
             return str(self.name)
@@ -28,10 +28,9 @@ def get_models(db):
         version = Column(Integer, nullable=False)
         created = Column(String(255))
         csv_file_id = Column(Integer, ForeignKey('csv_file.id'))
-        csv_file = relationship("CsvFile", back_populates="version")
-
-        missing_row = relationship(u'MissingRow')
-        new_row = relationship(u'NewRow')
+        csv_file = relationship("CsvFile", backref="version")
+        new_row = relationship("NewRow", back_populates="version", cascade="all, delete-orphan")
+        missing_row = relationship("MissingRow", back_populates="version", cascade="all, delete-orphan")
 
         def __str__(self):
             return str(self.version)

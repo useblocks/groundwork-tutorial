@@ -19,8 +19,8 @@ Files and versions
 
         New rows
         ++++++++
-        {% for missing_row in version.missing_row -%}
-            {{missing_row.row}}
+        {% for new_row in version.new_row -%}
+            {{new_row.row}}
         {% endfor -%}
 
     {% endfor %}
