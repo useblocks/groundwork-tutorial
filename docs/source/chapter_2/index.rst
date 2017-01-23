@@ -3,15 +3,18 @@
 groundwork and databases
 ========================
 
-* we use one-to-many only
-* short explain many-to-many, many-to-one
-* link to slqchemy relationships
-* sql-db -> sqlachemy models script
-* link to sqlalchemy schema viewer script/solutions
+This chapter lets you setup your own database to store watchers and history data in it.
+
+Please note that the installation of
+`groundwork-database <http://groundwork-database.readthedocs.io/>`_ is required for this chapter::
+
+   pip install groundwork-database
+
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   architecture
+   watcher_db.rst
+   history_db.rst

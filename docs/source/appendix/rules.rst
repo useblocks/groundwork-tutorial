@@ -1,5 +1,7 @@
-useblocks convention
-====================
+.. _rules:
+
+useblocks convention of Python development
+==========================================
 
 1. We keep all stuff, which belongs together, inside one repository
 2. We can open all stuff, which is developed by us, in our IDE

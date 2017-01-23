@@ -1,11 +1,10 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, PickleType
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 
 def get_models(db):
 
     Base = db.Base
-    metadata = Base.metadata
 
     class CsvFile(Base):
         __tablename__ = 'csv_file'

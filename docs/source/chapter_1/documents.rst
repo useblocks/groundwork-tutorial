@@ -147,7 +147,10 @@ Using rst and jinja
 Right now we do not have really helpful content in our document.
 As the content can be huge, we will store it in a new file called ``cvs_document_content.rst`` in our plugin folder.
 
-So let's create it and add the following content::
+So let's create it and add the following content:
+
+.. code-block:: jinja
+   :linenos:
 
     CSV Watcher Documentation
     =========================
@@ -166,7 +169,10 @@ value may change during runtime and can not be hard coded by ourselfs.
 Luckily groundwork documents are also supporting `jinja <http://jinja.pocoo.org/docs/2.9/templates/>`_, which is
 a template language and allows us to use the content of given python variables.
 
-Change the content to::
+Change the content to:
+
+.. code-block:: jinja
+   :linenos:
 
     CSV Watcher Documentation
     =========================
@@ -235,7 +241,7 @@ and the related new and missing rows for each version.
 
 This information is also available in a groundwork documents, so let's update our document content file to:
 
-.. code-block:: python
+.. code-block:: jinja
    :linenos:
 
    CSV Watcher Documentation
