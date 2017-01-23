@@ -210,12 +210,15 @@ add the following:</p>
 <p>Right now we do not have really helpful content in our document.
 As the content can be huge, we will store it in a new file called <code class="docutils literal"><span class="pre">cvs_document_content.rst</span></code> in our plugin folder.</p>
 <p>So let&#8217;s create it and add the following content:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>CSV Watcher Documentation
-=========================
+<div class="highlight-jinja"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="x"> CSV Watcher Documentation</span>
+<span class="x"> =========================</span>
 
-Registered csv watchers: ??
+<span class="x"> Registered csv watchers: ??</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>groundwork uses <a class="reference external" href="http://docutils.sourceforge.net/rst.html">restructured text (rst)</a> as syntax.
 rst was designed to create human and machine readable text files, which can be transformed to other outputs like
 html, pdf, docx, ...</p>
@@ -225,12 +228,15 @@ value may change during runtime and can not be hard coded by ourselfs.</p>
 <p>Luckily groundwork documents are also supporting <a class="reference external" href="http://jinja.pocoo.org/docs/2.9/templates/">jinja</a>, which is
 a template language and allows us to use the content of given python variables.</p>
 <p>Change the content to:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CSV</span> <span class="n">Watcher</span> <span class="n">Documentation</span>
-<span class="o">=========================</span>
+<div class="highlight-jinja"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="x"> CSV Watcher Documentation</span>
+<span class="x"> =========================</span>
 
-<span class="n">Registered</span> <span class="n">csv</span> <span class="n">watchers</span><span class="p">:</span> <span class="p">{{</span> <span class="n">plugin</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">csv_watcher</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">|</span><span class="n">length</span><span class="p">}}</span>
+<span class="x"> Registered csv watchers: </span><span class="cp">{{</span> <span class="nv">plugin.app.csv_watcher.get</span><span class="o">()|</span><span class="nf">length</span><span class="cp">}}</span><span class="x"></span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>In jinja <code class="docutils literal"><span class="pre">{{</span> <span class="pre">VARIABLE/FUNCTION</span> <span class="pre">}}</span></code> outputs the data of the given variable or function.
 And we use our plugin and its data structure to provide needed data.</p>
 <p>As <cite>get()</cite> will deliver a dictionary, we use <code class="docutils literal"><span class="pre">|length</span></code> to get the amount of entries.</p>
@@ -368,7 +374,7 @@ so that we get a living history of changes.</p>
 For each file it will store the current version number (just an integer beginning at 0)
 and the related new and missing rows for each version.</p>
 <p>This information is also available in a groundwork documents, so let&#8217;s update our document content file to:</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-jinja"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -384,23 +390,23 @@ and the related new and missing rows for each version.</p>
 14
 15
 16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">CSV</span> <span class="n">Watcher</span> <span class="n">Documentation</span>
-<span class="o">=========================</span>
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="x">CSV Watcher Documentation</span>
+<span class="x">=========================</span>
 
-<span class="n">Registered</span> <span class="n">csv</span> <span class="n">watchers</span><span class="p">:</span> <span class="p">{{</span> <span class="n">plugin</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">csv_watcher</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">|</span><span class="n">length</span><span class="p">}}</span>
+<span class="x">Registered csv watchers: </span><span class="cp">{{</span> <span class="nv">plugin.app.csv_watcher.get</span><span class="o">()|</span><span class="nf">length</span><span class="cp">}}</span><span class="x"></span>
 
-<span class="n">Files</span> <span class="ow">and</span> <span class="n">versions</span>
-<span class="o">------------------</span>
-<span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">csv_file</span> <span class="ow">in</span> <span class="n">plugin</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-    <span class="p">{{</span><span class="n">key</span><span class="p">}}</span>
-    <span class="p">{{</span><span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="n">key</span><span class="o">|</span><span class="n">length</span><span class="p">}}</span>
+<span class="x">Files and versions</span>
+<span class="x">------------------</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">key</span><span class="o">,</span> <span class="nv">csv_file</span> <span class="k">in</span> <span class="nv">plugin.archive.items</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span><span class="nv">key</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span><span class="s2">&quot;~&quot;</span><span class="o">*</span><span class="nv">key</span><span class="o">|</span><span class="nf">length</span><span class="cp">}}</span><span class="x"></span>
 
-    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">csv_file</span><span class="p">[</span><span class="s2">&quot;versions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-        <span class="p">{{</span><span class="n">key</span><span class="p">}}</span>
-        <span class="n">Missing</span><span class="p">:</span> <span class="p">{{</span><span class="n">version</span><span class="p">[</span><span class="s2">&quot;missing_rows&quot;</span><span class="p">]}}</span>
-        <span class="n">New</span><span class="p">:</span> <span class="p">{{</span><span class="n">version</span><span class="p">[</span><span class="s2">&quot;new_rows&quot;</span><span class="p">]}}</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">key</span><span class="o">,</span> <span class="nv">version</span> <span class="k">in</span> <span class="nv">csv_file</span><span class="o">[</span><span class="s2">&quot;versions&quot;</span><span class="o">]</span><span class="nv">.items</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{{</span><span class="nv">key</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">        Missing: </span><span class="cp">{{</span><span class="nv">version</span><span class="o">[</span><span class="s2">&quot;missing_rows&quot;</span><span class="o">]</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">        New: </span><span class="cp">{{</span><span class="nv">version</span><span class="o">[</span><span class="s2">&quot;new_rows&quot;</span><span class="o">]</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </td></tr></table></div>
 <p>We use some loops here to output our data.</p>

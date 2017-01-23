@@ -1,7 +1,7 @@
 .. _chapter_3:
 
 groundwork and the web
-==================== ==
+======================
 
 * Explain all technologies, which are needed to make a great website
 

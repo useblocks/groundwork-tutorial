@@ -14,24 +14,25 @@ Session 1.A
 #. Introduction
 #. Questions to training participants about their python know how
 #. groundwork origin
-   Why groundwork was developed
+    Why groundwork was developed
 #. groundwork showcase
-   Active developed, groundwork based tool
+    Active developed, groundwork based tool
 #. groundwork motivation
-   Benefits of groundwork for developers
+    Benefits of groundwork for developers
 #. groundwork concept
-   Applications, Plugins, Patterns
+    Applications, Plugins, Patterns
 #. groundwork tutorial
 
 Session 1.B
 ~~~~~~~~~~~
 
 #. Open questions
-#. Collection python and gw related topics
+#. :ref:`rules`
+#. Collection of Python and groundwork related topics
 #. Sphinx and PlantUML
 #. pytest and tox
 #. buildout
-#. Additionally mentioned topics
+#. Open discussion
 
 Day 2
 -----
