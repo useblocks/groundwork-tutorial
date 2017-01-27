@@ -1,14 +1,15 @@
 from click import Argument, Option
 from sqlalchemy import Column, Integer, String
 from flask import url_for
+from flask_restless import url_for as rest_url_for
 
 from groundwork.patterns import GwCommandsPattern
-from groundwork_database.patterns import GwSqlPattern
-from groundwork_web.patterns import GwWebDbAdminPattern
+# from groundwork_database.patterns import GwSqlPattern #  No longer needed, as GwWebDbAdminPattern inherits from it.
+from groundwork_web.patterns import GwWebDbAdminPattern, GwWebDbRestPattern
 from csv_manager.patterns import CsvWatcherPattern
 
 
-class CsvWatcherDbPlugin(GwCommandsPattern, CsvWatcherPattern, GwWebDbAdminPattern):
+class CsvWatcherDbPlugin(GwCommandsPattern, CsvWatcherPattern, GwWebDbAdminPattern, GwWebDbRestPattern):
     """
     A plugin for monitoring csv files.
     """
@@ -49,6 +50,7 @@ class CsvWatcherDbPlugin(GwCommandsPattern, CsvWatcherPattern, GwWebDbAdminPatte
         self.load_watchers()
 
         self.web.db.register(self.Watcher, self.db.session)
+
         try:
             menu_csv = self.web.menus.register(name="CSV", link="#")
         except Exception:
@@ -56,6 +58,10 @@ class CsvWatcherDbPlugin(GwCommandsPattern, CsvWatcherPattern, GwWebDbAdminPatte
         with self.app.web.flask.app_context():
             # Will be http://127.0.0.1:5000/admin/admin_csvwatchers/
             menu_csv.register(name="Watchers", link=url_for("admin_csvwatchers.index_view"))
+
+        self.web.rest.register(self.Watcher, self.db.session)
+        with self.app.web.flask.app_context():
+            menu_csv.register(name="REST CsvWatchers", link=rest_url_for(self.Watcher))
 
     def setup_db(self):
         self.db = self.databases.register(self.app.config.get("WATCHER_DATABASE_NAME", "csv_watcher_db"),
