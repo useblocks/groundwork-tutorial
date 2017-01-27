@@ -3,27 +3,21 @@
 groundwork and the web
 ======================
 
-* Explain all technologies, which are needed to make a great website
+In this chapter you will set up your own web application, create simple web and REST views for your database
+and finally create your own web view for showing and deleting csv history data.
 
- * Python
- * Javascript
- * JS-libs like Datatables
- * HTML
- * CSS
- * CSS-Frameworks like buildout
- * HTTP for REST
+Please note that the installation of
+`groundwork-database <http://groundwork-database.readthedocs.io/>`_ and
+`groundwork-web <http://groundwork-web.readthedocs.io/>`_
+is required for this chapter::
 
-* Load admin and rest plugins for csv_wathcer_db_plugin
-
- * Show that the directly change data without respecting our business logic
- * Register all known db tables
- * use plugin_need to preload db setup plugins
-
-* Create own simple view and show history in csv_document_plugin
-
+   pip install groundwork-database
+   pip install groundwork-web
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   architecture
+   web_setup
+   db_viewer
+   own_view
