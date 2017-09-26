@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>3.1. Web application setup &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -93,9 +89,9 @@ status of an application without the need of debugging the code for a first over
 This is very important, as flask can handle multiple apps in parallel, which all are registered for different domains
 (e.g. example.com and my_site.net). Depending on which domain is called, flask looks into its configuration and
 loads the requested view.
-So if you use &#8220;127.0.0.1:5000&#8221; and try to open your site with &#8220;localhost:5000&#8221;, you will get a 404 response for all
+So if you use “127.0.0.1:5000” and try to open your site with “localhost:5000”, you will get a 404 response for all
 views. Please note that also the port must be part of <strong>FLASK_SERVER_NAME</strong>.</p>
-<p><strong>FLASK_HOST</strong> is the external address to which the server gets bound. Normally &#8220;127.0.0.1&#8221; or &#8220;0.0.0.0&#8221; are working
+<p><strong>FLASK_HOST</strong> is the external address to which the server gets bound. Normally “127.0.0.1” or “0.0.0.0” are working
 well. If your computer provides several outgoing ethernet interfaces, a specific IP may be needed to bound the server to
 one interface only.</p>
 <p><strong>FLASK_PORT</strong> stores the port, which shall be used for connections.</p>
@@ -103,12 +99,12 @@ one interface only.</p>
 the traceback as web view. It also restarts the server, if it detects changes on related files.
 However, it starts the application also twice, in 2 separated processes. Which makes it hard to set breakpoints and
 debug it inside an IDE.</p>
-<p>Now let&#8217;s start our new web app and see, if we have configured everything correct by opening the WebManager:</p>
+<p>Now let’s start our new web app and see, if we have configured everything correct by opening the WebManager:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">csv_manager</span> <span class="n">server_start</span> <span class="n">flask_debug</span>
 </pre></div>
 </div>
 <p>Now open the WebManager at <a class="reference external" href="http://127.0.0.1:5000/webmanager/">http://127.0.0.1:5000/webmanager/</a>.</p>
-<p>That&#8217;s it. Everything should run now as expected. It&#8217;s time to take a look into our database via the browser.
+<p>That’s it. Everything should run now as expected. It’s time to take a look into our database via the browser.
 Go on with <a class="reference internal" href="db_viewer.html#db-viewer"><span class="std std-ref">Database views made simple</span></a>.</p>
 </div>
 </div>
@@ -156,7 +152,26 @@ Go on with <a class="reference internal" href="db_viewer.html#db-viewer"><span c
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

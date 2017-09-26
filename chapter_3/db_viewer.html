@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>3.2. Database views made simple &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -66,7 +62,7 @@
             
   <div class="section" id="database-views-made-simple">
 <span id="db-viewer"></span><h1>3.2. Database views made simple<a class="headerlink" href="#database-views-made-simple" title="Permalink to this headline">¶</a></h1>
-<p>Now it&#8217;s time to use the magic of groundwork patterns to easily extend a plugins functionality.</p>
+<p>Now it’s time to use the magic of groundwork patterns to easily extend a plugins functionality.</p>
 <p>We will just modify 3-4 lines to get a web view for our database models. This views can then be used to create,
 read, update and delete model data in our database.</p>
 <div class="section" id="web-view">
@@ -214,10 +210,10 @@ Changed lines are highlighted.</p>
 </span>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A plugin for monitoring csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherDbPlugin&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Watcher</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -329,7 +325,7 @@ Changed lines are highlighted.</p>
         <span class="k">pass</span>
 </pre></div>
 </td></tr></table></div>
-<p>As you can see, we haven&#8217;t made much changes.
+<p>As you can see, we haven’t made much changes.
 We replaced an import and added some new code lines to the <code class="docutils literal"><span class="pre">activation()</span></code> routine.</p>
 <p>Instead of <code class="docutils literal"><span class="pre">GwSqlPattern</span></code> we use the <code class="docutils literal"><span class="pre">GwWebDbAdminPattern</span></code> from the groundwork-web package [7].
 This pattern inherits itself from <code class="docutils literal"><span class="pre">GwSqlPattern</span></code>, so that all functions of this pattern are still available.
@@ -461,7 +457,26 @@ to care about HTML, CSS, form validation or any other web related technology.</p
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

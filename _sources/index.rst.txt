@@ -6,12 +6,6 @@
 Welcome to the groundwork tutorial
 ==================================
 
-.. warning::
-
-   This tutorial is currently under heavy construction. Updates will be deployed nearly each hour.
-
-   So please come back in 3-4 days, if something is still missing.
-
 This tutorial guides you through the creation of a groundwork based application.
 
 It starts with a simple commandline script for monitoring csv file changes,

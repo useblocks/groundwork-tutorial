@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>2.1. Simple watcher database &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -90,7 +86,7 @@
 <h2>2.1.1. Plugin creation<a class="headerlink" href="#plugin-creation" title="Permalink to this headline">¶</a></h2>
 <p>At first we need to set up a new plugin. So create a folder <cite>csv_watcher_db_plugin</cite> inside the folder
 <cite>csv_manager/plugins</cite>. Then create two files in it: <cite>__init__.py</cite> and <cite>csv_watcher_db_plugin.py</cite>.</p>
-<p>Finally let&#8217;s add some code to our new <cite>csv_watcher_db_plugin.py</cite>:</p>
+<p>Finally let’s add some code to our new <cite>csv_watcher_db_plugin.py</cite>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">click</span> <span class="k">import</span> <span class="n">Argument</span><span class="p">,</span> <span class="n">Option</span>
 
 <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="k">import</span> <span class="n">GwCommandsPattern</span>
@@ -105,7 +101,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherDbPlugin&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -151,8 +147,8 @@ And <cite>csv_watcher_delete</cite> will delete an existing watcher from our dat
 <p>Currently groundwork-database only supports sql-based database like MySQL, Postgresql, SQLite and more.</p>
 <p>We will use <a class="reference external" href="https://sqlite.org/">SQLite</a>,
 because it does not need any installation and is
-<a class="reference external" href="https://docs.python.org/3.5/library/sqlite3.html">part of Python&#8217;s standard library</a>.</p>
-<p>Let&#8217;s add the following configurations to our <code class="docutils literal"><span class="pre">configuration.py</span></code> file inside the <code class="docutils literal"><span class="pre">csv_manager/applications</span></code> folder:</p>
+<a class="reference external" href="https://docs.python.org/3.5/library/sqlite3.html">part of Python’s standard library</a>.</p>
+<p>Let’s add the following configurations to our <code class="docutils literal"><span class="pre">configuration.py</span></code> file inside the <code class="docutils literal"><span class="pre">csv_manager/applications</span></code> folder:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WATCHER_DATABASE_NAME</span> <span class="o">=</span> <span class="s2">&quot;WATCHER_DB&quot;</span>
 <span class="n">WATCHER_DATABASE_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;DB for CSV file watchers&quot;</span>
 <span class="n">WATCHER_DATABASE_LOCATION</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/watcher_db.db&quot;</span> <span class="o">%</span> <span class="n">APP_PATH</span>
@@ -231,7 +227,7 @@ tables, if they do not exist yet.</p>
 </div>
 <div class="section" id="working-with-database-models">
 <h2>2.1.4. Working with database models<a class="headerlink" href="#working-with-database-models" title="Permalink to this headline">¶</a></h2>
-<p>It&#8217;s time to use our newly created database model and add some data.</p>
+<p>It’s time to use our newly created database model and add some data.</p>
 <div class="section" id="loading-existing-watchers">
 <h3>2.1.4.1. Loading existing watchers<a class="headerlink" href="#loading-existing-watchers" title="Permalink to this headline">¶</a></h3>
 <p>But before we can add watchers, we should implement a function, which loads existing watchers and starts
@@ -297,7 +293,7 @@ because we will reuse it later inside our watcher creation function.</p>
 </div>
 <div class="section" id="show-watchers">
 <h3>2.1.4.2. Show watchers<a class="headerlink" href="#show-watchers" title="Permalink to this headline">¶</a></h3>
-<p>Let&#8217;s add the command function to print a list of currently existing watchers in our database:</p>
+<p>Let’s add the command function to print a list of currently existing watchers in our database:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">csv_watcher_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">watchers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Watcher</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">watcher</span> <span class="ow">in</span> <span class="n">watchers</span><span class="p">:</span>
@@ -362,7 +358,7 @@ because we will reuse it later inside our watcher creation function.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Watcher for </span><span class="si">%s</span><span class="s2"> removed&quot;</span> <span class="o">%</span> <span class="n">csv_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>That&#8217;s it, watchers can now be created and deleted via command line command. And our application does not loose them,
+<p>That’s it, watchers can now be created and deleted via command line command. And our application does not loose them,
 if it gets restarted.</p>
 <p>In the next chapter <a class="reference internal" href="history_db.html#history-db"><span class="std std-ref">Complex history database</span></a> we will use several database models, which have relations to each other.</p>
 </div>
@@ -421,7 +417,26 @@ if it gets restarted.</p>
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

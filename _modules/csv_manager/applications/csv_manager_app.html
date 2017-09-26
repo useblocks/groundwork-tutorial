@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>csv_manager.applications.csv_manager_app &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../../../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
@@ -33,10 +30,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../../../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -68,7 +64,7 @@
         <span class="c1"># Let&#39;s be sure our APP_PATH really exists</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">APP_PATH</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">APP_PATH</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s2">&quot;configuration.py&quot;</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;configuration.py&quot;</span><span class="p">)])</span>
 
 <div class="viewcode-block" id="CSV_MANAGER_APP.start"><a class="viewcode-back" href="../../../api/csv_manager.applications.html#csv_manager.applications.csv_manager_app.CSV_MANAGER_APP.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PLUGINS&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
@@ -79,7 +75,7 @@
     <span class="n">CSV_MANAGER_APP</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
 
-<span class="k">if</span> <span class="s2">&quot;main&quot;</span> <span class="ow">in</span> <span class="n">__name__</span><span class="p">:</span>
+<span class="k">if</span> <span class="s2">&quot;main&quot;</span> <span class="ow">in</span> <span class="vm">__name__</span><span class="p">:</span>
     <span class="n">start_app</span><span class="p">()</span>
 </pre></div>
 
@@ -108,7 +104,26 @@
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

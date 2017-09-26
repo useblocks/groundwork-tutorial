@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>1.5. First own plugin &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -67,7 +63,7 @@
   <div class="sidebar">
 <p class="first sidebar-title">Content</p>
 <div class="contents last topic" id="id1">
-<p class="topic-title first">&#8220;&#8221;</p>
+<p class="topic-title first">“”</p>
 <ul class="simple">
 <li><a class="reference internal" href="#first-own-plugin" id="id2">First own plugin</a><ul>
 <li><a class="reference internal" href="#example-application" id="id3">Example Application</a><ul>
@@ -98,7 +94,7 @@
 <div class="section" id="first-own-plugin">
 <span id="first-plugin"></span><h1>1.5. First own plugin<a class="headerlink" href="#first-own-plugin" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we will create our first plugin, register a command, work with csv files and create a thread.</p>
-<p>But before we start, let&#8217;s take a look what kind of application and plugins we want to build.</p>
+<p>But before we start, let’s take a look what kind of application and plugins we want to build.</p>
 <div class="section" id="example-application">
 <h2>1.5.1. Example Application<a class="headerlink" href="#example-application" title="Permalink to this headline">¶</a></h2>
 <p>This tutorial uses one single example application, which gets extend by each chapter.</p>
@@ -113,8 +109,9 @@ And we will also add some kind of a web interface to watch files and history in 
 <h3>1.5.1.1. Sequence diagram<a class="headerlink" href="#sequence-diagram" title="Permalink to this headline">¶</a></h3>
 <p>The following sequence diagram shows how user, application and plugin interacts with each other and what kind of tasks
 must be done during which step.</p>
-<p>But don&#8217;t worry, we will implement these features step by step.</p>
+<p>But don’t worry, we will implement these features step by step.</p>
 <p class="plantuml">
+<object data="../_images/plantuml-41e248d0c15d8e375d79fd5e8b93354fc81864de.svg" type="image/svg+xml" style="width:1092px;height:601px;">
 <a href="../_images/plantuml-41e248d0c15d8e375d79fd5e8b93354fc81864de.png"><img src="../_images/plantuml-41e248d0c15d8e375d79fd5e8b93354fc81864de.png" alt="&#64;startuml
 autonumber
 
@@ -140,7 +137,8 @@ loop endless
     cwpt -&gt; cwpt: Sleep x seconds
 end
 &#64;enduml" width="875.2px" height="482.4px"/></a>
-</p>
+
+</object></p>
 </div>
 </div>
 <div class="section" id="preparation">
@@ -170,7 +168,7 @@ end
 </div>
 <div class="section" id="birth-of-a-plugin">
 <h2>1.5.3. Birth of a plugin<a class="headerlink" href="#birth-of-a-plugin" title="Permalink to this headline">¶</a></h2>
-<p>Now we can start to write our first plugin. Let&#8217;s start with an empty plugin and add needed functions step by step.</p>
+<p>Now we can start to write our first plugin. Let’s start with an empty plugin and add needed functions step by step.</p>
 <p>Open <code class="docutils literal"><span class="pre">csv_watcher_plugin.py</span></code> and add the following:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -194,9 +192,9 @@ end
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A plugin for monitoring csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -247,7 +245,7 @@ It is a python list and there we need to add our plugin.</p>
 &lt;name&gt; is not used by groundwork and can be everything.</p>
 <p>The needed entry for our plugin is
 <code class="docutils literal"><span class="pre">csv_watcher_plugin</span> <span class="pre">=</span> <span class="pre">csv_manager.plugins.csv_watcher_plugin.csv_watcher_plugin:CsvWatcherPlugin</span></code>.</p>
-<p>Let&#8217;s add it to our setup.py:</p>
+<p>Let’s add it to our setup.py:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
     <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;csv_manager = &quot;</span>
                         <span class="s2">&quot;csv_manager.applications.csv_manager_app:start_app&quot;</span><span class="p">],</span>
@@ -276,7 +274,7 @@ Open <code class="docutils literal"><span class="pre">CSV-Manager/csv_manager/ap
 </div>
 <div class="section" id="first-run">
 <h3>1.5.3.2. First run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h3>
-<p>Ok, that&#8217;s it. Let&#8217;s see if our plugin really gets activated:</p>
+<p>Ok, that’s it. Let’s see if our plugin really gets activated:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -342,9 +340,9 @@ And in line 8 we see that it also got activated.</p>
      <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     A plugin for monitoring csv files.</span>
 <span class="sd">     &quot;&quot;&quot;</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
      <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
          <span class="k">pass</span>
@@ -383,9 +381,9 @@ available, if our plugin really got activated:</p>
      <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     A plugin for monitoring csv files.</span>
 <span class="sd">     &quot;&quot;&quot;</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
      <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;csv_watch&quot;</span><span class="p">,</span>
@@ -432,7 +430,7 @@ available, if our plugin really got activated:</p>
 <div class="section" id="adding-a-command-argument">
 <h3>1.5.4.1. Adding a command argument<a class="headerlink" href="#adding-a-command-argument" title="Permalink to this headline">¶</a></h3>
 <p>Our command gets called, but we still need the information which file our plugin must monitor.
-Let&#8217;s add an argument to our command:</p>
+Let’s add an argument to our command:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -469,9 +467,9 @@ Let&#8217;s add an argument to our command:</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A plugin for monitoring csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -516,7 +514,7 @@ The given csv file location will also be used inside our log message [26].</p>
 </div>
 <div class="section" id="handling-csv-files">
 <h2>1.5.5. Handling csv files<a class="headerlink" href="#handling-csv-files" title="Permalink to this headline">¶</a></h2>
-<p>It&#8217;s time to start coding the csv handling part of our plugin.
+<p>It’s time to start coding the csv handling part of our plugin.
 At first we need a way to read the content of a csv file.
 Luckily Python provides a built-in solution for this: <a class="reference external" href="https://docs.python.org/3/library/csv.html">The csv module</a></p>
 <p>But before we start, we need a <code class="docutils literal"><span class="pre">test.csv</span></code> file. Create one in the <code class="docutils literal"><span class="pre">CSV-Manager</span></code> folder
@@ -552,7 +550,7 @@ and add the following content:</p>
              <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Ok that wasn&#8217;t much code and all the magic is done in the lines 8-11. As you can see, we read the csv file and
+<p>Ok that wasn’t much code and all the magic is done in the lines 8-11. As you can see, we read the csv file and
 log every single line. Nothing more yet.</p>
 <p>And again the test on the command line:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
@@ -575,7 +573,7 @@ dictionary key names.</p>
 <div class="section" id="making-csv-diffs">
 <h3>1.5.5.1. Making csv diffs<a class="headerlink" href="#making-csv-diffs" title="Permalink to this headline">¶</a></h3>
 <p>Our application shall monitor csv files for changes. Therefore it must periodically read a file and compare its
-current content with an old, stored content. Let&#8217;s add this to our <code class="docutils literal"><span class="pre">csv_watcher_command</span></code> function:</p>
+current content with an old, stored content. Let’s add this to our <code class="docutils literal"><span class="pre">csv_watcher_command</span></code> function:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -647,9 +645,9 @@ current content with an old, stored content. Let&#8217;s add this to our <code c
 </td></tr></table></div>
 <p>To allow the easiest way of comparision, the csv content is transformed to a python list, where each list element
 represents a single row [13]. After that we compare the old and the new list [15].</p>
-<p>The code detects changes per row. If one single value has changed, the whole row is detected as &#8220;New row&#8221; [19-21].
-And the old row is detected as &#8220;Missing row&#8221; [24-26].</p>
-<p>Let&#8217;s see an output example:</p>
+<p>The code detects changes per row. If one single value has changed, the whole row is detected as “New row” [19-21].
+And the old row is detected as “Missing row” [24-26].</p>
+<p>Let’s see an output example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
 <span class="go">2017-01-14 17:20:17,477 - INFO  - Application signals initialised</span>
 <span class="go">2017-01-14 17:20:17,660 - INFO  - Application commands initialised</span>
@@ -677,7 +675,7 @@ In <a class="reference internal" href="../chapter_2/index.html#chapter-2"><span 
 above (<code class="docutils literal"><span class="pre">while</span> <span class="pre">True</span> <span class="pre">...</span></code>). Therefore we have to hardly stop our application by pressing <strong>Ctrl + C</strong>.
 Also other code from plugins is blocked, too. So in a complex application nothing would work anymore except our
 csv watcher code.</p>
-<p>Let&#8217;s fix this by using a thread.</p>
+<p>Let’s fix this by using a thread.</p>
 </div>
 </div>
 <div class="section" id="working-with-threads">
@@ -770,9 +768,9 @@ shall be executed in the new thread.</p>
      <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     A plugin for monitoring csv files.</span>
 <span class="sd">     &quot;&quot;&quot;</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="bp">None</span>
 
      <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -847,8 +845,8 @@ But compared to the old version, our watcher is not blocking the rest of our app
 </div>
 <div class="section" id="add-interval-option">
 <h2>1.5.7. Add interval option<a class="headerlink" href="#add-interval-option" title="Permalink to this headline">¶</a></h2>
-<p>Currently our application checks the file every 2 seconds. This value is hard coded and that&#8217;s not a good idea.
-We should allow the user to define the interval. So let&#8217;s change the code a little bit and add an optional command option.</p>
+<p>Currently our application checks the file every 2 seconds. This value is hard coded and that’s not a good idea.
+We should allow the user to define the interval. So let’s change the code a little bit and add an optional command option.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -906,7 +904,7 @@ We should allow the user to define the interval. So let&#8217;s change the code 
          <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">plugin</span><span class="o">.</span><span class="n">csv_interval</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>Let&#8217;s check, if the new option is mentioned in the help text for the command:</p>
+<p>Let’s check, if the new option is mentioned in the help text for the command:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="o">--</span><span class="n">help</span>
 <span class="go">2017-01-14 18:49:03,390 - INFO  - Application signals initialised</span>
 <span class="go">2017-01-14 18:49:03,595 - INFO  - Application commands initialised</span>
@@ -925,7 +923,7 @@ We should allow the user to define the interval. So let&#8217;s change the code 
 <span class="go">  --help                  Show this message and exit.</span>
 </pre></div>
 </div>
-<p>That&#8217;s it, We have created an awesome plugin, which can be started and configured via a command on the command line.</p>
+<p>That’s it, We have created an awesome plugin, which can be started and configured via a command on the command line.</p>
 <p>On the next chapter <a class="reference internal" href="first_pattern.html#first-pattern"><span class="std std-ref">First own pattern</span></a> we take a look into patterns and make our csv-watcher code reusable for other
 plugins.</p>
 </div>
@@ -993,7 +991,26 @@ plugins.</p>
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

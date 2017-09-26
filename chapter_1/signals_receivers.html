@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>1.7. Adding signals and receivers &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -67,7 +63,7 @@
   <div class="sidebar">
 <p class="first sidebar-title">Content</p>
 <div class="contents last topic" id="id1">
-<p class="topic-title first">&#8220;&#8221;</p>
+<p class="topic-title first">“”</p>
 <ul class="simple">
 <li><a class="reference internal" href="#adding-signals-and-receivers" id="id2">Adding signals and receivers</a><ul>
 <li><a class="reference internal" href="#register-and-send-signals" id="id3">Register and send signals</a></li>
@@ -89,7 +85,7 @@ And the receiving plugins do not need to know, from which plugin they have to co
 Both of them only need to know the signal name.</p>
 <div class="section" id="register-and-send-signals">
 <h2>1.7.1. Register and send signals<a class="headerlink" href="#register-and-send-signals" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s add a signal to our <code class="docutils literal"><span class="pre">CsvWatcherPattern</span></code> and remove all log message (or set the log-level to DEBUG):</p>
+<p>Let’s add a signal to our <code class="docutils literal"><span class="pre">CsvWatcherPattern</span></code> and remove all log message (or set the log-level to DEBUG):</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -148,8 +144,8 @@ Both of them only need to know the signal name.</p>
 56
 57
 58</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">class</span> <span class="nc">CsvWatcherPattern</span><span class="p">(</span><span class="n">GwThreadsPattern</span><span class="p">):</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
          <span class="c1"># Adds csv_watcher to each plugin</span>
          <span class="c1"># This may be done several times. Once for each plugin,</span>
@@ -216,7 +212,7 @@ receivers of our signal [40+45].</p>
 <div class="section" id="register-a-receiver">
 <h2>1.7.2. Register a receiver<a class="headerlink" href="#register-a-receiver" title="Permalink to this headline">¶</a></h2>
 <p>Right now nothing gets printed, if our pattern detects a change.</p>
-<p>Let&#8217;s change this by adding a receiver to our plugin <code class="docutils literal"><span class="pre">CsvWatcherPlugin</span></code> and
+<p>Let’s change this by adding a receiver to our plugin <code class="docutils literal"><span class="pre">CsvWatcherPlugin</span></code> and
 create a function, which logs the changes again. (Changes are highlighted)</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -285,10 +281,10 @@ create a function, which logs the changes again. (Changes are highlighted)</p>
      <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     A plugin for monitoring csv files.</span>
 <span class="sd">     &quot;&quot;&quot;</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
          <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="bp">None</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">csv_interval</span> <span class="o">=</span> <span class="bp">None</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">watcher_thread</span> <span class="o">=</span> <span class="bp">None</span>
@@ -341,13 +337,13 @@ create a function, which logs the changes again. (Changes are highlighted)</p>
 And it must be connected to the signal [35-38].</p>
 <p>Our function <code class="docutils literal"><span class="pre">csv_change_monitor</span></code> must have 2 parameters: <code class="docutils literal"><span class="pre">plugin</span></code> and <code class="docutils literal"><span class="pre">**kwargs</span></code>.</p>
 <p><code class="docutils literal"><span class="pre">plugin</span></code> contains the plugin instance, which has connected this function to the signal.
-And <code class="docutils literal"><span class="pre">**kwargs</span></code> can contain everything or nothing. It&#8217;s up by the signal sender to fill data in here.</p>
+And <code class="docutils literal"><span class="pre">**kwargs</span></code> can contain everything or nothing. It’s up by the signal sender to fill data in here.</p>
 <p>However, we know that there may be three entries in <code class="docutils literal"><span class="pre">**kwargs</span></code>: csv_file, new_rows and missing_rows.
 So we try to get them [51-53] and log them [55, 58].</p>
 </div>
 <div class="section" id="let-it-run">
 <h2>1.7.3. Let it run<a class="headerlink" href="#let-it-run" title="Permalink to this headline">¶</a></h2>
-<p>Again let&#8217;s make a test run:</p>
+<p>Again let’s make a test run:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="o">-</span><span class="n">i</span> <span class="mi">5</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
 <span class="go">2017-01-15 15:31:46,425 - INFO  - Application signals initialised</span>
 <span class="go">2017-01-15 15:31:46,624 - INFO  - Application commands initialised</span>
@@ -416,7 +412,26 @@ which can be used like other groundwork documents for any kind of helpful docume
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

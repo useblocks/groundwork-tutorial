@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>1.6. First own pattern &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -67,7 +63,7 @@
   <div class="sidebar">
 <p class="first sidebar-title">Content</p>
 <div class="contents last topic" id="id1">
-<p class="topic-title first">&#8220;&#8221;</p>
+<p class="topic-title first">“”</p>
 <ul class="simple">
 <li><a class="reference internal" href="#first-own-pattern" id="id2">First own pattern</a><ul>
 <li><a class="reference internal" href="#preparation" id="id3">Preparation</a></li>
@@ -95,10 +91,10 @@ And it gets deactivated when the last plugin, which inherit from it, gets deacti
 <p>For our code example this means that the csv watcher would be the perfect pattern.
 There are several use cases, where a specific plugin could need the help of a csv watcher pattern.
 For instance to monitor measurement results or
-to periodically import data from a tool which exports it&#8217;s data to a file.</p>
+to periodically import data from a tool which exports it’s data to a file.</p>
 <div class="section" id="preparation">
 <h2>1.6.1. Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
-<p>Before we can start, let&#8217;s create the needed python packages and files.</p>
+<p>Before we can start, let’s create the needed python packages and files.</p>
 <p>Create a folder <code class="docutils literal"><span class="pre">csv_watcher_pattern</span></code> inside the <code class="docutils literal"><span class="pre">patterns</span></code> folder of the csv_manager package.
 In the new folder create two additional files: <code class="docutils literal"><span class="pre">__init__.py</span></code> and <code class="docutils literal"><span class="pre">csv_watcher_pattern.py</span></code>.:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span>
@@ -178,8 +174,8 @@ In the new folder create two additional files: <code class="docutils literal"><s
 
 
 <span class="k">class</span> <span class="nc">CsvWatcherPattern</span><span class="p">(</span><span class="n">GwThreadsPattern</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Adds csv_watcher to each plugin</span>
         <span class="c1"># This may be done several times. Once for each plugin,</span>
@@ -198,7 +194,7 @@ In the new folder create two additional files: <code class="docutils literal"><s
 <span class="sd">    Responsible for adding the correct plugin context,</span>
 <span class="sd">    if a csv_watcher functions gets called inside a plugin</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="o">=</span> <span class="n">plugin</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">app</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="o">=</span> <span class="p">{}</span>
@@ -217,7 +213,7 @@ In the new folder create two additional files: <code class="docutils literal"><s
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Main class for handling watchers of csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
@@ -230,12 +226,12 @@ In the new folder create two additional files: <code class="docutils literal"><s
         <span class="k">pass</span>
 </pre></div>
 </td></tr></table></div>
-<p>Wow, that&#8217;s a lot of code for one single step.
+<p>Wow, that’s a lot of code for one single step.
 But to make our goal clear, we want to be able to register new watchers inside a plugin by using something like
 <code class="docutils literal"><span class="pre">self.csv_watcher.register()</span></code>. We also want to be able to unregister or get watchers, which were registered
 by the current plugin only.</p>
 <p>Or in others words: A plugin shall only have access to stuff, which it has registered by itself (called plugin context).
-That&#8217;s already the case for groundwork patterns like commands, documents, signals and more.</p>
+That’s already the case for groundwork patterns like commands, documents, signals and more.</p>
 <p>On the other hand, there must be a way to get access to all watchers. This should be possible by accessing the data
 via the application context. Or more detailed: by accessing it via the app object, which is available in each plugin via
 <code class="docutils literal"><span class="pre">self.app</span></code>. In our case we would get all watchers by using <code class="docutils literal"><span class="pre">self.app.csv_watchers.get()</span></code></p>
@@ -245,7 +241,7 @@ And another class <code class="docutils literal"><span class="pre">CsvWatcherApp
 <p>To save some code, functions of <code class="docutils literal"><span class="pre">CsvWatcherPlugin</span></code> are mostly calling the related function of
 <code class="docutils literal"><span class="pre">CsvWatcherApplication</span></code>. But they add the current plugin as parameter,
 so that the results are filtered for the given plugin.</p>
-<p>Example: Lets imagine we are working inside a plugin called &#8220;AwesomePlugin&#8221; and we register a new watcher via
+<p>Example: Lets imagine we are working inside a plugin called “AwesomePlugin” and we register a new watcher via
 <code class="docutils literal"><span class="pre">self.csv_watcher.register(&quot;test.csv&quot;)</span></code> [29]. This will call the register function of <code class="docutils literal"><span class="pre">CsvWatcherPlugin</span></code>
 and inside this function <code class="docutils literal"><span class="pre">app.csv_watcher.register(&quot;test.csv&quot;,</span> <span class="pre">plugin=&quot;AwesomePlugin&quot;)</span></code> [46] is called, which is part
 of <code class="docutils literal"><span class="pre">CsvWatcherApplication</span></code>.</p>
@@ -257,7 +253,7 @@ of <code class="docutils literal"><span class="pre">CsvWatcherApplication</span>
 </div>
 <div class="section" id="moving-the-csv-logic">
 <h2>1.6.3. Moving the csv logic<a class="headerlink" href="#moving-the-csv-logic" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s move our csv logic from the plugin into our pattern.
+<p>Let’s move our csv logic from the plugin into our pattern.
 We use a new class <code class="docutils literal"><span class="pre">CsvWatcher</span></code> for all functions and information round about a csv watcher.
 So it is very easy for a plugin to request a single watcher and get all needed stuff.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -316,7 +312,7 @@ So it is very easy for a plugin to request a single watcher and get all needed s
 54
 55
 56</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">class</span> <span class="nc">CsvWatcher</span><span class="p">:</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="n">interval</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span> <span class="o">=</span> <span class="n">plugin</span>
@@ -378,7 +374,7 @@ So it is very easy for a plugin to request a single watcher and get all needed s
 <p>As we are no longer inside a plugin, <code class="docutils literal"><span class="pre">self.log</span></code> will not work. Instead we have to use <code class="docutils literal"><span class="pre">plugin.log</span></code> to create log
 messages.</p>
 <p>We have also added an exception, which gets called, if the given csv file does not exist.</p>
-<p>Now let&#8217;s take a look into our cleaned plugin class:</p>
+<p>Now let’s take a look into our cleaned plugin class:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -430,10 +426,10 @@ messages.</p>
      <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     A plugin for monitoring csv files.</span>
 <span class="sd">     &quot;&quot;&quot;</span>
-     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
          <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="bp">None</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">csv_interval</span> <span class="o">=</span> <span class="bp">None</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">watcher_thread</span> <span class="o">=</span> <span class="bp">None</span>
@@ -475,7 +471,7 @@ our csv watcher [40+43].</p>
 </div>
 <div class="section" id="all-changed-files">
 <h2>1.6.4. All changed files<a class="headerlink" href="#all-changed-files" title="Permalink to this headline">¶</a></h2>
-<p>Before we start testing, let&#8217;s take a look into all changed files.</p>
+<p>Before we start testing, let’s take a look into all changed files.</p>
 <div class="section" id="csv-watcher-pattern-py">
 <h3>1.6.4.1. csv_watcher_pattern.py<a class="headerlink" href="#csv-watcher-pattern-py" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -608,8 +604,8 @@ our csv watcher [40+43].</p>
 
 
 <span class="k">class</span> <span class="nc">CsvWatcherPattern</span><span class="p">(</span><span class="n">GwThreadsPattern</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Adds csv_watcher to each plugin</span>
         <span class="c1"># This may be done several times. Once for each plugin, which inherits from CsvWatcherPattern</span>
@@ -627,7 +623,7 @@ our csv watcher [40+43].</p>
 <span class="sd">    Responsible for adding the correct plugin context, if a csv_watcher functions gets called inside a plugin</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_plugin</span> <span class="o">=</span> <span class="n">plugin</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">app</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="o">=</span> <span class="p">{}</span>
@@ -647,7 +643,7 @@ our csv watcher [40+43].</p>
 <span class="sd">    Main class for handling watchers of csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
@@ -666,7 +662,7 @@ our csv watcher [40+43].</p>
 
 
 <span class="k">class</span> <span class="nc">CsvWatcher</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">plugin</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="n">csv_file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="n">interval</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plugin</span> <span class="o">=</span> <span class="n">plugin</span>
@@ -777,10 +773,10 @@ our csv watcher [40+43].</p>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A plugin for monitoring csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;CsvWatcherPlugin&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csv_file</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csv_interval</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">watcher_thread</span> <span class="o">=</span> <span class="bp">None</span>
@@ -826,7 +822,7 @@ With this little change we are able to shorten the import-statement of our patte
 </div>
 <div class="section" id="testing">
 <h2>1.6.5. Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s call our csv_manager and see if it works:</p>
+<p>Let’s call our csv_manager and see if it works:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">csv_manager</span> <span class="n">csv_watch</span> <span class="o">-</span><span class="n">i</span> <span class="mi">5</span> <span class="n">test</span><span class="o">.</span><span class="n">csv</span>
 <span class="go">2017-01-15 10:02:18,232 - INFO  - Application signals initialised</span>
 <span class="go">2017-01-15 10:02:18,417 - INFO  - Application commands initialised</span>
@@ -844,12 +840,12 @@ With this little change we are able to shorten the import-statement of our patte
 <span class="go">2017-01-15 10:02:18,421 - INFO  - New row: {&#39;city&#39;: &#39;London&#39;, &#39;phone&#39;: &#39;777-888888&#39;, &#39;name&#39;: &#39;Anabel&#39;}</span>
 </pre></div>
 </div>
-<p>That&#8217;s it. You have created an awesome pattern, which every plugin can simply use to register watchers for csv files.
+<p>That’s it. You have created an awesome pattern, which every plugin can simply use to register watchers for csv files.
 And you have updated your plugin to use this pattern.</p>
 <p>Sadly there is one ugly problem. Our pattern creates log messages and our plugin gets not informed about changes.</p>
 <p>In most cases patterns should not create output to the user. This is the job for the plugin, because only the plugin
 is specific enough to really know what kind of information the user needs and how this should be presented
-(log, console, website, e-mail, ...).</p>
+(log, console, website, e-mail, …).</p>
 <p>So in the next chapter <a class="reference internal" href="signals_receivers.html#signals-receivers"><span class="std std-ref">Adding signals and receivers</span></a> we will modify our pattern to send signals instead of writing log
 messages. And we create a receiver in our plugin, so that the plugin can present the changes to the user.</p>
 </div>
@@ -907,7 +903,26 @@ messages. And we create a receiver in our plugin, so that the plugin can present
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>

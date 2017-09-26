@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>2.2. Complex history database &#8212; groundwork tutorial 0.1 documentation</title>
-    
     <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -35,10 +32,9 @@
     <link media="only screen and (max-device-width: 480px)" href="../_static/small_groundwork.css" type= "text/css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -83,7 +79,7 @@ dictionary, which would get destroyed with each application exit.</p>
 </div>
 <div class="section" id="model-relationships">
 <h2>2.2.2. Model relationships<a class="headerlink" href="#model-relationships" title="Permalink to this headline">¶</a></h2>
-<p>This time we need 4 database model classes. And it&#8217;s a good idea to store the class definitions
+<p>This time we need 4 database model classes. And it’s a good idea to store the class definitions
 inside a new python file.</p>
 <p>So create <code class="docutils literal"><span class="pre">models.py</span></code> in the folder <code class="docutils literal"><span class="pre">csv_manager/plugins/csv_document_plugin</span></code> and add the following content:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -163,7 +159,7 @@ inside a new python file.</p>
         <span class="c1"># version_id = Column(ForeignKey(u&#39;version.id&#39;))</span>
         <span class="c1"># version = relationship(u&#39;Version&#39;)</span>
 
-        <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Version</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
@@ -177,7 +173,7 @@ inside a new python file.</p>
 </span>        <span class="n">new_row</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;NewRow&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
         <span class="n">missing_row</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;MissingRow&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">MissingRow</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
@@ -188,7 +184,7 @@ inside a new python file.</p>
         <span class="n">version_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;version.id&#39;</span><span class="p">))</span>
         <span class="n">version</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Version&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;missing_row&quot;</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">NewRow</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
@@ -199,7 +195,7 @@ inside a new python file.</p>
         <span class="n">version_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;version.id&#39;</span><span class="p">))</span>
         <span class="n">version</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Version&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;new_row&quot;</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">CsvFile</span><span class="p">,</span> <span class="n">Version</span><span class="p">,</span> <span class="n">MissingRow</span><span class="p">,</span> <span class="n">NewRow</span>
@@ -208,7 +204,7 @@ inside a new python file.</p>
 <p>We put our classes into a function, because we need to provide the db-object [5].
 This object will be created during application runtime and therefore it is not available during pythons
 instantiation phase.</p>
-<p>Let&#8217;s take a look to the relationship between a csv_file and its versions [29+30].
+<p>Let’s take a look to the relationship between a csv_file and its versions [29+30].
 As you can see, the relationship is defined only on the Version class.</p>
 <p>First we a have created a value called <strong>csv_file_id</strong>, which shall store the unique ID of the linked csv_file.
 Then we have defined the relationship for the value <strong>csv_file</strong> [30]. If we request this value later, we will
@@ -218,6 +214,7 @@ directly get the linked csv_file instance.</p>
 <code class="docutils literal"><span class="pre">csv_file.version</span></code>.</p>
 <p>The final database model relationship layout is:</p>
 <p class="plantuml">
+<object data="../_images/plantuml-713a313e959824d875f61d7be5b1d49f46b07f03.svg" type="image/svg+xml" style="width:228px;height:273px;">
 <img src="../_images/plantuml-713a313e959824d875f61d7be5b1d49f46b07f03.png" alt="&#64;startuml
 skinparam backgroundColor transparent
 skinparam shadowing false
@@ -232,7 +229,8 @@ v &lt;-- m
 v &lt;-- n
 
 &#64;enduml" />
-</p>
+
+</object></p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">For a deeper look into SQLAlchemy relationships, please visit the related documentation at
@@ -241,7 +239,7 @@ v &lt;-- n
 </div>
 <div class="section" id="storing-the-history">
 <h2>2.2.3. Storing the history<a class="headerlink" href="#storing-the-history" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s take a look into the final plugin code of your <code class="docutils literal"><span class="pre">csv_document_plugin.py</span></code>:</p>
+<p>Let’s take a look into the final plugin code of your <code class="docutils literal"><span class="pre">csv_document_plugin.py</span></code>:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -338,9 +336,9 @@ v &lt;-- n
 
 
 <span class="k">class</span> <span class="nc">CsvDocumentPlugin</span><span class="p">(</span><span class="n">CsvWatcherPattern</span><span class="p">,</span> <span class="n">GwDocumentsPattern</span><span class="p">,</span> <span class="n">GwSqlPattern</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">archive</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CsvFile</span> <span class="o">=</span> <span class="bp">None</span>
@@ -349,7 +347,7 @@ v &lt;-- n
         <span class="bp">self</span><span class="o">.</span><span class="n">NewRow</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+        <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
         <span class="n">content_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_dir</span><span class="p">,</span> <span class="s1">&#39;csv_document_content.rst&#39;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">content_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_content</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CsvDocument&quot;</span><span class="p">,</span>
@@ -483,7 +481,7 @@ because all plugin variables und functions are available inside documents.</p>
 <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </td></tr></table></div>
-<p>At that&#8217;s the end of our groundwork database related chapter.</p>
+<p>At that’s the end of our groundwork database related chapter.</p>
 <p>On the next chapter <a class="reference internal" href="../chapter_3/index.html#chapter-3"><span class="std std-ref">groundwork and the web</span></a> we will use the possibility to create, read, update and delete (CRUD) our database
 tables inside a web application with one additional line only. And we will design our own web view to present our just
 collected history data inside a browser.</p>
@@ -536,7 +534,26 @@ collected history data inside a browser.</p>
     </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
       </div>
