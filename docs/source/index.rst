@@ -16,9 +16,6 @@ This is a bottom-up tutorial and therefore new code and functions are getting ad
 If you get lost or your code is not working as expected, try to catch a fresh code base from our git repository at
 https://github.com/useblocks/groundwork-tutorial.
 
-If you only want to see the final source code and used architecture,
-take a look into :ref:`chapter_n`.
-
 .. sidebar:: groundwork framework
 
    groundwork is a plugin-based Python Application framework.
@@ -34,6 +31,5 @@ take a look into :ref:`chapter_n`.
    chapter_1/index
    chapter_2/index
    chapter_3/index
-   chapter_n/index
    appendix/index
    api/index
