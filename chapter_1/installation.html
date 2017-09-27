@@ -109,6 +109,13 @@ and perform a development installation:</p>
 </div>
 <p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> sets only links from the source code to the used virtual environment.
 So changes on the code are directly available without any reinstallation (except if you have changed <code class="docutils literal"><span class="pre">setup.py</span></code> ).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Before executing <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> please be sure that your working directory is the just cloned groundwork-folder!
+The “.” in the command stands for “current working directory”.
+Alternative you can give pip the complete path: <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">/my/folder/to/groundwork/</span></code>.</p>
+<p class="last">Not sure what the correct path is? It must contain a <code class="docutils literal"><span class="pre">setup.py</span></code> file to be usable for installation.</p>
+</div>
 </div>
 <div class="section" id="packages-for-test-execution-and-documentation-building">
 <h3>1.2.2.2. Packages for test execution and documentation building<a class="headerlink" href="#packages-for-test-execution-and-documentation-building" title="Permalink to this headline">¶</a></h3>
