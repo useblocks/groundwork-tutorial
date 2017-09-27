@@ -54,6 +54,14 @@ and perform a development installation::
 ``pip install -e .`` sets only links from the source code to the used virtual environment.
 So changes on the code are directly available without any reinstallation (except if you have changed ``setup.py`` ).
 
+.. note::
+
+   Before executing ``pip install -e .`` please be sure that your working directory is the just cloned groundwork-folder!
+   The "." in the command stands for "current working directory".
+   Alternative you can give pip the complete path: ``pip install -e /my/folder/to/groundwork/``.
+
+   Not sure what the correct path is? It must contain a ``setup.py`` file to be usable for installation.
+
 Packages for test execution and documentation building
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
