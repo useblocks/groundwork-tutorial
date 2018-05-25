@@ -72,7 +72,7 @@ Before we can start coding, we have to create a place for our plugin.
 
 Create a folder ``csv_watcher_plugin`` inside the folder ``CSV-Manager/csv_manager/plugins/``.
 
-Inside the newly created folder create two new files: ``__init__.py`` and ``csv_manager_plugin.py``.
+Inside the newly created folder create two new files: ``__init__.py`` and ``csv_watcher_plugin.py``.
 
 At the end your CSV-Manager should look like this::
 
