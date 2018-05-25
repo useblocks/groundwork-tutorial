@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from sqlalchemy import Column, ForeignKey, Integer, String, PickleType
 from sqlalchemy.orm import relationship
 

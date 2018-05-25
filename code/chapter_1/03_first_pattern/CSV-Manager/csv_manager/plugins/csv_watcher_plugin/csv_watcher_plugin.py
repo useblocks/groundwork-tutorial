@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from click import Argument, Option
 from groundwork.patterns import GwCommandsPattern
 from csv_manager.patterns import CsvWatcherPattern

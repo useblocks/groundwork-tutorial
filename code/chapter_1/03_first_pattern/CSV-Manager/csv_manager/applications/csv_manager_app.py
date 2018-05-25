@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import os
 from groundwork import App
 from csv_manager.applications.configuration import APP_PATH

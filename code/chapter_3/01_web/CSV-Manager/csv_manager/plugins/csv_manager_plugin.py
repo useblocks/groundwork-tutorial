@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from groundwork.patterns import GwCommandsPattern
 
 

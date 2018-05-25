@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import os
 from _datetime import datetime
 from flask import request, flash, url_for
