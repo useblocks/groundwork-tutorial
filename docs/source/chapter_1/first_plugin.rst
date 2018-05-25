@@ -395,6 +395,12 @@ and add the following content::
     Richard,Paris,0445-4545-4545
     Anabel,London,-
 
+We also need the built-in python libraries ``csv`` for csv handling and ``os`` for checks regarding file existence.
+So let's import them by adding the following lines at the beginning of our file ``csv_watcher_plugin.py``::
+
+   import os
+   import csv
+
 Now we can write the part for reading the csv file:
 
 .. code-block:: python
