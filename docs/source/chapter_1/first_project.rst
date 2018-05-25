@@ -344,6 +344,15 @@ with different configurations (e.g. with Python 3.4 and Python 3.5).
    ERROR:   py34: InterpreterNotFound: python3.4
      py35: commands succeeded
 
+The tox configuration file can be found on root level and is called ``tox.ini``.
+
+.. literalinclude:: ../../../code/chapter_1/01_first_project/CSV-Manager/tox.ini
+   :language: rst
+
+If you like you can add newer python version to test by changing the ``envlist`` parameter::
+
+   envlist = py{27,34,35,36}
+
 Install and run our project
 ---------------------------
 
