@@ -93,6 +93,12 @@ At the end your CSV-Manager should look like this::
    │   └─ ...
    └─ ...
 
+.. warning::
+
+   Be sure your ``__init__.py`` is empty and you haven't copy and pasted an ``__init__.py`` file from another location,
+   which has some code in it!
+
+
 Birth of a plugin
 -----------------
 Now we can start to write our first plugin. Let's start with an empty plugin and add needed functions step by step.
