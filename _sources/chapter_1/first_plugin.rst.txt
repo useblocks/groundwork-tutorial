@@ -72,7 +72,7 @@ Before we can start coding, we have to create a place for our plugin.
 
 Create a folder ``csv_watcher_plugin`` inside the folder ``CSV-Manager/csv_manager/plugins/``.
 
-Inside the newly created folder create two new files: ``__init__.py`` and ``csv_manager_plugin.py``.
+Inside the newly created folder create two new files: ``__init__.py`` and ``csv_watcher_plugin.py``.
 
 At the end your CSV-Manager should look like this::
 
@@ -92,6 +92,12 @@ At the end your CSV-Manager should look like this::
    │   │   └── __init__.py
    │   └─ ...
    └─ ...
+
+.. warning::
+
+   Be sure your ``__init__.py`` is empty and you haven't copy and pasted an ``__init__.py`` file from another location,
+   which has some code in it!
+
 
 Birth of a plugin
 -----------------
@@ -388,6 +394,12 @@ and add the following content::
     Maria,Cologne,111/222
     Richard,Paris,0445-4545-4545
     Anabel,London,-
+
+We also need the built-in python libraries ``csv`` for csv handling and ``os`` for checks regarding file existence.
+So let's import them by adding the following lines at the beginning of our file ``csv_watcher_plugin.py``::
+
+   import os
+   import csv
 
 Now we can write the part for reading the csv file:
 

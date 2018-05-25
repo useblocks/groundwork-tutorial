@@ -323,7 +323,11 @@ so that we get a living history of changes.</p>
 38
 39
 40
-41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+41
+42
+43</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwDocumentsPattern</span>
 <span class="kn">from</span> <span class="nn">csv_manager.patterns</span> <span class="kn">import</span> <span class="n">CsvWatcherPattern</span>
@@ -341,9 +345,9 @@ so that we get a living history of changes.</p>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">content_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_content</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CsvDocument&quot;</span><span class="p">,</span>
                                     <span class="n">content</span><span class="o">=</span><span class="n">doc_content</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
-                                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stores pass csv watcher activities&quot;</span><span class="p">)</span>
-
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;csv_archive_receiver&quot;</span><span class="p">,</span> <span class="s2">&quot;csv_watcher_change&quot;</span><span class="p">,</span>
+<span class="hll">                                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stores pass csv watcher activities&quot;</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;csv_archive_receiver&quot;</span><span class="p">,</span> <span class="s2">&quot;csv_watcher_change&quot;</span><span class="p">,</span>
 </span><span class="hll">                             <span class="bp">self</span><span class="o">.</span><span class="n">_archive_csv_change</span><span class="p">,</span> <span class="s2">&quot;listen to changes to archive them.&quot;</span><span class="p">)</span>
 </span><span class="hll">
 </span><span class="hll">    <span class="k">def</span> <span class="nf">_archive_csv_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -359,9 +363,9 @@ so that we get a living history of changes.</p>
 </span><span class="hll">            <span class="n">current_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;current_version&quot;</span><span class="p">]</span>
 </span><span class="hll">            <span class="n">new_version</span> <span class="o">=</span> <span class="n">current_version</span> <span class="o">+</span> <span class="mi">1</span>
 </span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;versions&quot;</span><span class="p">][</span><span class="n">new_version</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;new_rows&quot;</span><span class="p">:</span> <span class="n">new_rows</span><span class="p">,</span>
-</span><span class="hll">                                                               <span class="s2">&quot;missing_rows&quot;</span><span class="p">:</span> <span class="n">missing_rows</span><span class="p">}</span>
-</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;current_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
-</span>
+</span>                                                               <span class="s2">&quot;missing_rows&quot;</span><span class="p">:</span> <span class="n">missing_rows</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">[</span><span class="n">csv_file</span><span class="p">][</span><span class="s2">&quot;current_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+
     <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>

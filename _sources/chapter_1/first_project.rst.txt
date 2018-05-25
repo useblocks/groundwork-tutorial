@@ -213,6 +213,50 @@ Other patterns would provide other functions, like ``self.documents.get()`` when
    Pattern-Inheritance is the default way in groundwork to enhance your plugin with useful and time-saving functions
    during development.
 
+Install and run our project
+---------------------------
+
+It's time for installing our CSV-Manager and start working and coding with it::
+
+    >>> cd CSV-Manager
+    >>> pip install -e .
+    # A lot of output
+
+This will install the CSV-Manager inside the current Python environment.
+
+By using the option ``-e`` no files will be copied, instead pip sets some links to our code.
+This allows us to make changes to the code without the need of reinstallation.
+
+And finally::
+
+    >>> csv_manager
+    2017-01-13 09:55:24,533 - INFO  - Application signals initialised
+    2017-01-13 09:55:24,715 - INFO  - Application commands initialised
+    2017-01-13 09:55:24,716 - INFO  - Plugins initialised: csv_manager_plugin
+    2017-01-13 09:55:24,716 - INFO  - Application documents initialised
+    2017-01-13 09:55:24,716 - INFO  - Plugins initialised: GwPluginsInfo
+    2017-01-13 09:55:24,717 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo
+    Usage: csv_manager [OPTIONS] COMMAND [ARGS]...
+
+    Options:
+      --help  Show this message and exit.
+
+    Commands:
+      hello_world  Prints hello world
+      plugin_list  List all plugins
+
+Yeah, our app is running and the plugin ``csv_manager_plugin`` has already registered a command.
+Execute it with::
+
+   >>> csv_manager hello_world
+   2017-01-13 17:12:11,857 - INFO  - Application signals initialised
+   2017-01-13 17:12:12,039 - INFO  - Application commands initialised
+   2017-01-13 17:12:12,039 - INFO  - Plugins initialised: csv_manager_plugin
+   2017-01-13 17:12:12,040 - INFO  - Application documents initialised
+   2017-01-13 17:12:12,040 - INFO  - Plugins initialised: GwPluginsInfo
+   2017-01-13 17:12:12,041 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo
+   Hello World. It's me, csv_manager_plugin!
+
 Documentation
 ~~~~~~~~~~~~~
 
@@ -344,49 +388,14 @@ with different configurations (e.g. with Python 3.4 and Python 3.5).
    ERROR:   py34: InterpreterNotFound: python3.4
      py35: commands succeeded
 
-Install and run our project
----------------------------
+The tox configuration file can be found on root level and is called ``tox.ini``.
 
-It's time for installing our CSV-Manager and start working and coding with it::
+.. literalinclude:: ../../../code/chapter_1/01_first_project/CSV-Manager/tox.ini
+   :language: rst
 
-    >>> cd CSV-Manager
-    >>> pip install -e .
-    # A lot of output
+If you like you can add newer python versions to your tests by changing the ``envlist`` parameter::
 
-This will install the CSV-Manager inside the current Python environment.
-
-By using the option ``-e`` no files will be copied, instead pip sets some links to our code.
-This allows us to make changes to the code without the need of reinstallation.
-
-And finally::
-
-    >>> csv_manager
-    2017-01-13 09:55:24,533 - INFO  - Application signals initialised
-    2017-01-13 09:55:24,715 - INFO  - Application commands initialised
-    2017-01-13 09:55:24,716 - INFO  - Plugins initialised: csv_manager_plugin
-    2017-01-13 09:55:24,716 - INFO  - Application documents initialised
-    2017-01-13 09:55:24,716 - INFO  - Plugins initialised: GwPluginsInfo
-    2017-01-13 09:55:24,717 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo
-    Usage: csv_manager [OPTIONS] COMMAND [ARGS]...
-
-    Options:
-      --help  Show this message and exit.
-
-    Commands:
-      hello_world  Prints hello world
-      plugin_list  List all plugins
-
-Yeah, our app is running and the plugin ``csv_manager_plugin`` has already registered a command.
-Execute it with::
-
-   >>> csv_manager hello_world
-   2017-01-13 17:12:11,857 - INFO  - Application signals initialised
-   2017-01-13 17:12:12,039 - INFO  - Application commands initialised
-   2017-01-13 17:12:12,039 - INFO  - Plugins initialised: csv_manager_plugin
-   2017-01-13 17:12:12,040 - INFO  - Application documents initialised
-   2017-01-13 17:12:12,040 - INFO  - Plugins initialised: GwPluginsInfo
-   2017-01-13 17:12:12,041 - INFO  - Plugins activated: csv_manager_plugin, GwPluginsInfo
-   Hello World. It's me, csv_manager_plugin!
+   envlist = py{27,34,35,36}
 
 Enhance application
 -------------------

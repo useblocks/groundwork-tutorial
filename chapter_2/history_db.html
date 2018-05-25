@@ -140,7 +140,11 @@ inside a new python file.</p>
 56
 57
 58
-59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">PickleType</span>
+59
+60
+61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">PickleType</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
 
 
@@ -166,11 +170,11 @@ inside a new python file.</p>
         <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;version&#39;</span>
 
         <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-        <span class="n">created</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">))</span>
-<span class="hll">        <span class="n">csv_file_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;csv_file.id&#39;</span><span class="p">))</span>
-</span><span class="hll">        <span class="n">csv_file</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;CsvFile&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
-</span>        <span class="n">new_row</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;NewRow&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+<span class="hll">        <span class="n">version</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class="hll">        <span class="n">created</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">))</span>
+</span>        <span class="n">csv_file_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;csv_file.id&#39;</span><span class="p">))</span>
+        <span class="n">csv_file</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;CsvFile&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
+        <span class="n">new_row</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;NewRow&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
         <span class="n">missing_row</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;MissingRow&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -325,7 +329,11 @@ v &lt;-- n
 83
 84
 85
-86</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+86
+87
+88</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">_datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">from</span> <span class="nn">groundwork.patterns</span> <span class="kn">import</span> <span class="n">GwDocumentsPattern</span>
@@ -355,18 +363,18 @@ v &lt;-- n
                                     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stores pass csv watcher activities&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;csv_archive_receiver&quot;</span><span class="p">,</span> <span class="s2">&quot;csv_watcher_change&quot;</span><span class="p">,</span>
-                             <span class="bp">self</span><span class="o">.</span><span class="n">_archive_csv_change</span><span class="p">,</span> <span class="s2">&quot;listen to changes to archive them.&quot;</span><span class="p">)</span>
-
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">databases</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HISTORY_DATABASE_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;csv_history&quot;</span><span class="p">),</span>
+<span class="hll">                             <span class="bp">self</span><span class="o">.</span><span class="n">_archive_csv_change</span><span class="p">,</span> <span class="s2">&quot;listen to changes to archive them.&quot;</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">databases</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HISTORY_DATABASE_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;csv_history&quot;</span><span class="p">),</span>
 </span><span class="hll">                                          <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HISTORY_DATABASE_CONNECTION&quot;</span><span class="p">,</span> <span class="s2">&quot;sqlite://&quot;</span><span class="p">),</span>
 </span><span class="hll">                                          <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HISTORY_DATABASE_DESCRIPTION&quot;</span><span class="p">,</span> <span class="s2">&quot;Stores csv history&quot;</span><span class="p">))</span>
 </span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">CsvFile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MissingRow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NewRow</span> <span class="o">=</span> <span class="n">get_models</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
 </span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CsvFile</span><span class="p">)</span>
 </span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">)</span>
 </span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MissingRow</span><span class="p">)</span>
-</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NewRow</span><span class="p">)</span>
-</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_all</span><span class="p">()</span>
-</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NewRow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_all</span><span class="p">()</span>
+
     <span class="k">def</span> <span class="nf">_archive_csv_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plugin</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">csv_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;csv_file&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">new_rows</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_rows&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -383,12 +391,12 @@ v &lt;-- n
 
             <span class="n">csv_file_object</span><span class="o">.</span><span class="n">current_version</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">csv_file_object</span><span class="p">)</span>
-
-            <span class="c1"># Version</span>
-<span class="hll">            <span class="n">version_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">csv_file_object</span><span class="o">.</span><span class="n">current_version</span><span class="p">,</span>
-</span><span class="hll">                                          <span class="n">created</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-</span><span class="hll">                                          <span class="n">csv_file</span><span class="o">=</span><span class="n">csv_file_object</span><span class="p">)</span>
-</span>            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">version_object</span><span class="p">)</span>
+<span class="hll">
+</span><span class="hll">            <span class="c1"># Version</span>
+</span><span class="hll">            <span class="n">version_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">csv_file_object</span><span class="o">.</span><span class="n">current_version</span><span class="p">,</span>
+</span>                                          <span class="n">created</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                                          <span class="n">csv_file</span><span class="o">=</span><span class="n">csv_file_object</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">version_object</span><span class="p">)</span>
 
             <span class="c1"># Missing rows</span>
             <span class="k">for</span> <span class="n">missing_row</span> <span class="ow">in</span> <span class="n">missing_rows</span><span class="p">:</span>

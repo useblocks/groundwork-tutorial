@@ -145,7 +145,7 @@ end
 <h2>1.5.2. Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
 <p>Before we can start coding, we have to create a place for our plugin.</p>
 <p>Create a folder <code class="docutils literal"><span class="pre">csv_watcher_plugin</span></code> inside the folder <code class="docutils literal"><span class="pre">CSV-Manager/csv_manager/plugins/</span></code>.</p>
-<p>Inside the newly created folder create two new files: <code class="docutils literal"><span class="pre">__init__.py</span></code> and <code class="docutils literal"><span class="pre">csv_manager_plugin.py</span></code>.</p>
+<p>Inside the newly created folder create two new files: <code class="docutils literal"><span class="pre">__init__.py</span></code> and <code class="docutils literal"><span class="pre">csv_watcher_plugin.py</span></code>.</p>
 <p>At the end your CSV-Manager should look like this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>CSV-Manager/
 ├── csv_manager
@@ -164,6 +164,11 @@ end
 │   └─ ...
 └─ ...
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be sure your <code class="docutils literal"><span class="pre">__init__.py</span></code> is empty and you haven’t copy and pasted an <code class="docutils literal"><span class="pre">__init__.py</span></code> file from another location,
+which has some code in it!</p>
 </div>
 </div>
 <div class="section" id="birth-of-a-plugin">
@@ -524,6 +529,12 @@ and add the following content:</p>
 <span class="n">Maria</span><span class="p">,</span><span class="n">Cologne</span><span class="p">,</span><span class="mi">111</span><span class="o">/</span><span class="mi">222</span>
 <span class="n">Richard</span><span class="p">,</span><span class="n">Paris</span><span class="p">,</span><span class="mi">0445</span><span class="o">-</span><span class="mi">4545</span><span class="o">-</span><span class="mi">4545</span>
 <span class="n">Anabel</span><span class="p">,</span><span class="n">London</span><span class="p">,</span><span class="o">-</span>
+</pre></div>
+</div>
+<p>We also need the built-in python libraries <code class="docutils literal"><span class="pre">csv</span></code> for csv handling and <code class="docutils literal"><span class="pre">os</span></code> for checks regarding file existence.
+So let’s import them by adding the following lines at the beginning of our file <code class="docutils literal"><span class="pre">csv_watcher_plugin.py</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">csv</span>
 </pre></div>
 </div>
 <p>Now we can write the part for reading the csv file:</p>
