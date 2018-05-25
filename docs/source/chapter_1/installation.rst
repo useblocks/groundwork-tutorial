@@ -13,7 +13,7 @@ These virtual environments are based on an already installed Python installation
 installed packages not visible within the virtual environment.
 
 .. note::
-   groundwork supports Python >3.4 only. Please make sure your installed Python Environment is correct.
+   groundwork supports Python 2.7 and >=3.3 only. Please make sure your installed Python Environment is correct.
 
 Creation
 ~~~~~~~~
